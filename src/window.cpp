@@ -10,6 +10,7 @@
 #include <ppgso/ppgso.h>
 
 #include "shapes/cube.cpp"
+#include "objects/player.cpp"
 #include "camera.h"
 
 using Scene = std::list<std::unique_ptr<Renderable>>;
@@ -23,6 +24,8 @@ private:
 public:
 	ProjectWindow(int size) : Window{"project", size, size}
 	{
+		auto player = std::make_unique<Player>(glm::vec3{0, 0, 0});
+
 		// Set axis colors to red,green and blue...and cube color to grey
 		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
 		auto axisX = std::make_unique<Cube>();
@@ -45,6 +48,8 @@ public:
 		cube->rotation = {0.0f, 0.0f, 1.0f};
 
 		//add into scene
+		scene.push_back(move(player));
+
 		scene.push_back(move(cube));
 		scene.push_back(move(axisX));
 		scene.push_back(move(axisY));
