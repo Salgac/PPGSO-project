@@ -10,6 +10,7 @@
 #include <ppgso/ppgso.h>
 
 #include "shapes/cube.cpp"
+#include "camera.h"
 
 using Scene = std::list<std::unique_ptr<Renderable>>;
 
@@ -17,13 +18,7 @@ class ProjectWindow : public ppgso::Window
 {
 private:
 	Scene scene;
-
-	//TODO camera generalization
-	// camera stuff
-	glm::vec3 cameraPosition{-0.5f, 0.5f, 1.0f};
-	glm::vec3 cameraFront{0.0f, 0.0f, -1.0f};
-	glm::vec3 cameraUp{0.0f, 1.0f, 0.0f};
-	float cameraSpeed = 0.05f;
+	Camera camera = {100.0f, (float)width / (float)height, 0.1f, 100.0f};
 
 public:
 	ProjectWindow(int size) : Window{"project", size, size}
@@ -46,9 +41,9 @@ public:
 		axisX->scale = {scaleMax, scaleMin, scaleMin};
 		axisY->scale = {scaleMin, scaleMax, scaleMin};
 		axisZ->scale = {scaleMin, scaleMin, scaleMax};
-		cube->scale = {0.08, 0.08, 0.08};
+		cube->scale = {0.4, 0.4, 0.4};
 
-		cube->position = {3, 3, 1};
+		cube->position = {-1, -1, -1};
 		cube->rotation = {0.0f, 0.0f, 1.0f};
 
 		//add into scene
@@ -56,6 +51,8 @@ public:
 		scene.push_back(move(axisX));
 		scene.push_back(move(axisY));
 		scene.push_back(move(axisZ));
+
+		camera.update();
 	}
 
 	void onIdle()
@@ -87,7 +84,7 @@ public:
 		// Render every object in scene
 		for (auto &object : scene)
 		{
-			object->render(cameraPosition, cameraFront);
+			object->render(camera);
 		}
 	}
 
@@ -100,16 +97,19 @@ public:
 			case 38:
 			case 113:
 				// left
-				cameraFront.x -= cameraSpeed;
-				cameraPosition.x -= cameraSpeed;
+				camera.front.x -= camera.speed;
+				camera.position.x -= camera.speed;
 				break;
 			case 40:
 			case 114:
 				// right
-				cameraFront.x += cameraSpeed;
-				cameraPosition.x += cameraSpeed;
+				camera.front.x += camera.speed;
+				camera.position.x += camera.speed;
 				break;
 			}
 		}
+
+		//update camera
+		camera.update();
 	}
 };

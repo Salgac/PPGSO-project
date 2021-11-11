@@ -10,7 +10,8 @@
 #include <shaders/color_vert_glsl.h>
 #include <shaders/color_frag_glsl.h>
 
-#include "../renderable.cpp"
+#include "../renderable.h"
+#include "../camera.h"
 
 // Object to represent a 3D cube
 class Cube : public Renderable
@@ -96,9 +97,6 @@ public:
 		glGenBuffers(1, &ibo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(Face), indices.data(), GL_STATIC_DRAW);
-
-		// Set projection matrices to identity
-		program.setUniform("ProjectionMatrix", glm::perspective((ppgso::PI / 180.f) * 60.0f, 1.0f, 0.1f, 100.0f));
 	};
 	// Clean up
 	~Cube()
@@ -113,25 +111,24 @@ public:
 	bool update(float dTime) override
 	{
 		modelMatrix = glm::mat4(1.0f);
-		modelMatrix = glm::scale(modelMatrix, scale);
-		modelMatrix = (rotation != glm::vec3(0, 0, 0)) ? glm::rotate(modelMatrix, (float)glfwGetTime(), rotation) : modelMatrix;
 		modelMatrix = glm::translate(modelMatrix, position);
-		modelMatrix = (rotation != glm::vec3(0, 0, 0)) ? glm::rotate(modelMatrix, (float)glfwGetTime() / 2.0f, {1, 1, 1}) : modelMatrix;
+		modelMatrix = glm::scale(modelMatrix, scale);
 
 		return true;
 	}
 
 	// Draw polygons
-	void render(glm::vec3 cameraPosition, glm::vec3 cameraFront) override
+	void render(Camera camera) override
 	{
-		std::cout << cameraPosition.x << std::endl;
-		viewMatrix = glm::lookAt(cameraPosition, cameraFront, glm::vec3{0.0f, 1.0f, 0.0f});
+		//update viewMatrix
+		viewMatrix = camera.viewMatrix;
 
 		// Update transformation and color uniforms in the shader
 		program.use();
 		program.setUniform("OverallColor", color);
 		program.setUniform("ModelMatrix", modelMatrix);
 		program.setUniform("ViewMatrix", viewMatrix);
+		program.setUniform("ProjectionMatrix", camera.perspective);
 
 		glBindVertexArray(vao);
 		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size() * 3, GL_UNSIGNED_INT, 0);
