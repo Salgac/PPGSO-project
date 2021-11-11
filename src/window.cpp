@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <vector>
+#include <list>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
@@ -10,12 +11,14 @@
 
 #include "shapes/cube.cpp"
 
+using Scene = std::list<std::unique_ptr<Renderable>>;
+
 class ProjectWindow : public ppgso::Window
 {
 private:
-	Cube axisX, axisY, axisZ;
-	Cube cube;
+	Scene scene;
 
+	//TODO camera generalization
 	// camera stuff
 	glm::vec3 cameraPosition{-0.5f, 0.5f, 1.0f};
 	glm::vec3 cameraFront{0.0f, 0.0f, -1.0f};
@@ -26,22 +29,33 @@ public:
 	ProjectWindow(int size) : Window{"project", size, size}
 	{
 		// Set axis colors to red,green and blue...and cube color to grey
-		cube.color = {0.5, 0.5, 0.5};
-		axisX.color = {1, 0, 0};
-		axisY.color = {0, 1, 0};
-		axisZ.color = {0, 0, 1};
+		auto cube = std::make_unique<Cube>();
+		auto axisX = std::make_unique<Cube>();
+		auto axisY = std::make_unique<Cube>();
+		auto axisZ = std::make_unique<Cube>();
+
+		cube->color = {0.5, 0.5, 0.5};
+		axisX->color = {1, 0, 0};
+		axisY->color = {0, 1, 0};
+		axisZ->color = {0, 0, 1};
 
 		const float scaleMin = 0.03f;
 		const float scaleMax = 10.00f;
 
 		// Set axis scaling in X,Y,Z directions...hint use scaleMin in tangent directions and scaleMax in the axis direction
-		axisX.scale = {scaleMax, scaleMin, scaleMin};
-		axisY.scale = {scaleMin, scaleMax, scaleMin};
-		axisZ.scale = {scaleMin, scaleMin, scaleMax};
-		cube.scale = {0.08, 0.08, 0.08};
+		axisX->scale = {scaleMax, scaleMin, scaleMin};
+		axisY->scale = {scaleMin, scaleMax, scaleMin};
+		axisZ->scale = {scaleMin, scaleMin, scaleMax};
+		cube->scale = {0.08, 0.08, 0.08};
 
-		cube.position = {3, 3, 1};
-		cube.rotation = {0.0f, 0.0f, 1.0f};
+		cube->position = {3, 3, 1};
+		cube->rotation = {0.0f, 0.0f, 1.0f};
+
+		//add into scene
+		scene.push_back(move(cube));
+		scene.push_back(move(axisX));
+		scene.push_back(move(axisY));
+		scene.push_back(move(axisZ));
 	}
 
 	void onIdle()
@@ -53,28 +67,28 @@ public:
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 
-		// Move and Render shape\    // Get time for animation
-		float t = (float)glfwGetTime();
+		// Track time
+		static auto time = (float)glfwGetTime();
+		float dTime = (float)glfwGetTime() - time;
+		time = (float)glfwGetTime();
 
-		// Set rotation and scale
-		cube.rotation.y = sin(t * 0.5f);
+		//update
+		auto i = std::begin(scene);
+		while (i != std::end(scene))
+		{
+			// Update object and remove from list if needed
+			auto obj = i->get();
+			if (!obj->update(dTime))
+				i = scene.erase(i);
+			else
+				++i;
+		}
 
-		// update view matrix of X,Y,Z axis and cube
-		cube.updateViewMatrix(cameraPosition, cameraFront, cameraUp);
-		axisX.updateViewMatrix(cameraPosition, cameraFront, cameraUp);
-		axisY.updateViewMatrix(cameraPosition, cameraFront, cameraUp);
-		axisZ.updateViewMatrix(cameraPosition, cameraFront, cameraUp);
-
-		// update model matrix
-		cube.updateModelMatrix();
-		axisX.updateModelMatrix();
-		axisY.updateModelMatrix();
-		axisZ.updateModelMatrix();
-
-		cube.render();
-		axisX.render();
-		axisY.render();
-		axisZ.render();
+		// Render every object in scene
+		for (auto &object : scene)
+		{
+			object->render(cameraPosition, cameraFront);
+		}
 	}
 
 	void onKey(int key, int scanCode, int action, int mods) override

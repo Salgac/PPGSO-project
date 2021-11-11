@@ -10,8 +10,10 @@
 #include <shaders/color_vert_glsl.h>
 #include <shaders/color_frag_glsl.h>
 
+#include "../renderable.cpp"
+
 // Object to represent a 3D cube
-class Cube
+class Cube : public Renderable
 {
 private:
 	// 2D vectors define points/vertices of the shape
@@ -97,8 +99,6 @@ public:
 
 		// Set projection matrices to identity
 		program.setUniform("ProjectionMatrix", glm::perspective((ppgso::PI / 180.f) * 60.0f, 1.0f, 0.1f, 100.0f));
-
-		program.setUniform("ViewMatrix", viewMatrix);
 	};
 	// Clean up
 	~Cube()
@@ -110,27 +110,23 @@ public:
 		glDeleteVertexArrays(1, &vao);
 	}
 
-	// Set the object transformation matrix
-	void updateModelMatrix()
+	bool update(float dTime) override
 	{
-		// Compute transformation by scaling, rotating and then translating the shape
-		// Update model matrix: modelMatrix = ... use position, rotation and scale
 		modelMatrix = glm::mat4(1.0f);
 		modelMatrix = glm::scale(modelMatrix, scale);
 		modelMatrix = (rotation != glm::vec3(0, 0, 0)) ? glm::rotate(modelMatrix, (float)glfwGetTime(), rotation) : modelMatrix;
 		modelMatrix = glm::translate(modelMatrix, position);
 		modelMatrix = (rotation != glm::vec3(0, 0, 0)) ? glm::rotate(modelMatrix, (float)glfwGetTime() / 2.0f, {1, 1, 1}) : modelMatrix;
-	}
 
-	void updateViewMatrix(glm::vec3 cameraPosition, glm::vec3 cameraFront, glm::vec3 cameraUp)
-	{
-		// lookAt - position, target, up vector
-		viewMatrix = glm::lookAt(cameraPosition, cameraFront, cameraUp);
+		return true;
 	}
 
 	// Draw polygons
-	void render()
+	void render(glm::vec3 cameraPosition, glm::vec3 cameraFront) override
 	{
+		std::cout << cameraPosition.x << std::endl;
+		viewMatrix = glm::lookAt(cameraPosition, cameraFront, glm::vec3{0.0f, 1.0f, 0.0f});
+
 		// Update transformation and color uniforms in the shader
 		program.use();
 		program.setUniform("OverallColor", color);
