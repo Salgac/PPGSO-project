@@ -24,7 +24,7 @@ public:
 	ProjectWindow(int size) : Window{"project", size, size}
 	{
 		// Set axis colors to red,green and blue...and cube color to grey
-		auto cube = std::make_unique<Cube>();
+		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
 		auto axisX = std::make_unique<Cube>();
 		auto axisY = std::make_unique<Cube>();
 		auto axisZ = std::make_unique<Cube>();
@@ -41,9 +41,7 @@ public:
 		axisX->scale = {scaleMax, scaleMin, scaleMin};
 		axisY->scale = {scaleMin, scaleMax, scaleMin};
 		axisZ->scale = {scaleMin, scaleMin, scaleMax};
-		cube->scale = {0.4, 0.4, 0.4};
 
-		cube->position = {-1, -1, -1};
 		cube->rotation = {0.0f, 0.0f, 1.0f};
 
 		//add into scene

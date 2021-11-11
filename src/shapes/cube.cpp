@@ -62,7 +62,7 @@ private:
 	};
 
 	// Program to associate with the object
-	ppgso::Shader program = {color_vert_glsl, color_frag_glsl};
+	std::unique_ptr<ppgso::Shader> shader;
 
 	// These will hold the data and object buffers
 	GLuint vao, vbo, cbo, ibo;
@@ -71,14 +71,21 @@ private:
 
 public:
 	// Public attributes that define position, color ..
-	glm::vec3 position{0, 0, 0};
+	glm::vec3 position;
 	glm::vec3 rotation{0, 0, 0};
-	glm::vec3 scale{1, 1, 1};
-	glm::vec3 color{1, 0, 0};
+	glm::vec3 scale;
+	glm::vec3 color{1, 1, 1};
 
 	// Initialize object data buffers
-	Cube()
+	Cube(glm::vec3 pos = glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3 scl = glm::vec3{1.0f, 1.0f, 1.0f})
 	{
+		position = pos;
+		scale = scl;
+
+		//shader
+		if (!shader)
+			shader = std::make_unique<ppgso::Shader>(color_vert_glsl, color_frag_glsl);
+
 		// Copy data to OpenGL
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
@@ -89,7 +96,7 @@ public:
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
 
 		// Set vertex program inputs
-		auto position_attrib = program.getAttribLocation("Position");
+		auto position_attrib = shader->getAttribLocation("Position");
 		glEnableVertexAttribArray(position_attrib);
 		glVertexAttribPointer(position_attrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -124,11 +131,11 @@ public:
 		viewMatrix = camera.viewMatrix;
 
 		// Update transformation and color uniforms in the shader
-		program.use();
-		program.setUniform("OverallColor", color);
-		program.setUniform("ModelMatrix", modelMatrix);
-		program.setUniform("ViewMatrix", viewMatrix);
-		program.setUniform("ProjectionMatrix", camera.perspective);
+		shader->use();
+		shader->setUniform("OverallColor", color);
+		shader->setUniform("ModelMatrix", modelMatrix);
+		shader->setUniform("ViewMatrix", viewMatrix);
+		shader->setUniform("ProjectionMatrix", camera.perspective);
 
 		glBindVertexArray(vao);
 		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size() * 3, GL_UNSIGNED_INT, 0);
