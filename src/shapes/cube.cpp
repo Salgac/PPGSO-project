@@ -122,11 +122,10 @@ public:
 		modelMatrix = (rotation != glm::vec3(0, 0, 0)) ? glm::rotate(modelMatrix, (float)glfwGetTime() / 2.0f, {1, 1, 1}) : modelMatrix;
 	}
 
-	void updateViewMatrix(glm::vec3 viewRotation)
+	void updateViewMatrix(glm::vec3 cameraPosition, glm::vec3 cameraFront, glm::vec3 cameraUp)
 	{
-		// Compute transformation by scaling, rotating and then translating the shape
-		// Update view matrix: modelMatrix = ... use translation -20 in Z and viewRotation
-		viewMatrix = glm::lookAt(viewRotation, glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+		// lookAt - position, target, up vector
+		viewMatrix = glm::lookAt(cameraPosition, cameraFront, cameraUp);
 	}
 
 	// Draw polygons

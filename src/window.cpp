@@ -16,7 +16,11 @@ private:
 	Cube axisX, axisY, axisZ;
 	Cube cube;
 
-	glm::vec3 viewRotation{1, 1, 1};
+	// camera stuff
+	glm::vec3 cameraPosition{-0.5f, 0.5f, 1.0f};
+	glm::vec3 cameraFront{0.0f, 0.0f, -1.0f};
+	glm::vec3 cameraUp{0.0f, 1.0f, 0.0f};
+	float cameraSpeed = 0.05f;
 
 public:
 	ProjectWindow(int size) : Window{"project", size, size}
@@ -53,14 +57,13 @@ public:
 		float t = (float)glfwGetTime();
 
 		// Set rotation and scale
-		viewRotation = {sin(t * 0.1f), 0.25f, cos(t * 0.1f)};
 		cube.rotation.y = sin(t * 0.5f);
 
 		// update view matrix of X,Y,Z axis and cube
-		cube.updateViewMatrix(viewRotation);
-		axisX.updateViewMatrix(viewRotation);
-		axisY.updateViewMatrix(viewRotation);
-		axisZ.updateViewMatrix(viewRotation);
+		cube.updateViewMatrix(cameraPosition, cameraFront, cameraUp);
+		axisX.updateViewMatrix(cameraPosition, cameraFront, cameraUp);
+		axisY.updateViewMatrix(cameraPosition, cameraFront, cameraUp);
+		axisZ.updateViewMatrix(cameraPosition, cameraFront, cameraUp);
 
 		// update model matrix
 		cube.updateModelMatrix();
@@ -72,5 +75,27 @@ public:
 		axisX.render();
 		axisY.render();
 		axisZ.render();
+	}
+
+	void onKey(int key, int scanCode, int action, int mods) override
+	{
+		if (action == GLFW_PRESS)
+		{
+			switch (scanCode)
+			{
+			case 38:
+			case 113:
+				// left
+				cameraFront.x -= cameraSpeed;
+				cameraPosition.x -= cameraSpeed;
+				break;
+			case 40:
+			case 114:
+				// right
+				cameraFront.x += cameraSpeed;
+				cameraPosition.x += cameraSpeed;
+				break;
+			}
+		}
 	}
 };
