@@ -29,8 +29,8 @@ public:
 
         for (int i = 0; i < 35;i++) {
             float a = glm::linearRand(-5.0f, -1.0f);
-            glm::vec3 pos = glm::vec3{glm::linearRand(-1.0f, 5.0f), 0, a};
-            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 1/(a*a), 0});
+            glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 4.0f), 0, a};
+            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5/(a*a), 0});
             scene.push_back(move(tree));
         }
 
