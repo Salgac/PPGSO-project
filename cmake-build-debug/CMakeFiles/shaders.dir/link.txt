@@ -1,0 +1,2 @@
+C:\mingw-w64\mingw64\bin\ar.exe qc libshaders.a CMakeFiles/shaders.dir/shaders/color_vert_glsl.cpp.obj CMakeFiles/shaders.dir/shaders/color_frag_glsl.cpp.obj CMakeFiles/shaders.dir/shaders/convolution_vert_glsl.cpp.obj CMakeFiles/shaders.dir/shaders/convolution_frag_glsl.cpp.obj CMakeFiles/shaders.dir/shaders/diffuse_vert_glsl.cpp.obj CMakeFiles/shaders.dir/shaders/diffuse_frag_glsl.cpp.obj CMakeFiles/shaders.dir/shaders/texture_vert_glsl.cpp.obj CMakeFiles/shaders.dir/shaders/texture_frag_glsl.cpp.obj
+C:\mingw-w64\mingw64\bin\ranlib.exe libshaders.a

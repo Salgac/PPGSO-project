@@ -1,0 +1,92 @@
+[
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe  @CMakeFiles/shaders.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\shaders.dir\\shaders\\color_vert_glsl.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\cmake-build-debug\\shaders\\color_vert_glsl.cpp",
+  "file": "C:/Users/PC/PPGSO-project/cmake-build-debug/shaders/color_vert_glsl.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe  @CMakeFiles/shaders.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\shaders.dir\\shaders\\color_frag_glsl.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\cmake-build-debug\\shaders\\color_frag_glsl.cpp",
+  "file": "C:/Users/PC/PPGSO-project/cmake-build-debug/shaders/color_frag_glsl.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe  @CMakeFiles/shaders.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\shaders.dir\\shaders\\convolution_vert_glsl.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\cmake-build-debug\\shaders\\convolution_vert_glsl.cpp",
+  "file": "C:/Users/PC/PPGSO-project/cmake-build-debug/shaders/convolution_vert_glsl.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe  @CMakeFiles/shaders.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\shaders.dir\\shaders\\convolution_frag_glsl.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\cmake-build-debug\\shaders\\convolution_frag_glsl.cpp",
+  "file": "C:/Users/PC/PPGSO-project/cmake-build-debug/shaders/convolution_frag_glsl.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe  @CMakeFiles/shaders.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\shaders.dir\\shaders\\diffuse_vert_glsl.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\cmake-build-debug\\shaders\\diffuse_vert_glsl.cpp",
+  "file": "C:/Users/PC/PPGSO-project/cmake-build-debug/shaders/diffuse_vert_glsl.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe  @CMakeFiles/shaders.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\shaders.dir\\shaders\\diffuse_frag_glsl.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\cmake-build-debug\\shaders\\diffuse_frag_glsl.cpp",
+  "file": "C:/Users/PC/PPGSO-project/cmake-build-debug/shaders/diffuse_frag_glsl.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe  @CMakeFiles/shaders.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\shaders.dir\\shaders\\texture_vert_glsl.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\cmake-build-debug\\shaders\\texture_vert_glsl.cpp",
+  "file": "C:/Users/PC/PPGSO-project/cmake-build-debug/shaders/texture_vert_glsl.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe  @CMakeFiles/shaders.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\shaders.dir\\shaders\\texture_frag_glsl.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\cmake-build-debug\\shaders\\texture_frag_glsl.cpp",
+  "file": "C:/Users/PC/PPGSO-project/cmake-build-debug/shaders/texture_frag_glsl.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\ppgso\\mesh.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\ppgso\\mesh.cpp",
+  "file": "C:/Users/PC/PPGSO-project/ppgso/mesh.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\ppgso\\tiny_obj_loader.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\ppgso\\tiny_obj_loader.cpp",
+  "file": "C:/Users/PC/PPGSO-project/ppgso/tiny_obj_loader.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\ppgso\\shader.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\ppgso\\shader.cpp",
+  "file": "C:/Users/PC/PPGSO-project/ppgso/shader.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\ppgso\\image.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\ppgso\\image.cpp",
+  "file": "C:/Users/PC/PPGSO-project/ppgso/image.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\ppgso\\image_bmp.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\ppgso\\image_bmp.cpp",
+  "file": "C:/Users/PC/PPGSO-project/ppgso/image_bmp.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\ppgso\\image_raw.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\ppgso\\image_raw.cpp",
+  "file": "C:/Users/PC/PPGSO-project/ppgso/image_raw.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\ppgso\\texture.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\ppgso\\texture.cpp",
+  "file": "C:/Users/PC/PPGSO-project/ppgso/texture.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\ppgso\\window.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\ppgso\\window.cpp",
+  "file": "C:/Users/PC/PPGSO-project/ppgso/window.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\src\\shapes\\tree.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\src\\shapes\\tree.cpp",
+  "file": "C:/Users/PC/PPGSO-project/src/shapes/tree.cpp"
+},
+{
+  "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/project.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\project.dir\\src\\main.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\src\\main.cpp",
+  "file": "C:/Users/PC/PPGSO-project/src/main.cpp"
+}
+]

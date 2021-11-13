@@ -1,0 +1,2 @@
+C:\mingw-w64\mingw64\bin\ar.exe qc libppgso.a CMakeFiles/ppgso.dir/ppgso/mesh.cpp.obj CMakeFiles/ppgso.dir/ppgso/tiny_obj_loader.cpp.obj CMakeFiles/ppgso.dir/ppgso/shader.cpp.obj CMakeFiles/ppgso.dir/ppgso/image.cpp.obj CMakeFiles/ppgso.dir/ppgso/image_bmp.cpp.obj CMakeFiles/ppgso.dir/ppgso/image_raw.cpp.obj CMakeFiles/ppgso.dir/ppgso/texture.cpp.obj CMakeFiles/ppgso.dir/ppgso/window.cpp.obj CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj
+C:\mingw-w64\mingw64\bin\ranlib.exe libppgso.a

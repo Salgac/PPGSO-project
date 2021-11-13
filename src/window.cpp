@@ -10,9 +10,11 @@
 #include <ppgso/ppgso.h>
 
 #include "shapes/cube.cpp"
+#include "shapes/tree.cpp"
 #include "camera.h"
 
 using Scene = std::list<std::unique_ptr<Renderable>>;
+
 
 class ProjectWindow : public ppgso::Window
 {
@@ -24,6 +26,14 @@ public:
 	ProjectWindow(int size) : Window{"project", size, size}
 	{
 		// Set axis colors to red,green and blue...and cube color to grey
+
+        for (int i = 0; i < 35;i++) {
+            float a = glm::linearRand(-5.0f, -1.0f);
+            glm::vec3 pos = glm::vec3{glm::linearRand(-1.0f, 5.0f), 0, a};
+            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 1/(a*a), 0});
+            scene.push_back(move(tree));
+        }
+
 		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
 		auto axisX = std::make_unique<Cube>();
 		auto axisY = std::make_unique<Cube>();
@@ -68,7 +78,7 @@ public:
 		time = (float)glfwGetTime();
 
 		//update
-		auto i = std::begin(scene);
+        auto i = std::begin(scene);
 		while (i != std::end(scene))
 		{
 			// Update object and remove from list if needed
@@ -95,7 +105,7 @@ public:
 			case 38:
 			case 113:
 				// left
-				camera.front.x -= camera.speed;
+                camera.front.x -= camera.speed;
 				camera.position.x -= camera.speed;
 				break;
 			case 40:
