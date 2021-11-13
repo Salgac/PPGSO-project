@@ -27,13 +27,36 @@ public:
 	{
 		// Set axis colors to red,green and blue...and cube color to grey
 
-        for (int i = 0; i < 35;i++) {
+        // stromy v pozadí
+        float sizef = 0.5;
+
+
+        //stromy pred kamerou
+        glm::vec3 pos = glm::vec3{1, -0.3, 0.8};
+        auto tree = std::make_unique<Tree>(pos, glm::vec3{0.2,0.24,0.2},sizef,2);
+        scene.push_back(move(tree));
+
+        pos = glm::vec3{2, -0.3, 0.8};
+        tree = std::make_unique<Tree>(pos,glm::vec3{0.15,0.17,0.15},sizef,2);
+        scene.push_back(move(tree));
+
+        pos = glm::vec3{3, -0.3, 0.8};
+        tree = std::make_unique<Tree>(pos,glm::vec3{0.2,0.2,0.2},sizef,2);
+        scene.push_back(move(tree));
+
+
+
+
+        /*
+        for (int i = 0; i < 2;i++) {
             float a = glm::linearRand(-5.0f, -1.0f);
-            glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 4.0f), 0, a};
-            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5/(a*a), 0});
+            glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 8.0f), 0, a};
+
+            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0.4,0.44,0.4},sizef,2);
+
             scene.push_back(move(tree));
         }
-
+         */
 		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
 		auto axisX = std::make_unique<Cube>();
 		auto axisY = std::make_unique<Cube>();
@@ -48,7 +71,7 @@ public:
 		const float scaleMax = 10.00f;
 
 		// Set axis scaling in X,Y,Z directions...hint use scaleMin in tangent directions and scaleMax in the axis direction
-		axisX->scale = {scaleMax, scaleMin, scaleMin};
+		axisX->scale = {scaleMax, 1, scaleMin};
 		axisY->scale = {scaleMin, scaleMax, scaleMin};
 		axisZ->scale = {scaleMin, scaleMin, scaleMax};
 

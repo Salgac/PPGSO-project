@@ -23,14 +23,14 @@ class Tree : public Renderable
     glm::mat4 modelMatrix{1.0f};
     glm::vec3 color{1.0f};
     // Static resources shared between all particles
-    static std::unique_ptr<ppgso::Mesh> mesh;
+    std::unique_ptr<ppgso::Mesh> mesh;
     static std::unique_ptr<ppgso::Shader> shader;
 
 public:
     float size = glm::linearRand(0.025f, 0.075f);
 
     glm::vec3 position{0, 0, 0};
-    glm::vec3 speed{0, 0, 0};
+    //glm::vec3 speed{0, 0, 0};
     glm::vec3 scale{size, size, size};
     float bornTime;
 
@@ -38,33 +38,31 @@ public:
     /// \param p - Initial position
     /// \param s - Initial speed
     /// \param c - Color of particle
-    Tree(glm::vec3 p, glm::vec3 s, glm::vec3 c)
+    Tree(glm::vec3 p, glm::vec3 c,float d,int e)
     {
         // First particle will initialize resources
+        //std::cout << "Thanks for viewing my code!";
         if (!shader)
             shader = std::make_unique<ppgso::Shader>(color_vert_glsl, color_frag_glsl);
-        if (!mesh)
+        std::cout << e;
+        if (e == 0)
             mesh = std::make_unique<ppgso::Mesh>("../data/Tree.obj");
+        if (e == 1)
+            mesh = std::make_unique<ppgso::Mesh>("../data/Tree2.obj");
+        if (e == 2)
+            mesh = std::make_unique<ppgso::Mesh>("../data/Tree3.obj");
 
         color = c;
-        speed = s;
         position = p;
+
+        size = d;
+        scale = {size, size, size};
 
         bornTime = (float)glfwGetTime();
     }
 
     bool update(float dTime) override
     {
-        // Animate position using speed and dTime.
-        // - Return true to keep the object alive
-        // - Returning false removes the object from the scene
-        // - hint: you can add more particles to the scene here also
-        //modelMatrix = glm::translate(modelMatrix, speed);
-
-        //new pos
-        //if (position.y > 0)
-        //    position += speed;
-
         modelMatrix = glm::mat4{1.0f};
         modelMatrix = glm::translate(modelMatrix, position);
         modelMatrix = glm::scale(modelMatrix, scale);
@@ -95,5 +93,5 @@ public:
     }
 };
 
-std::unique_ptr<ppgso::Mesh> Tree::mesh;
+//std::unique_ptr<ppgso::Mesh> Tree::mesh;
 std::unique_ptr<ppgso::Shader> Tree::shader;
