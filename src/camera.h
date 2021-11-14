@@ -13,7 +13,8 @@ public:
 	glm::mat4 perspective;
 	glm::mat4 viewMatrix{1.0f};
 
-	glm::vec3 position{-0.5f, 0.5f, 1.0f};
+	// stara kamera glm::vec3 position{-0.5f, 0.5f, 1.0f};
+    glm::vec3 position{0.0f, 0.25f, 0.85f};
 	glm::vec3 front{0.0f, 0.0f, -1.0f};
 	glm::vec3 up{0.0f, 1.0f, 0.0f};
 	float speed = 0.05f;

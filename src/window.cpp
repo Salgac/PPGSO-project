@@ -44,26 +44,31 @@ public:
         tree = std::make_unique<Tree>(pos,glm::vec3{0.2,0.2,0.2},sizef,2);
         scene.push_back(move(tree));
 
-
-
-
-        /*
-        for (int i = 0; i < 2;i++) {
-            float a = glm::linearRand(-5.0f, -1.0f);
-            glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 8.0f), 0, a};
-
-            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0.4,0.44,0.4},sizef,2);
-
+        float xx = 0.3;
+        for(int i = 0; i < 5;i++)
+        {
+            pos = glm::vec3{xx, 0, -0.8};
+            tree = std::make_unique<Tree>(pos, glm::vec3{0.18, 0.18, 0.18}, 0.3, 1);
             scene.push_back(move(tree));
+            xx += 1.2;
         }
-         */
+        xx = 0;
+        for(int i = 0; i < 3;i++)
+        {
+            pos = glm::vec3{xx, 0.3, -5};
+            tree = std::make_unique<Tree>(pos, glm::vec3{0.15, 0.15, 0.15}, 0.2, 0);
+            scene.push_back(move(tree));
+
+            xx += 3;
+        }
+
 		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
 		auto axisX = std::make_unique<Cube>();
 		auto axisY = std::make_unique<Cube>();
 		auto axisZ = std::make_unique<Cube>();
 
 		cube->color = {0.5, 0.5, 0.5};
-		axisX->color = {1, 0, 0};
+		axisX->color = {0.5, 0.5, 0.5};
 		axisY->color = {0, 1, 0};
 		axisZ->color = {0, 0, 1};
 
@@ -71,7 +76,7 @@ public:
 		const float scaleMax = 10.00f;
 
 		// Set axis scaling in X,Y,Z directions...hint use scaleMin in tangent directions and scaleMax in the axis direction
-		axisX->scale = {scaleMax, 1, scaleMin};
+		axisX->scale = {scaleMax, scaleMin, 0.7};
 		axisY->scale = {scaleMin, scaleMax, scaleMin};
 		axisZ->scale = {scaleMin, scaleMin, scaleMax};
 
