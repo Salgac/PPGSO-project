@@ -19,7 +19,7 @@ class Player final : public Renderable
 public:
 	glm::vec3 position{0, 0, 0};
 	glm::vec3 speed{0, 0, 0};
-	glm::vec3 scale{0.003, 0.003, 0.003};
+	glm::vec3 scale{0.6f, 0.6f, 0.6f};
 
 	/// Construct a new Player
 	/// \param p - Initial position
@@ -48,7 +48,7 @@ public:
 	void render(Camera camera) override
 	{
 		//TODO move according to camera in a better way
-		position.z = camera.front.x;
+		position.z = camera.front.x - 0.6;
 		update(0);
 
 		// Render the object
@@ -60,8 +60,6 @@ public:
 		shader->setUniform("ViewMatrix", viewMatrix);
 		shader->setUniform("ProjectionMatrix", camera.perspective);
 
-		//TODO fix texture mapping - requires scaling and a bit of tinkering
-		shader->setUniform("TextureOffset", glm::vec2(0.0f, 0.0f));
 		shader->setUniform("Texture", *texture);
 
 		mesh->render();
