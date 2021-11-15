@@ -7,7 +7,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/ppgso.dir/ppgso/texture.cpp.obj"
   "CMakeFiles/ppgso.dir/ppgso/tiny_obj_loader.cpp.obj"
   "CMakeFiles/ppgso.dir/ppgso/window.cpp.obj"
-  "CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj"
+  "CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj"
   "libppgso.a"
   "libppgso.pdb"
 )

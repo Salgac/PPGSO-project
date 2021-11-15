@@ -607,29 +607,29 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\project.dir\build.make CMakeFiles/project.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/objects/tree.obj: src/objects/tree.cpp.obj
-.PHONY : src/objects/tree.obj
+src/shapes/tree.obj: src/shapes/tree.cpp.obj
+.PHONY : src/shapes/tree.obj
 
 # target to build an object file
-src/objects/tree.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\ppgso.dir\build.make CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj
-.PHONY : src/objects/tree.cpp.obj
+src/shapes/tree.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ppgso.dir\build.make CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj
+.PHONY : src/shapes/tree.cpp.obj
 
-src/objects/tree.i: src/objects/tree.cpp.i
-.PHONY : src/objects/tree.i
+src/shapes/tree.i: src/shapes/tree.cpp.i
+.PHONY : src/shapes/tree.i
 
 # target to preprocess a source file
-src/objects/tree.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\ppgso.dir\build.make CMakeFiles/ppgso.dir/src/objects/tree.cpp.i
-.PHONY : src/objects/tree.cpp.i
+src/shapes/tree.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ppgso.dir\build.make CMakeFiles/ppgso.dir/src/shapes/tree.cpp.i
+.PHONY : src/shapes/tree.cpp.i
 
-src/objects/tree.s: src/objects/tree.cpp.s
-.PHONY : src/objects/tree.s
+src/shapes/tree.s: src/shapes/tree.cpp.s
+.PHONY : src/shapes/tree.s
 
 # target to generate assembly for a file
-src/objects/tree.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\ppgso.dir\build.make CMakeFiles/ppgso.dir/src/objects/tree.cpp.s
-.PHONY : src/objects/tree.cpp.s
+src/shapes/tree.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ppgso.dir\build.make CMakeFiles/ppgso.dir/src/shapes/tree.cpp.s
+.PHONY : src/shapes/tree.cpp.s
 
 # Help Target
 help:
@@ -697,9 +697,9 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
-	@echo ... src/objects/tree.obj
-	@echo ... src/objects/tree.i
-	@echo ... src/objects/tree.s
+	@echo ... src/shapes/tree.obj
+	@echo ... src/shapes/tree.i
+	@echo ... src/shapes/tree.s
 .PHONY : help
 
 

@@ -1,20 +1,9 @@
 "C:\Program Files\JetBrains\CLion 2021.2.2\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" C:\Users\PC\PPGSO-project
--- The CXX compiler identification is GNU 8.1.0
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: C:/mingw-w64/mingw64/bin/g++.exe - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
 -- Found GLFW3: C:/Users/PC/PPGSO-project/dependencies/lib/mingw/libglfw3.a
 FIND_PATH C:/Users/PC/PPGSO-project/dependencies/include
--- Found GLEW: C:/Users/PC/PPGSO-project/dependencies/include  
 -- Found GLEW: C:/Users/PC/PPGSO-project/dependencies/include
 -- GLEW_LIBRARIES: C:/Users/PC/PPGSO-project/dependencies/lib/mingw/libglew32.a
--- Found GLM: C:/Users/PC/PPGSO-project/dependencies/include  
 -- GLM_INCLUDE_DIR = C:/Users/PC/PPGSO-project/dependencies/include
--- Found OpenGL: opengl32   
--- Found OpenMP_CXX: -fopenmp (found version "4.5") 
--- Found OpenMP: TRUE (found version "4.5")  
 -- Configuring done
 -- Generating done
 -- Build files have been written to: C:/Users/PC/PPGSO-project/cmake-build-debug

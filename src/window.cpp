@@ -11,7 +11,7 @@
 
 #include "shapes/cube.cpp"
 
-#include "src/objects/tree.cpp"
+#include "shapes/tree.cpp"
 #include "objects/player.cpp"
 #include "camera.h"
 
