@@ -47,6 +47,10 @@ public:
 
 	void render(Camera camera) override
 	{
+		//TODO move according to camera in a better way
+		position.z = camera.front.x;
+		update(0);
+
 		// Render the object
 		viewMatrix = camera.viewMatrix;
 
