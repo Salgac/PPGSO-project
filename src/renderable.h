@@ -4,9 +4,6 @@
 #ifndef RENDERABLE
 #define RENDERABLE
 
-class Renderable;                                     // Forward declaration for Scene
-using Scene = std::list<std::unique_ptr<Renderable>>;
-
 class Renderable
 {
 public:

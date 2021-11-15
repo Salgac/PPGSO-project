@@ -1,9 +1,0 @@
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/shaders.dir
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/install.dir
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/install/local.dir
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/ppgso.dir
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/list_install_components.dir
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/project.dir
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/install/strip.dir

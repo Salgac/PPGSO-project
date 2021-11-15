@@ -11,12 +11,16 @@
 
 #include "shapes/cube.cpp"
 
-#include "shapes/tree.cpp"
 #include "objects/player.cpp"
+#include "objects/background.cpp"
+#include "objects/moon.cpp"
+#include "objects/ground.cpp"
+
+#include "objects/tree.cpp"
+
 #include "camera.h"
 
 using Scene = std::list<std::unique_ptr<Renderable>>;
-
 
 class ProjectWindow : public ppgso::Window
 {
@@ -29,36 +33,24 @@ public:
 	{
 		auto player = std::make_unique<Player>(glm::vec3{0, 0, 0});
 
-		// Set axis colors to red,green and blue...and cube color to grey
+		auto background = std::make_unique<Background>();
+		auto moon = std::make_unique<Moon>();
+		auto floor = std::make_unique<Ground>();
 
+		//trees
+		for (int i = 0; i < 35; i++)
+		{
+			float a = glm::linearRand(-5.0f, -1.0f);
+			glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 4.0f), 0, a};
+			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
+			scene.push_back(move(tree));
+		}
 
-        float sizef = 0.5;
-
-
-        //stromy pred kamerou
-        glm::vec3 pos = glm::vec3{1, -0.3, 0.8};
-        auto tree = std::make_unique<Tree>(pos, glm::vec3{0.2,0.24,0.2},sizef,2);
-        scene.push_back(move(tree));
-
-        // stromy v pozadí
-        float xx = 0.3;
-        pos = glm::vec3{xx, 0, -0.8};
-        tree = std::make_unique<Tree>(pos, glm::vec3{0.18, 0.18, 0.18}, 0.3, 1);
-        scene.push_back(move(tree));
-        xx = 0;
-        pos = glm::vec3{xx, 0.3, -5};
-        tree = std::make_unique<Tree>(pos, glm::vec3{0.15, 0.15, 0.15}, 0.2, 0);
-        scene.push_back(move(tree));
-
-
-
-		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
 		auto axisX = std::make_unique<Cube>();
 		auto axisY = std::make_unique<Cube>();
 		auto axisZ = std::make_unique<Cube>();
 
-		cube->color = {0.5, 0.5, 0.5};
-		axisX->color = {0.5, 0.5, 0.5};
+		axisX->color = {1, 0, 0};
 		axisY->color = {0, 1, 0};
 		axisZ->color = {0, 0, 1};
 
@@ -66,16 +58,16 @@ public:
 		const float scaleMax = 10.00f;
 
 		// Set axis scaling in X,Y,Z directions...hint use scaleMin in tangent directions and scaleMax in the axis direction
-		axisX->scale = {scaleMax, scaleMin, 0.7};
+		axisX->scale = {scaleMax, scaleMin, scaleMin};
 		axisY->scale = {scaleMin, scaleMax, scaleMin};
 		axisZ->scale = {scaleMin, scaleMin, scaleMax};
 
-		cube->rotation = {0.0f, 0.0f, 1.0f};
-
 		//add into scene
 		scene.push_back(move(player));
+		scene.push_back(move(background));
+		scene.push_back(move(moon));
+		scene.push_back(move(floor));
 
-		scene.push_back(move(cube));
 		scene.push_back(move(axisX));
 		scene.push_back(move(axisY));
 		scene.push_back(move(axisZ));
@@ -98,7 +90,7 @@ public:
 		time = (float)glfwGetTime();
 
 		//update
-        auto i = std::begin(scene);
+		auto i = std::begin(scene);
 		while (i != std::end(scene))
 		{
 			// Update object and remove from list if needed
@@ -125,7 +117,7 @@ public:
 			case 38:
 			case 113:
 				// left
-                camera.front.x -= camera.speed;
+				camera.front.x -= camera.speed;
 				camera.position.x -= camera.speed;
 				break;
 			case 40:

@@ -1,9 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2021.2.2\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" C:\Users\PC\PPGSO-project
--- Found GLFW3: C:/Users/PC/PPGSO-project/dependencies/lib/mingw/libglfw3.a
-FIND_PATH C:/Users/PC/PPGSO-project/dependencies/include
--- Found GLEW: C:/Users/PC/PPGSO-project/dependencies/include
--- GLEW_LIBRARIES: C:/Users/PC/PPGSO-project/dependencies/lib/mingw/libglew32.a
--- GLM_INCLUDE_DIR = C:/Users/PC/PPGSO-project/dependencies/include
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Users/PC/PPGSO-project/cmake-build-debug
