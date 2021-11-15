@@ -12,6 +12,7 @@
 #include "shapes/cube.cpp"
 #include "objects/player.cpp"
 #include "objects/background.cpp"
+#include "objects/moon.cpp"
 #include "camera.h"
 
 using Scene = std::list<std::unique_ptr<Renderable>>;
@@ -28,6 +29,7 @@ public:
 		auto player = std::make_unique<Player>(glm::vec3{0, 0, 0});
 
 		auto background = std::make_unique<Background>();
+		auto moon = std::make_unique<Moon>();
 
 		// Set axis colors to red,green and blue...and cube color to grey
 		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
@@ -53,6 +55,7 @@ public:
 		//add into scene
 		scene.push_back(move(player));
 		scene.push_back(move(background));
+		scene.push_back(move(moon));
 
 		scene.push_back(move(cube));
 		scene.push_back(move(axisX));
