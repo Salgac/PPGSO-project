@@ -177,19 +177,19 @@ CMakeFiles/ppgso.dir/ppgso/window.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ppgso.dir/ppgso/window.cpp.s"
 	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\PC\PPGSO-project\ppgso\window.cpp -o CMakeFiles\ppgso.dir\ppgso\window.cpp.s
 
-CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj: CMakeFiles/ppgso.dir/flags.make
-CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj: CMakeFiles/ppgso.dir/includes_CXX.rsp
-CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj: ../src/shapes/tree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\PC\PPGSO-project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\ppgso.dir\src\shapes\tree.cpp.obj -c C:\Users\PC\PPGSO-project\src\shapes\tree.cpp
+CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj: CMakeFiles/ppgso.dir/flags.make
+CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj: CMakeFiles/ppgso.dir/includes_CXX.rsp
+CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj: ../src/objects/tree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\PC\PPGSO-project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\ppgso.dir\src\objects\tree.cpp.obj -c C:\Users\PC\PPGSO-project\src\objects\tree.cpp
 
-CMakeFiles/ppgso.dir/src/shapes/tree.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ppgso.dir/src/shapes/tree.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\PC\PPGSO-project\src\shapes\tree.cpp > CMakeFiles\ppgso.dir\src\shapes\tree.cpp.i
+CMakeFiles/ppgso.dir/src/objects/tree.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ppgso.dir/src/objects/tree.cpp.i"
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\PC\PPGSO-project\src\objects\tree.cpp > CMakeFiles\ppgso.dir\src\objects\tree.cpp.i
 
-CMakeFiles/ppgso.dir/src/shapes/tree.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ppgso.dir/src/shapes/tree.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\PC\PPGSO-project\src\shapes\tree.cpp -o CMakeFiles\ppgso.dir\src\shapes\tree.cpp.s
+CMakeFiles/ppgso.dir/src/objects/tree.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ppgso.dir/src/objects/tree.cpp.s"
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\PC\PPGSO-project\src\objects\tree.cpp -o CMakeFiles\ppgso.dir\src\objects\tree.cpp.s
 
 # Object files for target ppgso
 ppgso_OBJECTS = \
@@ -201,7 +201,7 @@ ppgso_OBJECTS = \
 "CMakeFiles/ppgso.dir/ppgso/image_raw.cpp.obj" \
 "CMakeFiles/ppgso.dir/ppgso/texture.cpp.obj" \
 "CMakeFiles/ppgso.dir/ppgso/window.cpp.obj" \
-"CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj"
+"CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj"
 
 # External object files for target ppgso
 ppgso_EXTERNAL_OBJECTS =
@@ -214,7 +214,7 @@ libppgso.a: CMakeFiles/ppgso.dir/ppgso/image_bmp.cpp.obj
 libppgso.a: CMakeFiles/ppgso.dir/ppgso/image_raw.cpp.obj
 libppgso.a: CMakeFiles/ppgso.dir/ppgso/texture.cpp.obj
 libppgso.a: CMakeFiles/ppgso.dir/ppgso/window.cpp.obj
-libppgso.a: CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj
+libppgso.a: CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj
 libppgso.a: CMakeFiles/ppgso.dir/build.make
 libppgso.a: CMakeFiles/ppgso.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\PC\PPGSO-project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX static library libppgso.a"

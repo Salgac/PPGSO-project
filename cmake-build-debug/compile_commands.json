@@ -81,8 +81,8 @@
 },
 {
   "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\src\\shapes\\tree.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\src\\shapes\\tree.cpp",
-  "file": "C:/Users/PC/PPGSO-project/src/shapes/tree.cpp"
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe -DGLEW_STATIC -DGLM_FORCE_RADIANS @CMakeFiles/ppgso.dir/includes_CXX.rsp -fopenmp -g -Wpedantic -Wall -Wno-c++98-compat -Wextra -Wno-sign-conversion -Wno-unused-parameter -std=gnu++14 -o CMakeFiles\\ppgso.dir\\src\\objects\\tree.cpp.obj -c C:\\Users\\PC\\PPGSO-project\\src\\objects\\tree.cpp",
+  "file": "C:/Users/PC/PPGSO-project/src/objects/tree.cpp"
 },
 {
   "directory": "C:/Users/PC/PPGSO-project/cmake-build-debug",

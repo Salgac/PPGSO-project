@@ -353,7 +353,7 @@
 		<Unit filename="C:/Users/PC/PPGSO-project/src/main.cpp">
 			<Option target="project"/>
 		</Unit>
-		<Unit filename="C:/Users/PC/PPGSO-project/src/shapes/tree.cpp">
+		<Unit filename="C:/Users/PC/PPGSO-project/src/objects/tree.cpp">
 			<Option target="ppgso"/>
 		</Unit>
 		<Unit filename="C:/Users/PC/PPGSO-project/CMakeLists.txt">
