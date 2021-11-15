@@ -13,6 +13,8 @@
 #include "objects/player.cpp"
 #include "objects/background.cpp"
 #include "objects/moon.cpp"
+#include "objects/ground.cpp"
+
 #include "camera.h"
 
 using Scene = std::list<std::unique_ptr<Renderable>>;
@@ -30,14 +32,12 @@ public:
 
 		auto background = std::make_unique<Background>();
 		auto moon = std::make_unique<Moon>();
+		auto floor = std::make_unique<Ground>();
 
-		// Set axis colors to red,green and blue...and cube color to grey
-		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
 		auto axisX = std::make_unique<Cube>();
 		auto axisY = std::make_unique<Cube>();
 		auto axisZ = std::make_unique<Cube>();
 
-		cube->color = {0.5, 0.5, 0.5};
 		axisX->color = {1, 0, 0};
 		axisY->color = {0, 1, 0};
 		axisZ->color = {0, 0, 1};
@@ -50,14 +50,12 @@ public:
 		axisY->scale = {scaleMin, scaleMax, scaleMin};
 		axisZ->scale = {scaleMin, scaleMin, scaleMax};
 
-		cube->rotation = {0.0f, 0.0f, 1.0f};
-
 		//add into scene
 		scene.push_back(move(player));
 		scene.push_back(move(background));
 		scene.push_back(move(moon));
+		scene.push_back(move(floor));
 
-		scene.push_back(move(cube));
 		scene.push_back(move(axisX));
 		scene.push_back(move(axisY));
 		scene.push_back(move(axisZ));
