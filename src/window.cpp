@@ -10,10 +10,13 @@
 #include <ppgso/ppgso.h>
 
 #include "shapes/cube.cpp"
+
 #include "objects/player.cpp"
 #include "objects/background.cpp"
 #include "objects/moon.cpp"
 #include "objects/ground.cpp"
+
+#include "objects/tree.cpp"
 
 #include "camera.h"
 
@@ -33,6 +36,15 @@ public:
 		auto background = std::make_unique<Background>();
 		auto moon = std::make_unique<Moon>();
 		auto floor = std::make_unique<Ground>();
+
+		//trees
+		for (int i = 0; i < 35; i++)
+		{
+			float a = glm::linearRand(-5.0f, -1.0f);
+			glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 4.0f), 0, a};
+			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
+			scene.push_back(move(tree));
+		}
 
 		auto axisX = std::make_unique<Cube>();
 		auto axisY = std::make_unique<Cube>();
