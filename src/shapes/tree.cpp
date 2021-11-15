@@ -44,7 +44,6 @@ public:
         //std::cout << "Thanks for viewing my code!";
         if (!shader)
             shader = std::make_unique<ppgso::Shader>(color_vert_glsl, color_frag_glsl);
-        std::cout << e;
         if (e == 0)
             mesh = std::make_unique<ppgso::Mesh>("../data/Tree.obj");
         if (e == 1)

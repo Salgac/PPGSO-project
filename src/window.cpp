@@ -27,7 +27,7 @@ public:
 	{
 		// Set axis colors to red,green and blue...and cube color to grey
 
-        // stromy v pozadí
+
         float sizef = 0.5;
 
 
@@ -36,31 +36,17 @@ public:
         auto tree = std::make_unique<Tree>(pos, glm::vec3{0.2,0.24,0.2},sizef,2);
         scene.push_back(move(tree));
 
-        pos = glm::vec3{2, -0.3, 0.8};
-        tree = std::make_unique<Tree>(pos,glm::vec3{0.15,0.17,0.15},sizef,2);
-        scene.push_back(move(tree));
-
-        pos = glm::vec3{3, -0.3, 0.8};
-        tree = std::make_unique<Tree>(pos,glm::vec3{0.2,0.2,0.2},sizef,2);
-        scene.push_back(move(tree));
-
+        // stromy v pozadí
         float xx = 0.3;
-        for(int i = 0; i < 5;i++)
-        {
-            pos = glm::vec3{xx, 0, -0.8};
-            tree = std::make_unique<Tree>(pos, glm::vec3{0.18, 0.18, 0.18}, 0.3, 1);
-            scene.push_back(move(tree));
-            xx += 1.2;
-        }
+        pos = glm::vec3{xx, 0, -0.8};
+        tree = std::make_unique<Tree>(pos, glm::vec3{0.18, 0.18, 0.18}, 0.3, 1);
+        scene.push_back(move(tree));
         xx = 0;
-        for(int i = 0; i < 3;i++)
-        {
-            pos = glm::vec3{xx, 0.3, -5};
-            tree = std::make_unique<Tree>(pos, glm::vec3{0.15, 0.15, 0.15}, 0.2, 0);
-            scene.push_back(move(tree));
+        pos = glm::vec3{xx, 0.3, -5};
+        tree = std::make_unique<Tree>(pos, glm::vec3{0.15, 0.15, 0.15}, 0.2, 0);
+        scene.push_back(move(tree));
 
-            xx += 3;
-        }
+
 
 		auto cube = std::make_unique<Cube>(glm::vec3{-1, -1, -1}, glm::vec3{0.4, 0.4, 0.4});
 		auto axisX = std::make_unique<Cube>();
