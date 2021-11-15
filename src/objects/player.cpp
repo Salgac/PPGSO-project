@@ -1,6 +1,6 @@
 
-#include <shaders/color_vert_glsl.h>
-#include <shaders/color_frag_glsl.h>
+#include <shaders/texture_vert_glsl.h>
+#include <shaders/texture_frag_glsl.h>
 
 #include <ppgso/ppgso.h>
 
@@ -10,10 +10,10 @@ class Player final : public Renderable
 {
 	glm::mat4 viewMatrix{1.0f};
 	glm::mat4 modelMatrix{1.0f};
-	glm::vec3 color{1, 1, 0};
 
 	// Static resources
 	std::unique_ptr<ppgso::Mesh> mesh;
+	std::unique_ptr<ppgso::Texture> texture;
 	std::unique_ptr<ppgso::Shader> shader;
 
 public:
@@ -23,12 +23,12 @@ public:
 
 	/// Construct a new Player
 	/// \param p - Initial position
-	/// \param s - Initial speed
-	/// \param c - Color of particle
 	Player(glm::vec3 p)
 	{
 		if (!shader)
-			shader = std::make_unique<ppgso::Shader>(color_vert_glsl, color_frag_glsl);
+			shader = std::make_unique<ppgso::Shader>(texture_vert_glsl, texture_frag_glsl);
+		if (!texture)
+			texture = std::make_unique<ppgso::Texture>(ppgso::image::loadBMP("player.bmp"));
 		if (!mesh)
 			mesh = std::make_unique<ppgso::Mesh>("player.obj");
 
@@ -37,12 +37,6 @@ public:
 
 	bool update(float dTime) override
 	{
-		// Animate position using speed and dTime.
-		// - Return true to keep the object alive
-		// - Returning false removes the object from the scene
-		// - hint: you can add more particles to the scene here also
-		//modelMatrix = glm::translate(modelMatrix, speed);
-
 		modelMatrix = glm::mat4{1.0f};
 		modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
 		modelMatrix = glm::translate(modelMatrix, position);
@@ -56,12 +50,15 @@ public:
 		// Render the object
 		viewMatrix = camera.viewMatrix;
 
-		// Update transformation and color uniforms in the shader
 		shader->use();
-		shader->setUniform("OverallColor", color);
+		//shader->setUniform("LightDirection", glm::vec3{1.0f, 1.0f, 1.0f});
 		shader->setUniform("ModelMatrix", modelMatrix);
 		shader->setUniform("ViewMatrix", viewMatrix);
 		shader->setUniform("ProjectionMatrix", camera.perspective);
+
+		//TODO fix texture mapping - requires scaling and a bit of tinkering
+		shader->setUniform("TextureOffset", glm::vec2(0.0f, 0.0f));
+		shader->setUniform("Texture", *texture);
 
 		mesh->render();
 	}
