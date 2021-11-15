@@ -18,6 +18,9 @@ public:
 	glm::vec3 up{0.0f, 1.0f, 0.0f};
 	float speed = 0.05f;
 
+	const float BOUNDARY_LEFT = -0.5f;
+	const float BOUNDARY_RIGHT = 10.0f;
+
 	/// Representaiton of
 	/// \param fov - Field of view (in degrees)
 	/// \param ratio - Viewport ratio (width/height)
@@ -33,7 +36,8 @@ public:
 	void update()
 	{
 		// Update viewMatrix
-		viewMatrix = glm::lookAt(position, front, up);
+		if (front.x > BOUNDARY_LEFT && front.x < BOUNDARY_RIGHT)
+			viewMatrix = glm::lookAt(position, front, up);
 	}
 };
 
