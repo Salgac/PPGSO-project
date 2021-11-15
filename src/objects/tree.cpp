@@ -12,8 +12,8 @@
 #include <shaders/color_frag_glsl.h>
 #include <list>
 
-#include "../renderable.h"
-#include "../camera.h"
+#include "src/renderable.h"
+#include "src/camera.h"
 class Renderable;
 using Scene = std::list<std::unique_ptr<Renderable>>;
 

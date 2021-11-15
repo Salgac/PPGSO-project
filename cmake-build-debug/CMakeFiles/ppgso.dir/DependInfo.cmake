@@ -16,7 +16,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/PC/PPGSO-project/ppgso/texture.cpp" "C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/ppgso.dir/ppgso/texture.cpp.obj"
   "C:/Users/PC/PPGSO-project/ppgso/tiny_obj_loader.cpp" "C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/ppgso.dir/ppgso/tiny_obj_loader.cpp.obj"
   "C:/Users/PC/PPGSO-project/ppgso/window.cpp" "C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/ppgso.dir/ppgso/window.cpp.obj"
-  "C:/Users/PC/PPGSO-project/src/shapes/tree.cpp" "C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/ppgso.dir/src/shapes/tree.cpp.obj"
+  "C:/Users/PC/PPGSO-project/src/objects/tree.cpp" "C:/Users/PC/PPGSO-project/cmake-build-debug/CMakeFiles/ppgso.dir/src/objects/tree.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
