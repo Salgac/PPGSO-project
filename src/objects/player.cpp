@@ -4,9 +4,8 @@
 
 #include <ppgso/ppgso.h>
 
-
-//#include "../scene.cpp"
 #include "../renderable.h"
+#include "../scene.cpp"
 
 class Player final : public Renderable
 {
@@ -39,28 +38,24 @@ public:
 
 	bool update(float dTime, Scene &scene) override {
 
-        /*
+
         for (auto &obj: scene.objects)
         {
             // Ignore self in scene
             if (obj.get() == this)
                 continue;
 
-            // We only need to collide with asteroids, ignore other objects
             auto cube = dynamic_cast<Cube *>(obj.get());
             if (!cube) continue;
 
-            if (distance(position, cube->position) > cube->scale.y) {
+            //if (distance(position, cube->position) < cube->scale.z + scale.z) {
+                //position.z = position.z - 0.6;
+            //}
 
+            if (position.y > 0) {
+                position.y = position.y - GRAVITACIA * dTime;
             }
-
-            modelMatrix = glm::mat4{1.0f};
-            modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
-            modelMatrix = glm::translate(modelMatrix, position);
-            modelMatrix = glm::scale(modelMatrix, scale);
-            return true;
         }
-         */
 
 
         modelMatrix = glm::mat4{1.0f};
@@ -69,11 +64,10 @@ public:
         modelMatrix = glm::scale(modelMatrix, scale);
         return true;
     }
-
 	void render(Camera camera,Scene &scene) override
 	{
 		//TODO move according to camera in a better way
-		position.z = camera.front.x - 0.6;
+		position.z = scene.camera->front.x - 0.6;
 		update(0,scene);
 
 		// Render the object
@@ -88,5 +82,5 @@ public:
 		shader->setUniform("Texture", *texture);
 
 		mesh->render();
-	}
+	};
 };

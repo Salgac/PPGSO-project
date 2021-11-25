@@ -21,5 +21,4 @@ public:
 	/// \return - Return true to keep object in scene
 	virtual bool update(float dTime, Scene &scene) = 0;
 };
-
 #endif
