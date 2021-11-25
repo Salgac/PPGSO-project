@@ -95,7 +95,7 @@ public:
 		{
 			// Update object and remove from list if needed
 			auto obj = i->get();
-			if (!obj->update(dTime))
+			if (!obj->update(dTime,scene))
 				i = scene.erase(i);
 			else
 				++i;
@@ -104,7 +104,7 @@ public:
 		// Render every object in scene
 		for (auto &object : scene)
 		{
-			object->render(camera);
+			object->render(camera,scene);
 		}
 	}
 

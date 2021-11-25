@@ -115,7 +115,7 @@ public:
 		glDeleteVertexArrays(1, &vao);
 	}
 
-	bool update(float dTime) override
+	bool update(float dTime,Renderable &scene) override
 	{
 		modelMatrix = glm::mat4(1.0f);
 		modelMatrix = glm::translate(modelMatrix, position);
@@ -125,7 +125,7 @@ public:
 	}
 
 	// Draw polygons
-	void render(Camera camera) override
+	void render(Camera camera,Renderable &scene) override
 	{
 		//update viewMatrix
 		viewMatrix = camera.viewMatrix;

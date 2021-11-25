@@ -35,7 +35,7 @@ public:
 		position = p;
 	}
 
-	bool update(float dTime) override
+	bool update(float dTime,Renderable &scene) override
 	{
 		modelMatrix = glm::mat4{1.0f};
 		modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
@@ -45,7 +45,7 @@ public:
 		return true;
 	}
 
-	void render(Camera camera) override
+	void render(Camera camera,Renderable &scene) override
 	{
 		//TODO move according to camera in a better way
 		position.z = camera.front.x - 0.6;
