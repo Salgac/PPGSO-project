@@ -45,7 +45,7 @@ public:
 
 		for (auto &object : objects)
 		{
-			object->render(*camera,*this);
+			object->render(*this);
 
 			//TODO redo renderable definition
 			//object->render(*this);

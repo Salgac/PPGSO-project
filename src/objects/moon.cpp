@@ -3,7 +3,7 @@
 #include <shaders/texture_frag_glsl.h>
 
 #include <ppgso/ppgso.h>
-
+#include "../scene.cpp"
 #include "../renderable.h"
 
 class Moon final : public Renderable
@@ -38,13 +38,13 @@ public:
 		return true;
 	}
 
-	void render(Camera camera,Scene &scene) override
+	void render(Scene &scene) override
 	{
 		// Render the object
 		shader->use();
 		shader->setUniform("ModelMatrix", modelMatrix);
-		shader->setUniform("ViewMatrix", camera.viewMatrix);
-		shader->setUniform("ProjectionMatrix", camera.perspective);
+		shader->setUniform("ViewMatrix", scene.camera->viewMatrix);
+		shader->setUniform("ProjectionMatrix", scene.camera->perspective);
 		shader->setUniform("Texture", *texture);
 		shader->setUniform("TextureOffset", glm::vec2(0.0f, 0.0f));
 

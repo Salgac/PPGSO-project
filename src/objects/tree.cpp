@@ -12,6 +12,7 @@
 #include <shaders/color_frag_glsl.h>
 #include <list>
 
+#include "../scene.cpp"
 #include "../renderable.h"
 #include "../camera.h"
 class Renderable;
@@ -74,7 +75,7 @@ public:
             return false;
     }
 
-    void render(Camera camera,Scene &scene) override
+    void render(Scene &scene) override
     {
         // Render the object
         // - Use the shader
@@ -82,13 +83,13 @@ public:
         // - hint: use OverallColor in the color_vert_glsl shader for color
         // - Render the mesh
 
-        viewMatrix = camera.viewMatrix;
+        viewMatrix = scene.camera->viewMatrix;
         // Update transformation and color uniforms in the shader
         shader->use();
         shader->setUniform("OverallColor", color);
         shader->setUniform("ModelMatrix", modelMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("ProjectionMatrix", camera.perspective);
+        shader->setUniform("ProjectionMatrix", scene.camera->perspective);
 
         mesh->render();
     }

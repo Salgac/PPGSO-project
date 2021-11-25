@@ -68,20 +68,20 @@ public:
         modelMatrix = glm::scale(modelMatrix, scale);
         return true;
     }
-	void render(Camera camera,Scene &scene) override
+	void render(Scene &scene) override
 	{
 		//TODO move according to camera in a better way
 		position.z = scene.camera->front.x - 0.6;
 		update(0,scene);
 
 		// Render the object
-		viewMatrix = camera.viewMatrix;
+		viewMatrix = scene.camera->viewMatrix;
 
 		shader->use();
 		//shader->setUniform("LightDirection", glm::vec3{1.0f, 1.0f, 1.0f});
 		shader->setUniform("ModelMatrix", modelMatrix);
 		shader->setUniform("ViewMatrix", viewMatrix);
-		shader->setUniform("ProjectionMatrix", camera.perspective);
+		shader->setUniform("ProjectionMatrix", scene.camera->perspective);
 
 		shader->setUniform("Texture", *texture);
 

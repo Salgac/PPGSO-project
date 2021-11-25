@@ -13,7 +13,7 @@ public:
 
 	/// Render the object
 	/// \param camera - Camera to use for rendering
-	virtual void render(Camera camera,Scene &scene) = 0;
+	virtual void render(Scene &scene) = 0;
 
 	/// Update the object. Useful for specifing animation and behaviour.
 	/// \param dTime - Time delta
