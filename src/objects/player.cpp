@@ -48,13 +48,17 @@ public:
             auto cube = dynamic_cast<Cube *>(obj.get());
             if (!cube) continue;
 
-            //if (distance(position, cube->position) < cube->scale.z + scale.z) {
-                //position.z = position.z - 0.6;
-            //}
+            if (distance(position, cube->position) < cube->scale.z + (scale.z/2)) {
 
-            if (position.y > 0) {
-                position.y = position.y - GRAVITACIA * dTime;
+
             }
+            if (distance(position, cube->position) <= cube->scale.y) {
+                        position.y = cube->position.y + cube->scale.y;
+            }
+
+        }
+        if (position.y > 0) {
+            position.y = position.y - GRAVITACIA * dTime;
         }
 
 

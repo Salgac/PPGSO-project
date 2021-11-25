@@ -8,7 +8,6 @@
 #define SCENE
 
 #define GRAVITACIA 0.1f
-
 class Scene
 {
 public:
@@ -20,9 +19,13 @@ public:
 
 	//lights TODO
 
+
+    float Dtime;
+
 	//update function
 	void update(float time)
 	{
+        Dtime = time;
 		auto i = std::begin(objects);
 		while (i != std::end(objects))
 		{
