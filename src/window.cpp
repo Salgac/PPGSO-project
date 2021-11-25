@@ -46,6 +46,13 @@ public:
 			scene.push_back(move(tree));
 		}
 
+        auto tree = std::make_unique<Tree>( glm::vec3{0.5f,0,0}, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (2), 0});
+        scene.push_back(move(tree));
+
+        auto cube = std::make_unique<Cube>();
+        cube->scale = {0.1f,0.1f,0.1f};
+        scene.push_back(move(cube));
+
 		auto axisX = std::make_unique<Cube>();
 		auto axisY = std::make_unique<Cube>();
 		auto axisZ = std::make_unique<Cube>();

@@ -3,6 +3,7 @@
 #include <shaders/texture_frag_glsl.h>
 
 #include <ppgso/ppgso.h>
+#include "tree.cpp"
 
 #include "../renderable.h"
 
@@ -37,11 +38,22 @@ public:
 
 	bool update(float dTime,std::list<std::unique_ptr<Renderable>> &scene) override
 	{
-		modelMatrix = glm::mat4{1.0f};
-		modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
-		modelMatrix = glm::translate(modelMatrix, position);
-		modelMatrix = glm::scale(modelMatrix, scale);
 
+        for (auto &object : scene)
+        {
+            if (object.get() == this)
+                continue;
+            auto tree = dynamic_cast<Tree*>(object.get());
+            if (!tree) continue;
+
+            if (distance(position, tree->position) > tree->scale.y) {
+                modelMatrix = glm::translate(modelMatrix, position);
+            }
+        }
+
+        modelMatrix = glm::mat4{1.0f};
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
+        modelMatrix = glm::scale(modelMatrix, scale);
 		return true;
 	}
 
