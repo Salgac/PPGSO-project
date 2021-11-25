@@ -53,7 +53,7 @@ public:
         bornTime = (float)glfwGetTime();
     }
 
-    bool update(float dTime,Renderable &scene) override
+    bool update(float dTime,std::list<std::unique_ptr<Renderable>> &scene) override
     {
         // Animate position using speed and dTime.
         // - Return true to keep the object alive
@@ -75,7 +75,7 @@ public:
             return false;
     }
 
-    void render(Camera camera,Renderable &scene) override
+    void render(Camera camera,std::list<std::unique_ptr<Renderable>> &scene) override
     {
         // Render the object
         // - Use the shader

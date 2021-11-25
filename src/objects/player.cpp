@@ -35,7 +35,7 @@ public:
 		position = p;
 	}
 
-	bool update(float dTime,Renderable &scene) override
+	bool update(float dTime,std::list<std::unique_ptr<Renderable>> &scene) override
 	{
 		modelMatrix = glm::mat4{1.0f};
 		modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
@@ -45,11 +45,11 @@ public:
 		return true;
 	}
 
-	void render(Camera camera,Renderable &scene) override
+	void render(Camera camera,std::list<std::unique_ptr<Renderable>> &scene) override
 	{
 		//TODO move according to camera in a better way
 		position.z = camera.front.x - 0.6;
-		update(0);
+		update(0,scene);
 
 		// Render the object
 		viewMatrix = camera.viewMatrix;
