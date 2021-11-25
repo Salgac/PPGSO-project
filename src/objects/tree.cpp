@@ -15,7 +15,6 @@
 #include "../renderable.h"
 #include "../camera.h"
 class Renderable;
-using Scene = std::list<std::unique_ptr<Renderable>>;
 
 class Tree : public Renderable
 {
