@@ -5,7 +5,7 @@
 #include <ppgso/ppgso.h>
 
 
-#include "../scene.cpp"
+//#include "../scene.cpp"
 #include "../renderable.h"
 
 class Player final : public Renderable
