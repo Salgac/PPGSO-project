@@ -23,7 +23,7 @@ public:
 		{
 			// Update object and remove from list if needed
 			auto obj = i->get();
-			if (!obj->update(time))
+			if (!obj->update(time,*this))
 				i = objects.erase(i);
 			else
 				++i;
@@ -37,7 +37,7 @@ public:
 
 		for (auto &object : objects)
 		{
-			object->render(*camera);
+			object->render(*camera,*this);
 
 			//TODO redo renderable definition
 			//object->render(*this);

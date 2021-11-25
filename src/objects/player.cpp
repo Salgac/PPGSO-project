@@ -3,8 +3,9 @@
 #include <shaders/texture_frag_glsl.h>
 
 #include <ppgso/ppgso.h>
-#include "tree.cpp"
 
+
+#include "../scene.cpp"
 #include "../renderable.h"
 
 class Player final : public Renderable
@@ -36,28 +37,40 @@ public:
 		position = p;
 	}
 
-	bool update(float dTime,std::list<std::unique_ptr<Renderable>> &scene) override
-	{
+	bool update(float dTime, Scene &scene) override {
 
-        for (auto &object : scene)
+        /*
+        for (auto &obj: scene.objects)
         {
-            if (object.get() == this)
+            // Ignore self in scene
+            if (obj.get() == this)
                 continue;
-            auto tree = dynamic_cast<Tree*>(object.get());
-            if (!tree) continue;
 
-            if (distance(position, tree->position) > tree->scale.y) {
-                modelMatrix = glm::translate(modelMatrix, position);
+            // We only need to collide with asteroids, ignore other objects
+            auto cube = dynamic_cast<Cube *>(obj.get());
+            if (!cube) continue;
+
+            if (distance(position, cube->position) > cube->scale.y) {
+
             }
+
+            modelMatrix = glm::mat4{1.0f};
+            modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
+            modelMatrix = glm::translate(modelMatrix, position);
+            modelMatrix = glm::scale(modelMatrix, scale);
+            return true;
         }
+         */
+
 
         modelMatrix = glm::mat4{1.0f};
         modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
+        modelMatrix = glm::translate(modelMatrix, position);
         modelMatrix = glm::scale(modelMatrix, scale);
-		return true;
-	}
+        return true;
+    }
 
-	void render(Camera camera,std::list<std::unique_ptr<Renderable>> &scene) override
+	void render(Camera camera,Scene &scene) override
 	{
 		//TODO move according to camera in a better way
 		position.z = camera.front.x - 0.6;

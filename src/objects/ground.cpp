@@ -29,7 +29,7 @@ public:
 			mesh = std::make_unique<ppgso::Mesh>("quad.obj");
 	}
 
-	bool update(float dTime,std::list<std::unique_ptr<Renderable>> &scene) override
+	bool update(float dTime, Scene &scene) override
 	{
 		modelMatrix = glm::mat4{1.0f};
 		modelMatrix = glm::translate(modelMatrix, position);
@@ -39,7 +39,7 @@ public:
 		return true;
 	}
 
-	void render(Camera camera,std::list<std::unique_ptr<Renderable>> &scene) override
+	void render(Camera camera,Scene &scene) override
 	{
 		// Render the object
 		shader->use();
