@@ -19,23 +19,29 @@
 #include "objects/tree.cpp"
 
 #include "camera.h"
-
-using Scene = std::list<std::unique_ptr<Renderable>>;
+#include "scene.cpp"
 
 class ProjectWindow : public ppgso::Window
 {
 private:
 	Scene scene;
-	Camera camera = {100.0f, (float)width / (float)height, 0.1f, 100.0f};
 
-public:
-	ProjectWindow(int size) : Window{"project", size, size}
+	void initScene()
 	{
-		auto player = std::make_unique<Player>(glm::vec3{0, 0, 0});
+		//TODO create 2 separate templates for scenes
+		scene.objects.clear();
 
-		auto background = std::make_unique<Background>();
-		auto moon = std::make_unique<Moon>();
-		auto floor = std::make_unique<Ground>();
+		//camera
+		auto camera = std::make_unique<Camera>(100.0f, (float)width / (float)height, 0.1f, 100.0f);
+		scene.camera = move(camera);
+
+		//player
+		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 0, 0})));
+
+		//backgrounds
+		scene.objects.push_back(move(std::make_unique<Background>()));
+		scene.objects.push_back(move(std::make_unique<Moon>()));
+		scene.objects.push_back(move(std::make_unique<Ground>()));
 
 		//trees
 		for (int i = 0; i < 35; i++)
@@ -43,53 +49,25 @@ public:
 			float a = glm::linearRand(-5.0f, -1.0f);
 			glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 4.0f), 0, a};
 			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
-			scene.push_back(move(tree));
+			scene.objects.push_back(move(tree));
 		}
+	}
 
-        auto tree = std::make_unique<Tree>( glm::vec3{0.5f,0,0}, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (2), 0});
-        scene.push_back(move(tree));
 
-        auto cube = std::make_unique<Cube>();
-        cube->scale = {0.1f,0.1f,0.1f};
-        scene.push_back(move(cube));
+public:
+	ProjectWindow(int size) : Window{"project", size, size}
+	{
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
 
-		auto axisX = std::make_unique<Cube>();
-		auto axisY = std::make_unique<Cube>();
-		auto axisZ = std::make_unique<Cube>();
 
-		axisX->color = {1, 0, 0};
-		axisY->color = {0, 1, 0};
-		axisZ->color = {0, 0, 1};
-
-		const float scaleMin = 0.03f;
-		const float scaleMax = 10.00f;
-
-		// Set axis scaling in X,Y,Z directions...hint use scaleMin in tangent directions and scaleMax in the axis direction
-		axisX->scale = {scaleMax, scaleMin, scaleMin};
-		axisY->scale = {scaleMin, scaleMax, scaleMin};
-		axisZ->scale = {scaleMin, scaleMin, scaleMax};
-
-		//add into scene
-		scene.push_back(move(player));
-		scene.push_back(move(background));
-		scene.push_back(move(moon));
-		scene.push_back(move(floor));
-
-		scene.push_back(move(axisX));
-		scene.push_back(move(axisY));
-		scene.push_back(move(axisZ));
-
-		camera.update();
+		initScene();
 	}
 
 	void onIdle()
 	{
-		// Set gray background
-		glClearColor(.1f, .1f, .1f, 1.0f);
 		// Clear depth and color buffers
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
 
 		// Track time
 		static auto time = (float)glfwGetTime();
@@ -97,22 +75,6 @@ public:
 		time = (float)glfwGetTime();
 
 		//update
-		auto i = std::begin(scene);
-		while (i != std::end(scene))
-		{
-			// Update object and remove from list if needed
-			auto obj = i->get();
-			if (!obj->update(dTime,scene))
-				i = scene.erase(i);
-			else
-				++i;
-		}
-
-		// Render every object in scene
-		for (auto &object : scene)
-		{
-			object->render(camera,scene);
-		}
 	}
 
 	void onKey(int key, int scanCode, int action, int mods) override
@@ -124,19 +86,16 @@ public:
 			case 38:
 			case 113:
 				// left
-				camera.front.x -= camera.speed;
-				camera.position.x -= camera.speed;
+				scene.camera->front.x -= scene.camera->speed;
+				scene.camera->position.x -= scene.camera->speed;
 				break;
 			case 40:
 			case 114:
 				// right
-				camera.front.x += camera.speed;
-				camera.position.x += camera.speed;
+				scene.camera->front.x += scene.camera->speed;
+				scene.camera->position.x += scene.camera->speed;
 				break;
 			}
 		}
-
-		//update camera
-		camera.update();
 	}
 };
