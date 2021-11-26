@@ -48,22 +48,21 @@ public:
             auto cube = dynamic_cast<Cube *>(obj.get());
             if (!cube) continue;
 
-            if (distance(position, cube->position) < cube->scale.z + (scale.z/2)) {
-                /*
+
+            if(abs(position.z + cube->position.z) < (scale.y + cube->scale.y)/2 && cube->position.y + cube->scale.y/2 > position.y )
+            {
                 if (position.z < cube->position.z){
                     position.z -= scene.camera->speed;
                     scene.camera->front.x -= scene.camera->speed;
                     scene.camera->position.x -= scene.camera->speed;
                 }
-
-                if (position.z > cube->position.z){
+                if (position.z > cube->position.z) {
                     position.z += scene.camera->speed;
                     scene.camera->front.x += scene.camera->speed;
                     scene.camera->position.x += scene.camera->speed;
                 }
-                 */
-            } //from top
-            
+            }
+            //from top
             if ( abs(position.y + cube->position.y) < cube->scale.y + cube->position.y
                 && abs(position.z + cube->position.z) < (cube->scale.z + scale.z)/2+ cube->position.z) {
                     if (position.y > cube->position.y)
