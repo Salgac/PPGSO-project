@@ -39,12 +39,7 @@ private:
 		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
 
 		//backgrounds
-
-        auto cube = std::make_unique<Cube>();
-        cube->scale = {0.1f, 0.1f, 0.1f};
-        scene.objects.push_back(move(cube));
-
-		scene.objects.push_back(move(std::make_unique<Background>()));
+        scene.objects.push_back(move(std::make_unique<Background>()));
 		scene.objects.push_back(move(std::make_unique<Moon>()));
 		scene.objects.push_back(move(std::make_unique<Ground>()));
 
