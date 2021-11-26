@@ -36,7 +36,7 @@ private:
 		scene.camera = move(camera);
 
 		//player
-		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 3})));
+		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
 
 		//backgrounds
 

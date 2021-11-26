@@ -49,15 +49,30 @@ public:
             if (!cube) continue;
 
             if (distance(position, cube->position) < cube->scale.z + (scale.z/2)) {
+                /*
+                if (position.z < cube->position.z){
+                    position.z -= scene.camera->speed;
+                    scene.camera->front.x -= scene.camera->speed;
+                    scene.camera->position.x -= scene.camera->speed;
+                }
 
-
-            }
-            if (distance(position, cube->position) <= cube->scale.y) {
+                if (position.z > cube->position.z){
+                    position.z += scene.camera->speed;
+                    scene.camera->front.x += scene.camera->speed;
+                    scene.camera->position.x += scene.camera->speed;
+                }
+                 */
+            } //from top
+            
+            if ( abs(position.y + cube->position.y) < cube->scale.y + cube->position.y
+                && abs(position.z + cube->position.z) < (cube->scale.z + scale.z)/2+ cube->position.z) {
+                    if (position.y > cube->position.y)
                         position.y = cube->position.y + cube->scale.y;
+                        dTime = 0;
             }
 
         }
-        if (position.y > 0) {
+        if (position.y > 0) { //gravitacia
             position.y = position.y - GRAVITACIA * dTime;
         }
 
