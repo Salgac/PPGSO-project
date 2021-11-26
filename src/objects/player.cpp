@@ -45,28 +45,28 @@ public:
             if (obj.get() == this)
                 continue;
 
-            auto cube = dynamic_cast<Cube *>(obj.get());
-            if (!cube) continue;
+            auto collision_object = dynamic_cast<Cube *>(obj.get());
+            if (!collision_object) continue;
 
 
-            if(abs(position.z + cube->position.z) < (scale.y + cube->scale.y)/2 && cube->position.y + cube->scale.y/2 > position.y )
+            if(abs(position.z + collision_object->position.z) < (scale.y + collision_object->scale.y)/2 && collision_object->position.y + collision_object->scale.y/2 > position.y )
             {
-                if (position.z < cube->position.z){
+                if (position.z < collision_object->position.z){
                     position.z -= scene.camera->speed;
                     scene.camera->front.x -= scene.camera->speed;
                     scene.camera->position.x -= scene.camera->speed;
                 }
-                if (position.z > cube->position.z) {
+                if (position.z > collision_object->position.z) {
                     position.z += scene.camera->speed;
                     scene.camera->front.x += scene.camera->speed;
                     scene.camera->position.x += scene.camera->speed;
                 }
             }
             //from top
-            if ( abs(position.y + cube->position.y) < cube->scale.y + cube->position.y
-                && abs(position.z + cube->position.z) < (cube->scale.z + scale.z)/2+ cube->position.z) {
-                    if (position.y > cube->position.y)
-                        position.y = cube->position.y + cube->scale.y;
+            if ( abs(position.y + collision_object->position.y) < collision_object->scale.y + collision_object->position.y
+                && abs(position.z + collision_object->position.z) < (collision_object->scale.z + scale.z)/2+ collision_object->position.z) {
+                    if (position.y > collision_object->position.y)
+                        position.y = collision_object->position.y + collision_object->scale.y;
                         dTime = 0;
             }
 
