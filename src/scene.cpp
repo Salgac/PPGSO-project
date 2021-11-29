@@ -4,6 +4,10 @@
 #include "renderable.h"
 #include "camera.h"
 
+#ifndef SCENE
+#define SCENE
+
+#define GRAVITACIA 0.1f
 class Scene
 {
 public:
@@ -15,15 +19,19 @@ public:
 
 	//lights TODO
 
+
+    float Dtime;
+
 	//update function
 	void update(float time)
 	{
+        Dtime = time;
 		auto i = std::begin(objects);
 		while (i != std::end(objects))
 		{
 			// Update object and remove from list if needed
 			auto obj = i->get();
-			if (!obj->update(time))
+			if (!obj->update(time,*this))
 				i = objects.erase(i);
 			else
 				++i;
@@ -37,10 +45,12 @@ public:
 
 		for (auto &object : objects)
 		{
-			object->render(*camera);
+			object->render(*this);
 
 			//TODO redo renderable definition
 			//object->render(*this);
 		}
 	}
 };
+
+#endif

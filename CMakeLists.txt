@@ -79,8 +79,7 @@ add_library(ppgso STATIC
         ppgso/image_bmp.cpp
         ppgso/image_raw.cpp
         ppgso/texture.cpp
-        ppgso/window.cpp
-        )
+        ppgso/window.cpp)
 
 # Make sure GLM uses radians and GLEW is a static library
 target_compile_definitions(ppgso PUBLIC -DGLM_FORCE_RADIANS -DGLEW_STATIC)

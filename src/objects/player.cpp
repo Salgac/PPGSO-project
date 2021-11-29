@@ -5,6 +5,7 @@
 #include <ppgso/ppgso.h>
 
 #include "../renderable.h"
+#include "../scene.cpp"
 
 class Player final : public Renderable
 {
@@ -35,33 +36,69 @@ public:
 		position = p;
 	}
 
-	bool update(float dTime) override
-	{
-		modelMatrix = glm::mat4{1.0f};
-		modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
-		modelMatrix = glm::translate(modelMatrix, position);
-		modelMatrix = glm::scale(modelMatrix, scale);
+	bool update(float dTime, Scene &scene) override {
 
-		return true;
-	}
 
-	void render(Camera camera) override
+        for (auto &obj: scene.objects)
+        {
+            // Ignore self in scene
+            if (obj.get() == this)
+                continue;
+
+            auto collision_object = dynamic_cast<Cube *>(obj.get());
+            if (!collision_object) continue;
+
+
+            if(abs(position.z + collision_object->position.z) < (scale.y + collision_object->scale.y)/2 && collision_object->position.y + collision_object->scale.y/2 > position.y )
+            {
+                if (position.z < collision_object->position.z){
+                    position.z -= scene.camera->speed;
+                    scene.camera->front.x -= scene.camera->speed;
+                    scene.camera->position.x -= scene.camera->speed;
+                }
+                if (position.z > collision_object->position.z) {
+                    position.z += scene.camera->speed;
+                    scene.camera->front.x += scene.camera->speed;
+                    scene.camera->position.x += scene.camera->speed;
+                }
+            }
+            //from top
+            if ( abs(position.y + collision_object->position.y) < collision_object->scale.y + collision_object->position.y
+                && abs(position.z + collision_object->position.z) < (collision_object->scale.z + scale.z)/2+ collision_object->position.z) {
+                    if (position.y > collision_object->position.y)
+                        position.y = collision_object->position.y + collision_object->scale.y;
+                        dTime = 0;
+            }
+
+        }
+        if (position.y > 0) { //gravitacia
+            position.y = position.y - GRAVITACIA * dTime;
+        }
+
+
+        modelMatrix = glm::mat4{1.0f};
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
+        modelMatrix = glm::translate(modelMatrix, position);
+        modelMatrix = glm::scale(modelMatrix, scale);
+        return true;
+    }
+	void render(Scene &scene) override
 	{
 		//TODO move according to camera in a better way
-		position.z = camera.front.x - 0.6;
-		update(0);
+		position.z = scene.camera->front.x - 0.6;
+		update(0,scene);
 
 		// Render the object
-		viewMatrix = camera.viewMatrix;
+		viewMatrix = scene.camera->viewMatrix;
 
 		shader->use();
 		//shader->setUniform("LightDirection", glm::vec3{1.0f, 1.0f, 1.0f});
 		shader->setUniform("ModelMatrix", modelMatrix);
 		shader->setUniform("ViewMatrix", viewMatrix);
-		shader->setUniform("ProjectionMatrix", camera.perspective);
+		shader->setUniform("ProjectionMatrix", scene.camera->perspective);
 
 		shader->setUniform("Texture", *texture);
 
 		mesh->render();
-	}
+	};
 };

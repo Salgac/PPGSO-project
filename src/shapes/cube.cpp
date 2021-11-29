@@ -10,6 +10,8 @@
 #include <shaders/color_vert_glsl.h>
 #include <shaders/color_frag_glsl.h>
 
+#include "../scene.cpp"
+
 #include "../renderable.h"
 #include "../camera.h"
 
@@ -115,7 +117,7 @@ public:
 		glDeleteVertexArrays(1, &vao);
 	}
 
-	bool update(float dTime) override
+	bool update(float dTime, Scene &scene) override
 	{
 		modelMatrix = glm::mat4(1.0f);
 		modelMatrix = glm::translate(modelMatrix, position);
@@ -125,17 +127,17 @@ public:
 	}
 
 	// Draw polygons
-	void render(Camera camera) override
+	void render(Scene &scene) override
 	{
 		//update viewMatrix
-		viewMatrix = camera.viewMatrix;
+		viewMatrix = scene.camera->viewMatrix;
 
 		// Update transformation and color uniforms in the shader
 		shader->use();
 		shader->setUniform("OverallColor", color);
 		shader->setUniform("ModelMatrix", modelMatrix);
 		shader->setUniform("ViewMatrix", viewMatrix);
-		shader->setUniform("ProjectionMatrix", camera.perspective);
+		shader->setUniform("ProjectionMatrix",scene.camera->perspective);
 
 		glBindVertexArray(vao);
 		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size() * 3, GL_UNSIGNED_INT, 0);

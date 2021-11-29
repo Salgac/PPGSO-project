@@ -39,7 +39,7 @@ private:
 		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 0, 0})));
 
 		//backgrounds
-		scene.objects.push_back(move(std::make_unique<Background>()));
+        scene.objects.push_back(move(std::make_unique<Background>()));
 		scene.objects.push_back(move(std::make_unique<Moon>()));
 		scene.objects.push_back(move(std::make_unique<Ground>()));
 
@@ -53,30 +53,31 @@ private:
 		}
 	}
 
+
 public:
 	ProjectWindow(int size) : Window{"project", size, size}
 	{
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
 
-		initScene();
+        initScene();
 	}
 
 	void onIdle()
 	{
-		// Clear depth and color buffers
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        // Clear depth and color buffers
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Track time
-		static auto time = (float)glfwGetTime();
-		float dTime = (float)glfwGetTime() - time;
-		time = (float)glfwGetTime();
+        // Track time
+        static auto time = (float)glfwGetTime();
+        float dTime = (float)glfwGetTime() - time;
+        time = (float)glfwGetTime();
 
-		//update
-		scene.update(dTime);
+        //update
+        scene.update(dTime);
 
-		// Render every object in scene
-		scene.render();
+        // Render every object in scene
+        scene.render();
 	}
 
 	void onKey(int key, int scanCode, int action, int mods) override
