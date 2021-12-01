@@ -36,7 +36,7 @@ public:
 
     float dgr;
     int drc;
-    int help_timer = 0;
+    int help_timer = 100;
 
     /// Construct a new Particle
     /// \param p - Initial position
@@ -72,21 +72,23 @@ public:
             if (!collision_object) continue;
 
 
-            if (abs(position.z - collision_object->position.z) < ((scale.y + collision_object->scale.y)/2) )
+            if (abs(abs(position.z) - abs(collision_object->position.z)) < ((scale.y + collision_object->scale.y)/1.5) )
             {
+
                 help_timer = 200;
                 collision_object->help_timer = 200;
             }
 
             if(help_timer > 0)
             {
-                position.z -= (0.3f * drc) * dTime;
+                position.z -= (0.3f) * dTime;
                 help_timer --;
             }
             else
             {
-                position.z += (0.2f * drc) * dTime;
+                position.z += (0.2f) * dTime;
             }
+
         }
 
 
@@ -94,7 +96,7 @@ public:
 
 
         modelMatrix = glm::mat4{1.0f};
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(dgr), glm::vec3{0, 1, 0});
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(dgr), glm::vec3{0, 0.5f, 0});
         modelMatrix = glm::translate(modelMatrix, position);
         modelMatrix = glm::scale(modelMatrix, scale);
 

@@ -55,13 +55,16 @@ private:
 		}
          */
 
-        glm::vec3 pos = {1,0,1};
-        auto wolf0 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},90.0f,1);
+
+        glm::vec3 pos = {1,0,0.5};
+        auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},90.0f,1);
+        scene.objects.push_back(move(wolf1));
+
+        pos = {-1,0,-1.5}; // needs to be negative numbers
+        auto wolf0 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},270.0f,-1);
         scene.objects.push_back(move(wolf0));
 
-        pos = {1,0,3};
-        auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},90.0f,-1);
-        scene.objects.push_back(move(wolf1));
+
 
 	}
 

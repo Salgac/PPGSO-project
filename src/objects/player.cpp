@@ -77,7 +77,7 @@ public:
 
 
         modelMatrix = glm::mat4{1.0f};
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0,1, 0});
         modelMatrix = glm::translate(modelMatrix, position);
         modelMatrix = glm::scale(modelMatrix, scale);
         return true;
