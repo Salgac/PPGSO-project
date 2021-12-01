@@ -17,6 +17,7 @@
 #include "objects/ground.cpp"
 
 #include "objects/tree.cpp"
+#include "objects/wolf.cpp"
 
 #include "camera.h"
 #include "scene.cpp"
@@ -44,6 +45,7 @@ private:
 		scene.objects.push_back(move(std::make_unique<Ground>()));
 
 		//trees
+        /*
 		for (int i = 0; i < 35; i++)
 		{
 			float a = glm::linearRand(-5.0f, -1.0f);
@@ -51,6 +53,16 @@ private:
 			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
 			scene.objects.push_back(move(tree));
 		}
+         */
+
+        glm::vec3 pos = {1,0,1};
+        auto wolf0 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},90.0f,1);
+        scene.objects.push_back(move(wolf0));
+
+        pos = {1,0,3};
+        auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},90.0f,-1);
+        scene.objects.push_back(move(wolf1));
+
 	}
 
 
