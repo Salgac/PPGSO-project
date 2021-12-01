@@ -17,6 +17,7 @@
 #include "objects/ground.cpp"
 
 #include "objects/tree.cpp"
+#include "objects/falling_tree.cpp"
 #include "objects/wolf.cpp"
 
 #include "camera.h"
@@ -63,6 +64,10 @@ private:
         pos = {-1,0,-1.5}; // needs to be negative numbers
         auto wolf0 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},270.0f,-1);
         scene.objects.push_back(move(wolf0));
+
+        pos = glm::vec3{2,0,-2};
+        auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 , 0});
+        scene.objects.push_back(move(tree));
 
 
 
