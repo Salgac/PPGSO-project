@@ -15,6 +15,11 @@
 #include "../scene.cpp"
 #include "../renderable.h"
 #include "../camera.h"
+
+
+#ifndef FALL_TREE
+#define FALL_TREE
+
 class Renderable;
 
 class Falling_Tree : public Renderable
@@ -65,7 +70,7 @@ public:
     {
         modelMatrix = glm::mat4{1.0f};
 
-        if(scene.camera->position.x > 1) {
+        if( position.x - scene.camera->position.x < 1.5) {
 
             if (rotate < 90) {
                 rotate += rotate_speed;
@@ -105,3 +110,5 @@ public:
 
 std::unique_ptr<ppgso::Mesh> Falling_Tree::mesh;
 std::unique_ptr<ppgso::Shader> Falling_Tree::shader;
+
+#endif

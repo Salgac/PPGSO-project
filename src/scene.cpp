@@ -8,6 +8,8 @@
 #define SCENE
 
 #define GRAVITACIA 0.1f
+#define VIETOR 0.01f
+
 class Scene
 {
 public:

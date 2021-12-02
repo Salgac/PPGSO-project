@@ -7,6 +7,9 @@
 #include "../renderable.h"
 #include "../scene.cpp"
 
+#include "falling_tree.cpp"
+
+
 class Player final : public Renderable
 {
 	glm::mat4 viewMatrix{1.0f};
@@ -45,6 +48,7 @@ public:
             if (obj.get() == this)
                 continue;
 
+            //auto collision_object = dynamic_cast<Cube *>(obj.get());
             auto collision_object = dynamic_cast<Cube *>(obj.get());
             if (!collision_object) continue;
 
@@ -67,13 +71,23 @@ public:
                 && abs(position.z + collision_object->position.z) < (collision_object->scale.z + scale.z)/2+ collision_object->position.z) {
                     if (position.y > collision_object->position.y)
                         position.y = collision_object->position.y + collision_object->scale.y;
-                        dTime = 0;
             }
 
         }
         if (position.y > 0) { //gravitacia
-            position.y = position.y - GRAVITACIA * dTime;
+            position.y = position.y - GRAVITACIA;
         }
+        /*
+        if (position.z > 0 && position.z < 10) { //vietor v danom mieste
+
+
+            position.z -= (VIETOR);
+            scene.camera->front.x -= (VIETOR);
+            scene.camera->position.x -= (VIETOR);
+        }
+         */
+        
+
 
 
         modelMatrix = glm::mat4{1.0f};
