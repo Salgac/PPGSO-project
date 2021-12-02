@@ -86,7 +86,7 @@ public:
             scene.camera->position.x -= (VIETOR);
         }
          */
-        
+
 
 
 
