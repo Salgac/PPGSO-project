@@ -10,6 +10,10 @@ CMakeLists.txt
 dependencies
 shapes
 
+_build
+_install
+.vscode
+
 **/cmake-build-debug
 **/CMakeCache.txt
 **/cmake_install.cmake

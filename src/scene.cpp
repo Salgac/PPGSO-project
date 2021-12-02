@@ -19,19 +19,21 @@ public:
 
 	//lights TODO
 
+	//player
+	bool jump = false;
 
-    float Dtime;
+	float Dtime;
 
 	//update function
 	void update(float time)
 	{
-        Dtime = time;
+		Dtime = time;
 		auto i = std::begin(objects);
 		while (i != std::end(objects))
 		{
 			// Update object and remove from list if needed
 			auto obj = i->get();
-			if (!obj->update(time,*this))
+			if (!obj->update(time, *this))
 				i = objects.erase(i);
 			else
 				++i;
