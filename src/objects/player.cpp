@@ -52,7 +52,26 @@ public:
             auto collision_object = dynamic_cast<Cube *>(obj.get());
             if (!collision_object) continue;
 
+            if (distance(position, collision_object ->position) < collision_object ->scale.y)
+            {
 
+                if(position.y > collision_object->position.z)
+                    position.y = collision_object->position.y + collision_object->scale.y;
+                else
+                    if (position.z < collision_object->position.z){
+                        position.z -= scene.camera->speed;
+                        scene.camera->front.x -= scene.camera->speed;
+                        scene.camera->position.x -= scene.camera->speed;
+                    }
+                else
+                    if (position.z > collision_object->position.z) {
+                        position.z += scene.camera->speed;
+                        scene.camera->front.x += scene.camera->speed;
+                        scene.camera->position.x += scene.camera->speed;
+                    }
+            }
+
+            /*
             if(abs(position.z + collision_object->position.z) < (scale.y + collision_object->scale.y)/2 && collision_object->position.y + collision_object->scale.y/2 > position.y )
             {
                 if (position.z < collision_object->position.z){
@@ -66,12 +85,14 @@ public:
                     scene.camera->position.x += scene.camera->speed;
                 }
             }
+
             //from top
             if ( abs(position.y + collision_object->position.y) < collision_object->scale.y + collision_object->position.y
                 && abs(position.z + collision_object->position.z) < (collision_object->scale.z + scale.z)/2+ collision_object->position.z) {
                     if (position.y > collision_object->position.y)
                         position.y = collision_object->position.y + collision_object->scale.y;
             }
+             */
 
         }
         if (position.y > 0) { //gravitacia

@@ -65,9 +65,15 @@ private:
         auto wolf0 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},270.0f,-1);
         scene.objects.push_back(move(wolf0));
 
+
+
         pos = glm::vec3{2,0,-2};
         auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 , 0});
         scene.objects.push_back(move(tree));
+
+        auto cube = std::make_unique<Cube>(glm::vec3{2, 0, 0}, glm::vec3{0.2, 0.2, 1});
+        cube->color = {0.5, 0.5, 0.5};
+        scene.objects.push_back(move(cube));
 
 
 
