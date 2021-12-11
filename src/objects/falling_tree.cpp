@@ -16,6 +16,8 @@
 #include "../renderable.h"
 #include "../camera.h"
 
+#include "../shapes/cube.cpp"
+
 
 #ifndef FALL_TREE
 #define FALL_TREE
@@ -32,11 +34,13 @@ class Falling_Tree : public Renderable
     static std::unique_ptr<ppgso::Shader> shader;
 
 public:
-    float size = 2;
+    float size = 3;
 
     glm::vec3 position{0, 0, 0};
     glm::vec3 speed{0, 0, 0};
     glm::vec3 scale{size, size, size};
+
+    bool collision = false;
     float rotate = 0;
     float help;
 
@@ -71,6 +75,14 @@ public:
         modelMatrix = glm::mat4{1.0f};
 
         if( position.x - scene.camera->position.x < 1.5) {
+
+            if(!collision)
+            {
+                collision = true;
+                auto cube = std::make_unique<Cube>(glm::vec3{position.x, 0, 0}, glm::vec3{0, 0.3, 1},0);
+                cube->scale = {0.15f, 0.15, 0.15};
+                scene.objects.push_back(move(cube));
+            }
 
             if (rotate < 90) {
                 rotate += rotate_speed;

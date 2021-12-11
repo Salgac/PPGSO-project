@@ -67,13 +67,12 @@ private:
 
 
 
-        pos = glm::vec3{2,0,-2};
+        pos = glm::vec3{2,0,-1.5};
         auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 , 0});
         scene.objects.push_back(move(tree));
 
-        auto cube = std::make_unique<Cube>(glm::vec3{2, 0, 0}, glm::vec3{0.2, 0.2, 1});
-        cube->color = {0.5, 0.5, 0.5};
-        scene.objects.push_back(move(cube));
+
+        //cube->scale = {0.15f, 0.2, 1};
 
 
 
@@ -109,22 +108,23 @@ public:
 	{
 		if (action == GLFW_PRESS)
 		{
+            //std::cout << scanCode<< std::endl;
 			switch (scanCode)
-			{
-			case 38:
-			case 113:
-				// left
+            {
+			case 32:
+			case 331:
+				// left  38 113
 				scene.camera->front.x -= scene.camera->speed;
 				scene.camera->position.x -= scene.camera->speed;
 				break;
-			case 40:
-			case 114:
-				// right
+			case 30:
+			case 333:
+				// right  40 114
 				scene.camera->front.x += scene.camera->speed;
 				scene.camera->position.x += scene.camera->speed;
 				break;
-			case 65:
-				//spacebar
+			case 57:
+				//spacebar 65
 				std::cout << scene.jump << std::endl;
 				if (!scene.jump)
 					scene.jump = true;

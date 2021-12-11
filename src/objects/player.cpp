@@ -25,7 +25,11 @@ public:
 	glm::vec3 speed{0, 0, 0};
 	glm::vec3 scale{0.6f, 0.6f, 0.6f};
 
-	glm::vec3 jump{0, 2.0f, 0};
+	glm::vec3 jump{0, 4.0f, 0};
+
+    float ground = 0;
+
+    bool move = true;
 
 	/// Construct a new Player
 	/// \param p - Initial position
@@ -43,6 +47,7 @@ public:
 	bool update(float dTime, Scene &scene) override
 	{
 		// collisions
+        glm::vec3 player_position{position.z, position.y, position.x};
 		for (auto &obj : scene.objects)
 		{
 			// Ignore self in scene
@@ -53,8 +58,53 @@ public:
 			if (!collision_object)
 				continue;
 
-			if (abs(position.z + collision_object->position.z) < (scale.y + collision_object->scale.y) / 2 && collision_object->position.y + collision_object->scale.y / 2 > position.y)
+
+            if(glm::distance(player_position,collision_object->position) < collision_object->scale.x + scale.z/2)
+            {
+                if(player_position.y < collision_object->scale.y)
+                {
+                    std::cout << glm::distance(player_position,collision_object->position)<< std::endl;
+                    speed.z = 0;
+                    position.z -= scene.camera->speed;
+                    scene.camera->front.x -= scene.camera->speed;
+                    scene.camera->position.x -= scene.camera->speed;
+                }
+                else
+                {
+                    if(!scene.jump)
+                        ground = collision_object->position.y + collision_object->scale.y;
+                }
+
+            }
+            else
+                if(glm::distance(player_position,collision_object->position) > collision_object->scale.x + scale.z/2 + 0.025f)
+                    ground = 0;
+
+            /*
+            if (abs(position.z + collision_object->position.x) < 0.05 and position.z < collision_object->position.z and (position.y) < collision_object->position.y + collision_object->scale.y)
+            {
+                //opravit neskor
+
+                std::cout << "zaciatok"<< std::endl;
+                position.z -= scene.camera->speed;
+                scene.camera->front.x -= scene.camera->speed;
+                scene.camera->position.x -= scene.camera->speed;
+
+            }
+
+            if (abs(position.z + collision_object->position.z) < collision_object->scale.z*2 + scale.z and position.z > collision_object->position.z and position.y > collision_object->position.y)
+            {
+                if(!scene.jump)
+                    ground = collision_object->position.y + collision_object->scale.y;
+            }
+            else
+                ground = 0;
+
+
+			if (abs(position.z + collision_object->position.z) < 0.05 or abs(position.z + collision_object->position.z) < collision_object->scale.)
 			{
+
+
 				if (position.z < collision_object->position.z)
 				{
 					position.z -= scene.camera->speed;
@@ -67,7 +117,9 @@ public:
 					scene.camera->front.x += scene.camera->speed;
 					scene.camera->position.x += scene.camera->speed;
 				}
+
 			}
+
 			//from top
 			if (abs(position.y + collision_object->position.y) < collision_object->scale.y + collision_object->position.y && abs(position.z + collision_object->position.z) < (collision_object->scale.z + scale.z) / 2 + collision_object->position.z)
 			{
@@ -75,6 +127,7 @@ public:
 					position.y = collision_object->position.y + collision_object->scale.y;
 				dTime = 0;
 			}
+             */
 		}
 
 		// move the player
@@ -83,21 +136,21 @@ public:
 		// jumps
 		if (scene.jump)
 		{
-			if (speed.y == 0)
+			if (speed.y == ground)
 				speed += jump;
 			scene.jump = false;
 		}
 
 		// gravity
-		if (position.y >= 0)
+		if (position.y >= ground)
 		{
 			speed.y -= GRAVITACIA;
 			position.y += speed.y * dTime;
 
 			//floor when on ground
-			if (position.y < 0.01f)
+			if (position.y < ground + 0.01f)
 			{
-				position.y = 0;
+				position.y = ground;
 				speed.y = 0;
 			}
 		}
