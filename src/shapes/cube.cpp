@@ -15,6 +15,9 @@
 #include "../renderable.h"
 #include "../camera.h"
 
+
+#ifndef CUBE
+#define CUBE
 // Object to represent a 3D cube
 class Cube : public Renderable
 {
@@ -76,13 +79,17 @@ public:
 	glm::vec3 position;
 	glm::vec3 rotation{0, 0, 0};
 	glm::vec3 scale;
-	glm::vec3 color{1, 1, 1};
+	glm::vec3 color;
+
+    int drawable;
 
 	// Initialize object data buffers
-	Cube(glm::vec3 pos = glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3 scl = glm::vec3{1.0f, 1.0f, 1.0f})
+	Cube(glm::vec3 pos, glm::vec3 scl, int draw)
 	{
 		position = pos;
 		scale = scl;
+
+        drawable = draw;
 
 		//shader
 		if (!shader)
@@ -140,6 +147,10 @@ public:
 		shader->setUniform("ProjectionMatrix",scene.camera->perspective);
 
 		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size() * 3, GL_UNSIGNED_INT, 0);
+        if (drawable == 1)
+		    glDrawElements(GL_TRIANGLES, (GLsizei)indices.size() * 3, GL_UNSIGNED_INT, 0);
 	};
 };
+
+
+#endif

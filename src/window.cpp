@@ -17,6 +17,8 @@
 #include "objects/ground.cpp"
 
 #include "objects/tree.cpp"
+#include "objects/falling_tree.cpp"
+#include "objects/wolf.cpp"
 
 #include "camera.h"
 #include "scene.cpp"
@@ -44,6 +46,7 @@ private:
 		scene.objects.push_back(move(std::make_unique<Ground>()));
 
 		//trees
+        /*
 		for (int i = 0; i < 35; i++)
 		{
 			float a = glm::linearRand(-5.0f, -1.0f);
@@ -51,6 +54,22 @@ private:
 			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
 			scene.objects.push_back(move(tree));
 		}
+         */
+
+
+        //wolfs
+        for (float i = 0; i < 5; i++)
+        {
+            glm::vec3 pos = {2.5 + i/2,0,0.5 + i/2};
+            auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0},glm::vec3{0.2 + i*0.05, 0.2 + i*0.05, 0.2 + i*0.05},90.0f,1);
+            scene.objects.push_back(move(wolf1));
+
+        }
+
+
+        glm::vec3 pos = glm::vec3{2,0,-1.5};
+        auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 , 0});
+        scene.objects.push_back(move(tree));
 	}
 
 public:
@@ -83,8 +102,9 @@ public:
 	{
 		if (action == GLFW_PRESS)
 		{
+            //std::cout << scanCode<< std::endl;
 			switch (scanCode)
-			{
+            {
 			case 38:
 			case 113:
 				// left
