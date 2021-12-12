@@ -30,23 +30,23 @@ private:
 
 	void initScene()
 	{
-		//TODO create 2 separate templates for scenes
+		// TODO create 2 separate templates for scenes
 		scene.objects.clear();
 
-		//camera
+		// camera
 		auto camera = std::make_unique<Camera>(100.0f, (float)width / (float)height, 0.1f, 100.0f);
 		scene.camera = move(camera);
 
-		//player
+		// player
 		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
 
-		//backgrounds
+		// backgrounds
 		scene.objects.push_back(move(std::make_unique<Background>()));
 		scene.objects.push_back(move(std::make_unique<Moon>()));
 		scene.objects.push_back(move(std::make_unique<Ground>()));
 
-		//trees
-        /*
+		// trees
+		/*
 		for (int i = 0; i < 35; i++)
 		{
 			float a = glm::linearRand(-5.0f, -1.0f);
@@ -54,22 +54,19 @@ private:
 			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
 			scene.objects.push_back(move(tree));
 		}
-         */
+		 */
 
+		// wolfs
+		for (float i = 0; i < 5; i++)
+		{
+			glm::vec3 pos = {2.5 + i / 2, 0, 0.5 + i / 2};
+			auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
+			scene.objects.push_back(move(wolf1));
+		}
 
-        //wolfs
-        for (float i = 0; i < 5; i++)
-        {
-            glm::vec3 pos = {2.5 + i/2,0,0.5 + i/2};
-            auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0},glm::vec3{0.2 + i*0.05, 0.2 + i*0.05, 0.2 + i*0.05},90.0f,1);
-            scene.objects.push_back(move(wolf1));
-
-        }
-
-
-        glm::vec3 pos = glm::vec3{2,0,-1.5};
-        auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 , 0});
-        scene.objects.push_back(move(tree));
+		glm::vec3 pos = glm::vec3{2, 0, -1.5};
+		auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5, 0});
+		scene.objects.push_back(move(tree));
 	}
 
 public:
@@ -91,7 +88,7 @@ public:
 		float dTime = (float)glfwGetTime() - time;
 		time = (float)glfwGetTime();
 
-		//update
+		// update
 		scene.update(dTime);
 
 		// Render every object in scene
@@ -102,24 +99,21 @@ public:
 	{
 		if (action == GLFW_PRESS)
 		{
-            //std::cout << scanCode<< std::endl;
+			// TODO remove the stuttering
 			switch (scanCode)
-            {
+			{
 			case 38:
 			case 113:
 				// left
-				scene.camera->front.x -= scene.camera->speed;
-				scene.camera->position.x -= scene.camera->speed;
+				scene.move_left = true;
 				break;
 			case 40:
 			case 114:
 				// right
-				scene.camera->front.x += scene.camera->speed;
-				scene.camera->position.x += scene.camera->speed;
+				scene.move_right = true;
 				break;
 			case 65:
-				//spacebar
-				std::cout << scene.jump << std::endl;
+				// spacebar
 				if (!scene.jump)
 					scene.jump = true;
 				break;

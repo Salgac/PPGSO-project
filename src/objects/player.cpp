@@ -9,7 +9,6 @@
 
 #include "falling_tree.cpp"
 
-
 class Player final : public Renderable
 {
 	glm::mat4 viewMatrix{1.0f};
@@ -26,9 +25,9 @@ public:
 	glm::vec3 scale{0.6f, 0.6f, 0.6f};
 
 	glm::vec3 jump{0, 4.0f, 0};
+	glm::vec3 move{0, 0, 0.85f};
 
-    float ground = 0;
-    bool move = true;
+	float ground = 0;
 
 	/// Construct a new Player
 	/// \param p - Initial position
@@ -46,7 +45,7 @@ public:
 	bool update(float dTime, Scene &scene) override
 	{
 		// collisions
-        glm::vec3 player_position{position.z, position.y, position.x};
+		glm::vec3 player_position{position.z, position.y, position.x};
 		for (auto &obj : scene.objects)
 		{
 			// Ignore self in scene
@@ -57,42 +56,51 @@ public:
 			if (!collision_object)
 				continue;
 
+			if (glm::distance(player_position, collision_object->position) < collision_object->scale.x + scale.z / 2)
+			{
+				if (player_position.y < collision_object->scale.y)
+				{
+					if (player_position.x < collision_object->position.x)
+					{
+						speed.z = 0;
+						position.z -= scene.camera->speed;
+						scene.camera->front.x -= scene.camera->speed;
+						scene.camera->position.x -= scene.camera->speed;
+					}
 
-            if(glm::distance(player_position,collision_object->position) < collision_object->scale.x + scale.z/2)
-            {
-                if(player_position.y < collision_object->scale.y)
-                {
-                    if(player_position.x < collision_object->position.x)
-                    {
-                        speed.z = 0;
-                        position.z -= scene.camera->speed;
-                        scene.camera->front.x -= scene.camera->speed;
-                        scene.camera->position.x -= scene.camera->speed;
-                    }
+					if (player_position.x > collision_object->position.x)
+					{
+						speed.z = 0;
+						position.z += scene.camera->speed;
+						scene.camera->front.x += scene.camera->speed;
+						scene.camera->position.x += scene.camera->speed;
+					}
+				}
 
-                    if(player_position.x > collision_object->position.x)
-                    {
-                        speed.z = 0;
-                        position.z += scene.camera->speed;
-                        scene.camera->front.x += scene.camera->speed;
-                        scene.camera->position.x += scene.camera->speed;
-                    }
-
-                }
-
-                else
-                {
-                    if(!scene.jump)
-                        ground = collision_object->position.y + collision_object->scale.y;
-                }
-            }
-            else
-                if(glm::distance(player_position,collision_object->position) > collision_object->scale.x + scale.z/2 + 0.025f)
-                    ground = 0;
+				else
+				{
+					if (!scene.jump)
+						ground = collision_object->position.y + collision_object->scale.y;
+				}
+			}
+			else if (glm::distance(player_position, collision_object->position) > collision_object->scale.x + scale.z / 2 + 0.025f)
+				ground = 0;
 		}
 
 		// move the player
-		position.z = scene.camera->front.x - 0.6;
+		// TODO smooth acceleration and deceleration?
+		speed.z = 0;
+		if (scene.move_left)
+		{
+			speed -= move;
+			scene.move_left = false;
+		}
+		else if (scene.move_right)
+		{
+			speed += move;
+			scene.move_right = false;
+		}
+		position.z += speed.z * dTime;
 
 		// jumps
 		if (scene.jump)
@@ -108,7 +116,7 @@ public:
 			speed.y -= GRAVITACIA;
 			position.y += speed.y * dTime;
 
-			//floor when on ground
+			// floor when on ground
 			if (position.y < ground + 0.01f)
 			{
 				position.y = ground;
@@ -116,20 +124,23 @@ public:
 			}
 		}
 
-        /*
-         * ked zmenime pohyb kamery podla hraca bude to fungovat
-        if (position.z < 5 )
-        {
-            speed.z -= VIETOR;
-            position.z += speed.z * dTime;
+		/*
+		 * ked zmenime pohyb kamery podla hraca bude to fungovat
+		if (position.z < 5 )
+		{
+			speed.z -= VIETOR;
+			position.z += speed.z * dTime;
 
-            //floor when on ground
-            if (position.z < 0)
-            {
-                speed.z = 0;
-            }
-        }
-        */
+			//floor when on ground
+			if (position.z < 0)
+			{
+				speed.z = 0;
+			}
+		}
+		*/
+
+		// for scene specific actions
+		scene.player_position = position;
 
 		// generate modelMatrix
 		modelMatrix = glm::mat4{1.0f};
@@ -145,7 +156,7 @@ public:
 		viewMatrix = scene.camera->viewMatrix;
 
 		shader->use();
-		//shader->setUniform("LightDirection", glm::vec3{1.0f, 1.0f, 1.0f});
+		// shader->setUniform("LightDirection", glm::vec3{1.0f, 1.0f, 1.0f});
 		shader->setUniform("ModelMatrix", modelMatrix);
 		shader->setUniform("ViewMatrix", viewMatrix);
 		shader->setUniform("ProjectionMatrix", scene.camera->perspective);

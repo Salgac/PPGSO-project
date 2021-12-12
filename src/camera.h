@@ -13,9 +13,12 @@ public:
 	glm::mat4 perspective;
 	glm::mat4 viewMatrix{1.0f};
 
-	// stara kamera glm::vec3 position{-0.5f, 0.5f, 1.0f};
-    glm::vec3 position{0.0f, 0.25f, 0.85f};
+	// deprecated
+	glm::vec3 position{-0.5f, 0.5f, 1.0f};
 	glm::vec3 front{0.0f, 0.0f, -1.0f};
+
+	glm::vec3 position_offset{-0.5f, 0.5f, 1.0f};
+	glm::vec3 front_offset{0.0f, 0.0f, -1.0f};
 	glm::vec3 up{0.0f, 1.0f, 0.0f};
 	float speed = 0.05f;
 
@@ -34,11 +37,18 @@ public:
 	}
 
 	/// Recalculate viewMatrix from position, rotation and scale
-	void update()
+	void update(glm::vec3 player_position)
 	{
+		// transform positions
+		int tmp = player_position.x;
+		player_position.x = player_position.z + 0.6f;
+		player_position.z = tmp;
+
+		auto front = player_position;
+
 		// Update viewMatrix
 		if (front.x > BOUNDARY_LEFT && front.x < BOUNDARY_RIGHT)
-			viewMatrix = glm::lookAt(position, front, up);
+			viewMatrix = glm::lookAt(front + position_offset, front + front_offset, up);
 	}
 };
 

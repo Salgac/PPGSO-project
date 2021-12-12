@@ -13,20 +13,23 @@
 class Scene
 {
 public:
-	//list of objects
+	// list of objects
 	std::list<std::unique_ptr<Renderable>> objects;
 
-	//camera
+	// camera
 	std::unique_ptr<Camera> camera;
 
-	//lights TODO
+	// lights TODO
 
-	//player
+	// player
 	bool jump = false;
+	bool move_left = false;
+	bool move_right = false;
+	glm::vec3 player_position{0, 0, 0};
 
 	float Dtime;
 
-	//update function
+	// update function
 	void update(float time)
 	{
 		Dtime = time;
@@ -42,18 +45,15 @@ public:
 		}
 	}
 
-	//render function
+	// render function
 	void render()
 	{
-		camera->update();
-
 		for (auto &object : objects)
 		{
 			object->render(*this);
-
-			//TODO redo renderable definition
-			//object->render(*this);
 		}
+
+		camera->update(player_position);
 	}
 };
 
