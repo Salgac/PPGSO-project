@@ -56,6 +56,7 @@ private:
 		}
          */
 
+
         //wolfs
         for (float i = 0; i < 5; i++)
         {
@@ -104,20 +105,20 @@ public:
             //std::cout << scanCode<< std::endl;
 			switch (scanCode)
             {
-			case 32:
-			case 331:
-				// left  38 113
+			case 38:
+			case 113:
+				// left
 				scene.camera->front.x -= scene.camera->speed;
 				scene.camera->position.x -= scene.camera->speed;
 				break;
-			case 30:
-			case 333:
-				// right  40 114
+			case 40:
+			case 114:
+				// right
 				scene.camera->front.x += scene.camera->speed;
 				scene.camera->position.x += scene.camera->speed;
 				break;
-			case 57:
-				//spacebar 65
+			case 65:
+				//spacebar
 				std::cout << scene.jump << std::endl;
 				if (!scene.jump)
 					scene.jump = true;

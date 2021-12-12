@@ -72,7 +72,6 @@ public:
                     if(!scene.jump)
                         ground = collision_object->position.y + collision_object->scale.y;
                 }
-
             }
             else
                 if(glm::distance(player_position,collision_object->position) > collision_object->scale.x + scale.z/2 + 0.025f)
@@ -103,6 +102,21 @@ public:
 				speed.y = 0;
 			}
 		}
+
+        /*
+         * ked zmenime pohyb kamery podla hraca bude to fungovat
+        if (position.z < 5 )
+        {
+            speed.z -= VIETOR;
+            position.z += speed.z * dTime;
+
+            //floor when on ground
+            if (position.z < 0)
+            {
+                speed.z = 0;
+            }
+        }
+        */
 
 		// generate modelMatrix
 		modelMatrix = glm::mat4{1.0f};
