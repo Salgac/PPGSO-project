@@ -29,6 +29,8 @@ public:
 
 	float ground = 0;
 
+    bool wind = false;
+
 	/// Construct a new Player
 	/// \param p - Initial position
 	Player(glm::vec3 p)
@@ -61,20 +63,10 @@ public:
 				if (player_position.y < collision_object->scale.y)
 				{
 					if (player_position.x < collision_object->position.x)
-					{
-						speed.z = 0;
-						position.z -= scene.camera->speed;
-						scene.camera->front.x -= scene.camera->speed;
-						scene.camera->position.x -= scene.camera->speed;
-					}
+                        scene.move_right = false;
 
 					if (player_position.x > collision_object->position.x)
-					{
-						speed.z = 0;
-						position.z += scene.camera->speed;
-						scene.camera->front.x += scene.camera->speed;
-						scene.camera->position.x += scene.camera->speed;
-					}
+                        scene.move_left = false;
 				}
 
 				else
@@ -86,23 +78,6 @@ public:
 			else if (glm::distance(player_position, collision_object->position) > collision_object->scale.x + scale.z / 2 + 0.025f)
 				ground = 0;
 		}
-
-		// move the player
-		if (scene.move_left)
-		{
-			if (abs(speed.z) == 0)
-				speed -= move;
-		}
-		else if (scene.move_right)
-		{
-			if (abs(speed.z) == 0)
-				speed += move;
-		}
-		else
-		{
-			speed.z = 0;
-		}
-		position.z += speed.z * dTime;
 
 		// jumps
 		if (scene.jump)
@@ -126,20 +101,28 @@ public:
 			}
 		}
 
-		/*
-		 * ked zmenime pohyb kamery podla hraca bude to fungovat
-		if (position.z < 5 )
-		{
-			speed.z -= VIETOR;
-			position.z += speed.z * dTime;
+        // move the player
+        if (scene.move_left)
+        {
+            if (abs(speed.z) == 0)
+                speed -= move;
+        }
+        else if (scene.move_right)
+        {
+            if (abs(speed.z) == 0)
+                speed += move;
+        }
+        else
+        {
+            speed.z = 0;
+        }
 
-			//floor when on ground
-			if (position.z < 0)
-			{
-				speed.z = 0;
-			}
-		}
-		*/
+        if (position.z >= 1 )
+        {
+            position.z -= VIETOR * dTime;
+        }
+
+        position.z += speed.z * dTime;
 
 		// for scene specific actions
 		scene.player_position = position;

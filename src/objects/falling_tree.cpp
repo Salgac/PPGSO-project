@@ -73,8 +73,8 @@ public:
     bool update(float dTime, Scene &scene) override
     {
         modelMatrix = glm::mat4{1.0f};
-
-        if( position.x - scene.camera->position.x < 1.5) {
+        
+        if( position.x - scene.player_position.z < 1.5) {
 
             if(!collision)
             {
