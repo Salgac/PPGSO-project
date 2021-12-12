@@ -25,7 +25,7 @@ public:
 	glm::vec3 scale{0.6f, 0.6f, 0.6f};
 
 	glm::vec3 jump{0, 4.0f, 0};
-	glm::vec3 move{0, 0, 0.85f};
+	glm::vec3 move{0, 0, 0.5f};
 
 	float ground = 0;
 
@@ -88,17 +88,19 @@ public:
 		}
 
 		// move the player
-		// TODO smooth acceleration and deceleration?
-		speed.z = 0;
 		if (scene.move_left)
 		{
-			speed -= move;
-			scene.move_left = false;
+			if (abs(speed.z) == 0)
+				speed -= move;
 		}
 		else if (scene.move_right)
 		{
-			speed += move;
-			scene.move_right = false;
+			if (abs(speed.z) == 0)
+				speed += move;
+		}
+		else
+		{
+			speed.z = 0;
 		}
 		position.z += speed.z * dTime;
 

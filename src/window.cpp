@@ -99,7 +99,6 @@ public:
 	{
 		if (action == GLFW_PRESS)
 		{
-			// TODO remove the stuttering
 			switch (scanCode)
 			{
 			case 38:
@@ -116,6 +115,22 @@ public:
 				// spacebar
 				if (!scene.jump)
 					scene.jump = true;
+				break;
+			}
+		}
+		if (action == GLFW_RELEASE)
+		{
+			switch (scanCode)
+			{
+			case 38:
+			case 113:
+				// left
+				scene.move_left = false;
+				break;
+			case 40:
+			case 114:
+				// right
+				scene.move_right = false;
 				break;
 			}
 		}
