@@ -62,11 +62,24 @@ public:
             {
                 if(player_position.y < collision_object->scale.y)
                 {
-                    speed.z = 0;
-                    position.z -= scene.camera->speed;
-                    scene.camera->front.x -= scene.camera->speed;
-                    scene.camera->position.x -= scene.camera->speed;
+                    if(player_position.x < collision_object->position.x)
+                    {
+                        speed.z = 0;
+                        position.z -= scene.camera->speed;
+                        scene.camera->front.x -= scene.camera->speed;
+                        scene.camera->position.x -= scene.camera->speed;
+                    }
+
+                    if(player_position.x > collision_object->position.x)
+                    {
+                        speed.z = 0;
+                        position.z += scene.camera->speed;
+                        scene.camera->front.x += scene.camera->speed;
+                        scene.camera->position.x += scene.camera->speed;
+                    }
+
                 }
+
                 else
                 {
                     if(!scene.jump)
