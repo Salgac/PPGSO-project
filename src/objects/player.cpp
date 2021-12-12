@@ -28,7 +28,6 @@ public:
 	glm::vec3 jump{0, 4.0f, 0};
 
     float ground = 0;
-
     bool move = true;
 
 	/// Construct a new Player
@@ -63,7 +62,6 @@ public:
             {
                 if(player_position.y < collision_object->scale.y)
                 {
-                    std::cout << glm::distance(player_position,collision_object->position)<< std::endl;
                     speed.z = 0;
                     position.z -= scene.camera->speed;
                     scene.camera->front.x -= scene.camera->speed;
@@ -79,55 +77,6 @@ public:
             else
                 if(glm::distance(player_position,collision_object->position) > collision_object->scale.x + scale.z/2 + 0.025f)
                     ground = 0;
-
-            /*
-            if (abs(position.z + collision_object->position.x) < 0.05 and position.z < collision_object->position.z and (position.y) < collision_object->position.y + collision_object->scale.y)
-            {
-                //opravit neskor
-
-                std::cout << "zaciatok"<< std::endl;
-                position.z -= scene.camera->speed;
-                scene.camera->front.x -= scene.camera->speed;
-                scene.camera->position.x -= scene.camera->speed;
-
-            }
-
-            if (abs(position.z + collision_object->position.z) < collision_object->scale.z*2 + scale.z and position.z > collision_object->position.z and position.y > collision_object->position.y)
-            {
-                if(!scene.jump)
-                    ground = collision_object->position.y + collision_object->scale.y;
-            }
-            else
-                ground = 0;
-
-
-			if (abs(position.z + collision_object->position.z) < 0.05 or abs(position.z + collision_object->position.z) < collision_object->scale.)
-			{
-
-
-				if (position.z < collision_object->position.z)
-				{
-					position.z -= scene.camera->speed;
-					scene.camera->front.x -= scene.camera->speed;
-					scene.camera->position.x -= scene.camera->speed;
-				}
-				if (position.z > collision_object->position.z)
-				{
-					position.z += scene.camera->speed;
-					scene.camera->front.x += scene.camera->speed;
-					scene.camera->position.x += scene.camera->speed;
-				}
-
-			}
-
-			//from top
-			if (abs(position.y + collision_object->position.y) < collision_object->scale.y + collision_object->position.y && abs(position.z + collision_object->position.z) < (collision_object->scale.z + scale.z) / 2 + collision_object->position.z)
-			{
-				if (position.y > collision_object->position.y)
-					position.y = collision_object->position.y + collision_object->scale.y;
-				dTime = 0;
-			}
-             */
 		}
 
 		// move the player

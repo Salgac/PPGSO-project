@@ -17,8 +17,7 @@
 
 class Renderable;
 
-class Wolf final : public Renderable
-{
+class Wolf final : public Renderable {
     glm::mat4 viewMatrix{1.0f};
     glm::mat4 modelMatrix{1.0f};
     //glm::vec3 color{1.0f};
@@ -30,20 +29,26 @@ class Wolf final : public Renderable
 public:
 
     glm::vec3 position{0, 0, 0};
+    glm::vec3 start_position{0, 0, 0};
     glm::vec3 speed{0, 0, 0};
     glm::vec3 scale{0.6f, 0.6f, 0.6f};
     glm::vec3 color{1, 1, 0};
+    glm::vec3 jump{0, 2.0f, 0};
 
     float dgr;
     int drc;
     int help_timer = 100;
 
+    bool jumping = false;
+
+    int distance_x = 0;
+    int distance_z = 0;
+
     /// Construct a new Particle
     /// \param p - Initial position
     /// \param s - Initial speed
     /// \param c - Color of particle
-    Wolf(glm::vec3 p, glm::vec3 s,float r,int d)
-    {
+    Wolf(glm::vec3 p, glm::vec3 s, glm::vec3 c, float r, int d) {
         // First particle will initialize resources
         if (!shader)
             shader = std::make_unique<ppgso::Shader>(color_vert_glsl, color_frag_glsl);
@@ -56,13 +61,67 @@ public:
 
         speed = s;
         position = p;
+        start_position = p;
         dgr = r;
+        color = c;
 
+        speed.z = 0.3f;
+        speed.x = 0.3f;
+
+    }
+
+    int movement(int random) {
+        if (distance_x == 0) {
+
+            distance_x = 100;
+
+            if (random < 25)
+                speed.x = 0.2;
+            if (random > 25 and random < 50)
+                speed.x = -0.2;
+            if (random > 50)
+                speed.z = 0;
+        }
+        if (distance_z == 0) {
+            int random = rand() % 75;
+
+            distance_z = 100;
+
+            if (random < 25)
+                speed.z = 0.2;
+            if (random > 25 and random < 50)
+                speed.z = -0.2;
+            if (random > 50)
+                speed.z = 0;
+
+        }
+    }
+
+    void move()
+    {
+        if(position.z > start_position.z + 3 or position.z < start_position.z - 3 )
+            speed.z = speed.z * (-1);
+        if(position.x > start_position.x + 3 or position.x < start_position.x - 1 or position.x < -3)
+            speed.x = speed.x * (-1);
+
+        if(distance_x == 0 or distance_z == 0 )
+            movement(rand()%100);
+
+        if (jumping)
+        {
+            if (speed.y == 0)
+                speed += jump;
+            jumping = false;
+        }
+
+        distance_z--;
+        distance_x--;
 
     }
 
     bool update(float dTime, Scene &scene) override
     {
+
         for (auto &obj: scene.objects) {
             // Ignore self in scene
             if (obj.get() == this)
@@ -71,29 +130,34 @@ public:
             auto collision_object = dynamic_cast<Wolf *>(obj.get());
             if (!collision_object) continue;
 
-
-            if (abs(abs(position.z) - abs(collision_object->position.z)) < ((scale.y + collision_object->scale.y)/1.5) )
+            if(glm::distance(position,collision_object->position) < collision_object->scale.x)
             {
+                speed.z = (-speed.z);
+                speed.x = (-speed.x) ;
 
-                help_timer = 200;
-                collision_object->help_timer = 200;
+                collision_object->jumping = true;
+                jumping = true;
             }
-
-            if(help_timer > 0)
-            {
-                position.z -= (0.3f) * dTime;
-                help_timer --;
-            }
-            else
-            {
-                position.z += (0.2f) * dTime;
-            }
-
         }
 
+        move();
 
+        // gravity
+        if (position.y >= 0)
+        {
+            speed.y -= GRAVITACIA;
+            position.y += speed.y * dTime;
 
+            //floor when on ground
+        }
 
+        if (position.y <  0.01f)
+        {
+            position.y = 0;
+            speed.y = 0;
+        }
+
+        position += speed*dTime;
 
         modelMatrix = glm::mat4{1.0f};
         modelMatrix = glm::rotate(modelMatrix, glm::radians(dgr), glm::vec3{0, 0.5f, 0});

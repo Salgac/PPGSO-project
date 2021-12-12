@@ -56,26 +56,19 @@ private:
 		}
          */
 
+        //wolfs
+        for (float i = 0; i < 5; i++)
+        {
+            glm::vec3 pos = {2.5 + i/2,0,0.5 + i/2};
+            auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0},glm::vec3{0.2 + i*0.05, 0.2 + i*0.05, 0.2 + i*0.05},90.0f,1);
+            scene.objects.push_back(move(wolf1));
 
-        glm::vec3 pos = {1,0,0.5};
-        auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},90.0f,1);
-        scene.objects.push_back(move(wolf1));
-
-        pos = {-1,0,-1.5}; // needs to be negative numbers
-        auto wolf0 = std::make_unique<Wolf>(pos, glm::vec3{0, -0.01, 0},270.0f,-1);
-        scene.objects.push_back(move(wolf0));
+        }
 
 
-
-        pos = glm::vec3{2,0,-1.5};
+        glm::vec3 pos = glm::vec3{2,0,-1.5};
         auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 , 0});
         scene.objects.push_back(move(tree));
-
-
-        //cube->scale = {0.15f, 0.2, 1};
-
-
-
 	}
 
 public:
