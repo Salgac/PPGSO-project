@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <list>
+#include <memory>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
@@ -28,6 +30,9 @@ class Wolf final : public Renderable {
 
 public:
 
+    std::list<std::unique_ptr<Wolf>> objects;
+
+
     glm::vec3 position{0, 0, 0};
     glm::vec3 start_position{0, 0, 0};
     glm::vec3 speed{0, 0, 0};
@@ -35,14 +40,17 @@ public:
     glm::vec3 color{1, 1, 0};
     glm::vec3 jump{0, 2.0f, 0};
 
-    float dgr;
-    int drc;
+    float max_dgr = 0;
+    float dgr = 0;
+
     int help_timer = 100;
 
     bool jumping = false;
 
     int distance_x = 0;
     int distance_z = 0;
+
+    int child = 0;
 
     /// Construct a new Particle
     /// \param p - Initial position
@@ -57,7 +65,7 @@ public:
         if (!texture)
             texture = std::make_unique<ppgso::Texture>(ppgso::image::loadBMP("player.bmp"));
 
-        drc = d;
+        dgr = d;
 
         speed = s;
         position = p;
@@ -65,12 +73,33 @@ public:
         dgr = r;
         color = c;
 
+        //child = det;
+
         speed.z = 0.3f;
         speed.x = 0.3f;
 
+        objects.clear();
+        //create(child);
+
     }
 
-    int movement(int random) {
+    /*
+    bool create(int child)
+    {
+        for(int i = 1; i <= child; i++)
+        {
+
+            glm::vec3 pos = {1 + i / 2, 0, - 0.5 + i / 2};
+            auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1,0);
+            objects.push_back(wolf1);
+            objects.push_back(move(wolf1));
+        }
+
+
+    }
+     */
+
+    void movement(int random) {
         if (distance_x == 0) {
 
             distance_x = 100;
@@ -142,6 +171,27 @@ public:
 
         move();
 
+
+        /*
+        max_dgr = 0;
+
+        if(speed.x >= 0)
+            max_dgr += 0;
+        if(speed.x < 0)
+            max_dgr -= 180;
+
+        if(speed.z > 0 )
+            max_dgr -= 90;
+        if(speed.z < 0 )
+            max_dgr += 90;
+
+        if(dgr < max_dgr)
+            dgr += 1.5f;
+        if(dgr > max_dgr)
+            dgr -= 1.5f;
+        */
+
+
         // gravity
         if (position.y >= 0)
         {
@@ -160,8 +210,8 @@ public:
         position += speed*dTime;
 
         modelMatrix = glm::mat4{1.0f};
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(dgr), glm::vec3{0, 0.5f, 0});
         modelMatrix = glm::translate(modelMatrix, position);
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1.0f, 0});
         modelMatrix = glm::scale(modelMatrix, scale);
 
 

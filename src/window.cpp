@@ -19,81 +19,191 @@
 #include "objects/tree.cpp"
 #include "objects/falling_tree.cpp"
 #include "objects/wolf.cpp"
+#include "objects/deer.cpp"
 
 #include "camera.h"
 #include "scene.cpp"
 
-class ProjectWindow : public ppgso::Window
-{
+#include <shaders/convolution_vert_glsl.h>
+#include <shaders/convolution_frag_glsl.h>
+
+#include <shaders/texture_vert_glsl.h>
+#include <shaders/texture_frag_glsl.h>
+
+class ProjectWindow : public ppgso::Window {
 private:
-	Scene scene;
+    Scene scene;
 
-	void initScene()
-	{
-		// TODO create 2 separate templates for scenes
-		scene.objects.clear();
+    // Objects to render the framebuffer on to
+    ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
+    //ppgso::Shader quadShader = {texture_vert_glsl, texture_frag_glsl};
+    ppgso::Mesh quadMesh = {"quad.obj"};
+    ppgso::Texture quadTexture = {1024, 1024};
 
-		// camera
-		auto camera = std::make_unique<Camera>(100.0f, (float)width / (float)height, 0.1f, 100.0f);
-		scene.camera = move(camera);
+    // OpenGL object ids for framebuffer and render buffer
+    GLuint fbo = 1;
+    GLuint rbo = 1;
 
-		// player
-		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
+    bool convolution = false;
 
-		// backgrounds
-		scene.objects.push_back(move(std::make_unique<Background>()));
-		scene.objects.push_back(move(std::make_unique<Moon>()));
-		scene.objects.push_back(move(std::make_unique<Ground>()));
+    void initScene() {
 
-		// trees
-		/*
-		for (int i = 0; i < 35; i++)
-		{
-			float a = glm::linearRand(-5.0f, -1.0f);
-			glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 4.0f), 0, a};
-			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
-			scene.objects.push_back(move(tree));
-		}
-		 */
 
-		// wolfs
-		for (float i = 0; i < 5; i++)
-		{
-			glm::vec3 pos = {2.5 + i / 2, 0, 0.5 + i / 2};
-			auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
-			scene.objects.push_back(move(wolf1));
-		}
+        // TODO create 2 separate templates for scenes
+        scene.objects.clear();
 
-		glm::vec3 pos = glm::vec3{2, 0, -1.5};
-		auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5, 0});
-		scene.objects.push_back(move(tree));
-	}
+        // camera
+        auto camera = std::make_unique<Camera>(100.0f, (float) width / (float) height, 0.1f, 100.0f);
+        scene.camera = move(camera);
+
+        // player
+        scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
+
+        // backgrounds
+        scene.objects.push_back(move(std::make_unique<Background>()));
+        scene.objects.push_back(move(std::make_unique<Moon>()));
+        scene.objects.push_back(move(std::make_unique<Ground>()));
+
+        // trees
+        /*
+        for (int i = 0; i < 35; i++)
+        {
+            float a = glm::linearRand(-5.0f, -1.0f);
+            glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 4.0f), 0, a};
+            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
+            scene.objects.push_back(move(tree));
+        }
+
+        */
+        // wolfs
+        for (float i = 0; i < 5; i++) {
+            glm::vec3 pos = {1 + i / 2, 0, -2 - i};
+            auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0},
+                                                glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
+            scene.objects.push_back(move(wolf1));
+        }
+
+        glm::vec3 pos = glm::vec3{2, 0, -1.5};
+        auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5, 0});
+        scene.objects.push_back(move(tree));
+
+
+        pos = {1, 0, -1};
+        auto deer = std::make_unique<Deer>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0, 1});
+        scene.objects.push_back(move(deer));
+
+
+    }
+
 
 public:
-	ProjectWindow(int size) : Window{"project", size, size}
-	{
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
+    ProjectWindow(int size) : Window{"project", size, size} {
 
-		initScene();
-	}
+        buffer();
 
-	void onIdle()
-	{
-		// Clear depth and color buffers
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Track time
-		static auto time = (float)glfwGetTime();
-		float dTime = (float)glfwGetTime() - time;
-		time = (float)glfwGetTime();
+        initScene();
+    }
 
-		// update
-		scene.update(dTime);
+    void buffer()
+    {
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
 
-		// Render every object in scene
-		scene.render();
-	}
+
+        quadTexture.bind();
+
+        unsigned int framebufferTexture;
+        glGenTextures(1, &framebufferTexture);
+        glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // Prevents edge bleeding
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); // Prevents edge bleeding
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, framebufferTexture, 0);
+
+
+        // Initialize framebuffer, its color texture (the sphere will be rendered to it) and its render buffer for depth info storage
+        glGenFramebuffers(1, &fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+        // Set up render buffer that has a depth buffer and stencil buffer
+        glGenRenderbuffers(1, &rbo);
+        glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+        // Associate the quadTexture with it
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, quadTexture.image.width, quadTexture.image.height);
+        glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, quadTexture.getTexture(), 0);
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+            throw std::runtime_error("Cannot create framebuffer!");
+    }
+
+    void onIdle() {
+
+        glViewport(0, 0, 1024, 1024);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+        glClearColor(.5f, .7f, .5f, 0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // Track time
+        static auto time = (float) glfwGetTime();
+        float dTime = (float) glfwGetTime() - time;
+        time = (float) glfwGetTime();
+
+        // update
+        scene.update(dTime);
+        // Render every object in scene
+        scene.render();
+
+
+        resetViewport();
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        // Clear the framebuffer
+        glClearColor(0, 0, 0, 0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+        auto quadViewMatrix = glm::mat4{1.0f};
+        quadViewMatrix = glm::lookAt(glm::vec3{0.0f, 0.0f, -1.0f}, scene.camera->front - glm::vec3{0.0f, 0.0f, -0.1f},{0.0f, -1.0f, 0.0f});
+
+        // Animate rotation of the quad
+        auto quadModelMatrix = glm::mat4{1.0f};
+
+
+        // Set shader inputs
+        quadShader.use();
+        quadShader.setUniform("ProjectionMatrix", scene.camera->perspective);
+        quadShader.setUniform("ViewMatrix", quadViewMatrix);
+        quadShader.setUniform("ModelMatrix", quadModelMatrix);
+        quadShader.setUniform("Texture", quadTexture);
+        quadMesh.render();
+
+    }
+
+    void change_filter()
+    {
+        if(convolution)
+        {
+            quadShader = {texture_vert_glsl, texture_frag_glsl};
+            convolution = false;
+            resetViewport();
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            buffer();
+        }
+        if(!convolution)
+        {
+            quadShader = {texture_vert_glsl, texture_frag_glsl};
+            convolution = true;
+            resetViewport();
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            buffer();
+        }
+    }
 
 	void onKey(int key, int scanCode, int action, int mods) override
 	{
@@ -111,15 +221,20 @@ public:
 				// right
 				scene.move_right = true;
 				break;
-			case 65:
+			case 57:
 				// spacebar
 				if (!scene.jump)
 					scene.jump = true;
 				break;
-			}
+            case 28:
+
+                change_filter();
+                break;
+            }
 		}
 		if (action == GLFW_RELEASE)
 		{
+            std::cout << scanCode;
 			switch (scanCode)
 			{
 			case 38:
@@ -132,7 +247,8 @@ public:
 				// right
 				scene.move_right = false;
 				break;
-			}
-		}
+
+            }
+        }
 	}
 };
