@@ -92,7 +92,6 @@ private:
         auto deer = std::make_unique<Deer>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0, 1});
         scene.objects.push_back(move(deer));
 
-
     }
 
 
@@ -100,8 +99,6 @@ public:
     ProjectWindow(int size) : Window{"project", size, size} {
 
         buffer();
-
-
         initScene();
     }
 
@@ -169,7 +166,7 @@ public:
 
 
         auto quadViewMatrix = glm::mat4{1.0f};
-        quadViewMatrix = glm::lookAt(glm::vec3{0.0f, 0.0f, -1.0f}, scene.camera->front - glm::vec3{0.0f, 0.0f, -0.1f},{0.0f, -1.0f, 0.0f});
+        quadViewMatrix = glm::lookAt(glm::vec3{0.0f, 0.0f, -0.8f}, scene.camera->front - glm::vec3{0.0f, 0.0f, -1.0f},{0.0f, -1.0f, 0.0f});
 
         // Animate rotation of the quad
         auto quadModelMatrix = glm::mat4{1.0f};
@@ -226,10 +223,6 @@ public:
 				if (!scene.jump)
 					scene.jump = true;
 				break;
-            case 28:
-
-                change_filter();
-                break;
             }
 		}
 		if (action == GLFW_RELEASE)
