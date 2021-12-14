@@ -43,7 +43,14 @@ private:
 		// shader and light
 		auto shader = std::make_unique<ppgso::Shader>(light_vert_glsl, light_frag_glsl);
 
+		// moonlight
+		scene.light_positions.push_back(glm::vec3(5, 7, -13));
 		shader->setUniform("lights[0].color", glm::vec3(1, 0.5, 0.5));
+
+		// temp
+		scene.light_positions.push_back(glm::vec3(0, 3, 0));
+		shader->setUniform("lights[1].color", glm::vec3(1, 1, 1));
+
 		scene.shader = move(shader);
 
 		// player

@@ -139,8 +139,18 @@ public:
 		scene.shader->setUniform("Texture", *texture);
 
 		// light
-		scene.shader->setUniform("lights[0].position", scene.light_position - position);
+		setLightShader(scene);
 
 		mesh->render();
 	};
+
+	void setLightShader(Scene &scene)
+	{
+		for (int i = 0; i < scene.LIGHT_COUNT; i++)
+		{
+			char buffer[64];
+			sprintf(buffer, "lights[%d].position", i);
+			scene.shader->setUniform(buffer, scene.light_positions.at(i) - position);
+		}
+	}
 };

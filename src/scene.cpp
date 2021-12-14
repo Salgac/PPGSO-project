@@ -23,8 +23,9 @@ public:
 	std::unique_ptr<ppgso::Shader> shader;
 
 	// lights
-	glm::vec3 light_position = {0, 0, 0};
-	glm::vec3 light_color = {1.0f, 0.5f, 0.5f};
+	std::vector<glm::vec3> light_positions;
+	// glm::vec3 light_color = {1.0f, 0.5f, 0.5f};
+	int LIGHT_COUNT = 2;
 
 	// player
 	bool jump = false;

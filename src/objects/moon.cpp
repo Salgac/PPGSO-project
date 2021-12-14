@@ -13,7 +13,6 @@ class Moon final : public Renderable
 public:
 	glm::vec3 position{5, 15, -25};
 	glm::vec3 scale{5, 5, 1};
-	glm::vec3 light{5, 7, -13};
 
 	Moon()
 	{
@@ -29,12 +28,6 @@ public:
 		modelMatrix = glm::translate(modelMatrix, position);
 		modelMatrix = glm::scale(modelMatrix, scale);
 
-		// set as a light source
-		if (scene.light_position != light)
-		{
-			scene.light_position = light;
-		}
-
 		return true;
 	}
 
@@ -47,7 +40,7 @@ public:
 		scene.shader->setUniform("ProjectionMatrix", scene.camera->perspective);
 		scene.shader->setUniform("Texture", *texture);
 
-		// light
+		// light - only illumination
 		scene.shader->setUniform("lights[0].position", glm::vec3{0, 0, 5});
 
 		mesh->render();
