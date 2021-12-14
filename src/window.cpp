@@ -48,7 +48,7 @@ private:
 		shader->setUniform("lights[0].color", glm::vec3(1, 0.5, 0.5));
 
 		// temp
-		scene.light_positions.push_back(glm::vec3(0, 3, 0));
+		scene.light_positions.push_back(glm::vec3(0, 2, 0));
 		shader->setUniform("lights[1].color", glm::vec3(1, 1, 1));
 
 		scene.shader = move(shader);

@@ -42,6 +42,7 @@ public:
 
 		// light - only illumination
 		scene.shader->setUniform("lights[0].position", glm::vec3{0, 0, 5});
+		scene.shader->setUniform("lights[1].position", glm::vec3{0, 0, 0});
 
 		mesh->render();
 	}
