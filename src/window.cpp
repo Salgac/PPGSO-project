@@ -74,8 +74,12 @@ private:
         for (int i = 0; i < 3;i++)
         {
             glm::vec3 pos = glm::vec3{4+(i*2), 0, -1.5};
-            auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.4, 0});
+            auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0});
             scene.objects.push_back(move(tree));
+            //0.5f, 0.35f, 0.05f
+            //0.4470588235294118f,0.3607843137254902f,0.2588235294117647f
+            //0.3607843137254902f, 0.2509803921568627f, 0.2f
+
         }
 
         // wolfs
