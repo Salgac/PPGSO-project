@@ -98,11 +98,11 @@ private:
 public:
     ProjectWindow(int size) : Window{"project", size, size} {
 
-        buffer();
+        buffer_init();
         initScene();
     }
 
-    void buffer()
+    void buffer_init()
     {
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -138,32 +138,23 @@ public:
             throw std::runtime_error("Cannot create framebuffer!");
     }
 
-    void onIdle() {
-
+    void buffer_set()
+    {
         glViewport(0, 0, 1024, 1024);
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
         glClearColor(.5f, .7f, .5f, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
 
-        // Track time
-        static auto time = (float) glfwGetTime();
-        float dTime = (float) glfwGetTime() - time;
-        time = (float) glfwGetTime();
-
-        // update
-        scene.update(dTime);
-        // Render every object in scene
-        scene.render();
-
-
+    void buffer_show()
+    {
         resetViewport();
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         // Clear the framebuffer
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
         auto quadViewMatrix = glm::mat4{1.0f};
         quadViewMatrix = glm::lookAt(glm::vec3{0.0f, 0.0f, -0.8f}, scene.camera->front - glm::vec3{0.0f, 0.0f, -1.0f},{0.0f, -1.0f, 0.0f});
@@ -179,27 +170,27 @@ public:
         quadShader.setUniform("ModelMatrix", quadModelMatrix);
         quadShader.setUniform("Texture", quadTexture);
         quadMesh.render();
-
     }
 
-    void change_filter()
-    {
-        if(convolution)
-        {
-            quadShader = {texture_vert_glsl, texture_frag_glsl};
-            convolution = false;
-            resetViewport();
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-            buffer();
-        }
-        if(!convolution)
-        {
-            quadShader = {texture_vert_glsl, texture_frag_glsl};
-            convolution = true;
-            resetViewport();
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-            buffer();
-        }
+    void onIdle() {
+        buffer_set();
+
+
+        // Track time
+        static auto time = (float) glfwGetTime();
+        float dTime = (float) glfwGetTime() - time;
+        time = (float) glfwGetTime();
+
+        // update
+        scene.update(dTime);
+        // Render every object in scene
+        scene.render();
+
+
+
+
+
+        buffer_show();
     }
 
 	void onKey(int key, int scanCode, int action, int mods) override
@@ -218,7 +209,7 @@ public:
 				// right
 				scene.move_right = true;
 				break;
-			case 57:
+			case 65:
 				// spacebar
 				if (!scene.jump)
 					scene.jump = true;
@@ -227,7 +218,6 @@ public:
 		}
 		if (action == GLFW_RELEASE)
 		{
-            std::cout << scanCode;
 			switch (scanCode)
 			{
 			case 38:
