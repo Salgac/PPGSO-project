@@ -42,6 +42,6 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 |                                                       | ○ Správny Phongov osvetlovací model s viacerými (aspoň 3) zdrojmi svetla, pričom musia byť splnené podmienky                          | 2     | &#9744; |
 |                                                       | ○ Tiene implementované (Jednoduchým spôsobom / pomocou shadow-maps)                                                                   | 1/3   | &#9744; |
 | **Post-processing**                                   |                                                                                                                                       |       |         |
-|                                                       | ○ Zobrazenie scény cez vlastný framebuffer, pomocou ktorého sa aplikuje filter: základný (grayscale) / konvolučný / pokročilý (bloom) | 1/2/4 | &#9744; |
+|                                                       | ○ Zobrazenie scény cez vlastný framebuffer, pomocou ktorého sa aplikuje filter: základný (grayscale) / konvolučný / pokročilý (bloom) | 1/2/4 | &#9745; |
 |                                                       |                                                                                                                                       |       |         |
-|                                                       |                                                                                                                                       | 40    | 17      |
+|                                                       |                                                                                                                                       | 40    | 19      |
