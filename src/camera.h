@@ -50,6 +50,7 @@ public:
         player_position.z = tmp;
 
 
+        /*
         if (go_boundary_right) {
             if (distance(front,boundary_position_right) > 0 )
                 front.x += position.x;
@@ -75,7 +76,8 @@ public:
         }
         if(!go_player and !go_boundary_left and !go_boundary_right)
             front = player_position;
-
+        */
+        auto front = player_position;
 		// Update viewMatrix
 		if (front.x > BOUNDARY_LEFT && front.x < BOUNDARY_RIGHT)
 			viewMatrix = glm::lookAt(front + position_offset, front + front_offset, up);
