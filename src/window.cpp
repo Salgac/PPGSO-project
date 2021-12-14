@@ -70,13 +70,14 @@ private:
             scene.objects.push_back(move(tree));
         }
 
-
+        //faling trees
         for (int i = 0; i < 3;i++)
         {
             glm::vec3 pos = glm::vec3{4+(i*2), 0, -1.5};
             auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.4, 0});
             scene.objects.push_back(move(tree));
         }
+
         // wolfs
         for (float i = 0; i < 5; i++)
         {
@@ -176,7 +177,7 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         auto quadViewMatrix = glm::mat4{1.0f};
-        quadViewMatrix = glm::lookAt(glm::vec3{0.0f, 0.0f, -0.8f}, scene.camera->front - glm::vec3{0.0f, 0.0f, -1.0f},{0.0f, -1.0f, 0.0f});
+        quadViewMatrix = glm::lookAt(glm::vec3{0.0f, 0.0f, -0.8f}, scene.camera->help - glm::vec3{0.0f, 1.0f, -1.0f},{0.0f, -1.0f, 0.0f});
 
         // Animate rotation of the quad
         auto quadModelMatrix = glm::mat4{1.0f};

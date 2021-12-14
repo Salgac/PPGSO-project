@@ -20,6 +20,8 @@ public:
 	glm::vec3 position_offset{-0.5f, 0.5f, 1.0f};
 	glm::vec3 front_offset{0.0f, 0.0f, -1.0f};
 	glm::vec3 up{0.0f, 1.0f, 0.0f};
+
+    glm::vec3 help{0.0f, 1.0f, 0.0f};
 	float speed = 0.05f;
 
     bool go_boundary_right = false;
@@ -50,7 +52,7 @@ public:
         player_position.z = tmp;
 
 
-        /*
+
         if (go_boundary_right) {
             if (distance(front,boundary_position_right) > 0 )
                 front.x += position.x;
@@ -76,8 +78,8 @@ public:
         }
         if(!go_player and !go_boundary_left and !go_boundary_right)
             front = player_position;
-        */
-        auto front = player_position;
+
+        auto help = player_position;
 		// Update viewMatrix
 		if (front.x > BOUNDARY_LEFT && front.x < BOUNDARY_RIGHT)
 			viewMatrix = glm::lookAt(front + position_offset, front + front_offset, up);
