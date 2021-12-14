@@ -25,9 +25,10 @@ public:
 	glm::vec3 scale{0.6f, 0.6f, 0.6f};
 
 	glm::vec3 jump{0, 2.0f, 0};
-	glm::vec3 move{0, 0, 0.5f};
+	glm::vec3 move{0, 0, 2.5f};
 
 	float ground = 0;
+
 
 	/// Construct a new Player
 	/// \param p - Initial position
