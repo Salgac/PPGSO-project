@@ -32,7 +32,7 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 |                                                       | ○ Animácia na základe dát uložených v kľúčových snímkoch a interpolácie                                                               | 3     | &#9744; |
 | **Simulácia**                                         |                                                                                                                                       |       |         |
 |                                                       | ○ Efektívna kolízia medzi objektami (Dynamická odozva na kolíziu)                                                                     | 3     | &#9745; |
-|                                                       | ○ Simulácia aspoň s dvoma silami s použitím vektorovej algebry (Napr. gravitácia + vietor, časticový systém)                          | 2     | &#9744; |
+|                                                       | ○ Simulácia aspoň s dvoma silami s použitím vektorovej algebry (Napr. gravitácia + vietor, časticový systém)                          | 2     | &#9745; |
 | **Transformácie kamery**                              |                                                                                                                                       |       |         |
 |                                                       | ○ Kamera s perspektívnou projekciou                                                                                                   | 1     | &#9745; |
 |                                                       | ○ Animovaná kamera pomocou kľúčových snímkov alebo riadená animačnými krivkami                                                        | 3     | &#9744; |
@@ -44,4 +44,4 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 | **Post-processing**                                   |                                                                                                                                       |       |         |
 |                                                       | ○ Zobrazenie scény cez vlastný framebuffer, pomocou ktorého sa aplikuje filter: základný (grayscale) / konvolučný / pokročilý (bloom) | 1/2/4 | &#9744; |
 |                                                       |                                                                                                                                       |       |         |
-|                                                       |                                                                                                                                       | 40    | 10      |
+|                                                       |                                                                                                                                       | 40    | 12      |
