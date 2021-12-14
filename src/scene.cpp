@@ -19,7 +19,12 @@ public:
 	// camera
 	std::unique_ptr<Camera> camera;
 
-	// lights TODO
+	// shader
+	std::unique_ptr<ppgso::Shader> shader;
+
+	// lights
+	glm::vec3 light_position = {0, 0, 0};
+	glm::vec3 light_color = {1.0f, 0.5f, 0.5f};
 
 	// player
 	bool jump = false;

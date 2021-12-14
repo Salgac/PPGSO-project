@@ -1,7 +1,3 @@
-
-#include <shaders/texture_vert_glsl.h>
-#include <shaders/texture_frag_glsl.h>
-
 #include <ppgso/ppgso.h>
 #include "../scene.cpp"
 #include "../renderable.h"
@@ -13,16 +9,14 @@ class Moon final : public Renderable
 	// Static resources
 	std::unique_ptr<ppgso::Mesh> mesh;
 	std::unique_ptr<ppgso::Texture> texture;
-	std::unique_ptr<ppgso::Shader> shader;
 
 public:
 	glm::vec3 position{5, 15, -25};
-	glm::vec3 scale{5, 5, 0};
+	glm::vec3 scale{5, 5, 1};
+	glm::vec3 light{5, 7, -13};
 
 	Moon()
 	{
-		if (!shader)
-			shader = std::make_unique<ppgso::Shader>(texture_vert_glsl, texture_frag_glsl);
 		if (!texture)
 			texture = std::make_unique<ppgso::Texture>(ppgso::image::loadBMP("moon.bmp"));
 		if (!mesh)
@@ -35,18 +29,26 @@ public:
 		modelMatrix = glm::translate(modelMatrix, position);
 		modelMatrix = glm::scale(modelMatrix, scale);
 
+		// set as a light source
+		if (scene.light_position != light)
+		{
+			scene.light_position = light;
+		}
+
 		return true;
 	}
 
 	void render(Scene &scene) override
 	{
 		// Render the object
-		shader->use();
-		shader->setUniform("ModelMatrix", modelMatrix);
-		shader->setUniform("ViewMatrix", scene.camera->viewMatrix);
-		shader->setUniform("ProjectionMatrix", scene.camera->perspective);
-		shader->setUniform("Texture", *texture);
-		shader->setUniform("TextureOffset", glm::vec2(0.0f, 0.0f));
+		scene.shader->use();
+		scene.shader->setUniform("ModelMatrix", modelMatrix);
+		scene.shader->setUniform("ViewMatrix", scene.camera->viewMatrix);
+		scene.shader->setUniform("ProjectionMatrix", scene.camera->perspective);
+		scene.shader->setUniform("Texture", *texture);
+
+		// light
+		scene.shader->setUniform("lights[0].position", glm::vec3{0, 0, 5});
 
 		mesh->render();
 	}

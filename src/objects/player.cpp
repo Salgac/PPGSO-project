@@ -1,7 +1,3 @@
-
-#include <shaders/texture_vert_glsl.h>
-#include <shaders/texture_frag_glsl.h>
-
 #include <ppgso/ppgso.h>
 
 #include "../renderable.h"
@@ -17,7 +13,6 @@ class Player final : public Renderable
 	// Static resources
 	std::unique_ptr<ppgso::Mesh> mesh;
 	std::unique_ptr<ppgso::Texture> texture;
-	std::unique_ptr<ppgso::Shader> shader;
 
 public:
 	glm::vec3 position{0, 0, 0};
@@ -33,8 +28,6 @@ public:
 	/// \param p - Initial position
 	Player(glm::vec3 p)
 	{
-		if (!shader)
-			shader = std::make_unique<ppgso::Shader>(texture_vert_glsl, texture_frag_glsl);
 		if (!texture)
 			texture = std::make_unique<ppgso::Texture>(ppgso::image::loadBMP("player.bmp"));
 		if (!mesh)
@@ -138,13 +131,15 @@ public:
 		// Render the object
 		viewMatrix = scene.camera->viewMatrix;
 
-		shader->use();
-		// shader->setUniform("LightDirection", glm::vec3{1.0f, 1.0f, 1.0f});
-		shader->setUniform("ModelMatrix", modelMatrix);
-		shader->setUniform("ViewMatrix", viewMatrix);
-		shader->setUniform("ProjectionMatrix", scene.camera->perspective);
+		// shader
+		scene.shader->use();
+		scene.shader->setUniform("ModelMatrix", modelMatrix);
+		scene.shader->setUniform("ViewMatrix", viewMatrix);
+		scene.shader->setUniform("ProjectionMatrix", scene.camera->perspective);
+		scene.shader->setUniform("Texture", *texture);
 
-		shader->setUniform("Texture", *texture);
+		// light
+		scene.shader->setUniform("lights[0].position", scene.light_position - position);
 
 		mesh->render();
 	};
