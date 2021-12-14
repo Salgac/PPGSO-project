@@ -17,7 +17,7 @@ class Ground final : public Renderable
 
 public:
 	glm::vec3 position{7, 0, -4};
-	glm::vec3 scale{12, 5, 0};
+	glm::vec3 scale{20, 8, 0};
 
 	Ground()
 	{

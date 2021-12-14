@@ -29,6 +29,10 @@ class Falling_Tree : public Renderable
     glm::mat4 viewMatrix{1.0f};
     glm::mat4 modelMatrix{1.0f};
     glm::vec3 color{0.3607843137254902f, 0.2509803921568627f, 0.2f};
+
+    //0.4470588235294118f,0.3607843137254902f,0.2588235294117647f
+    //0.3607843137254902f, 0.2509803921568627f, 0.2f
+
     // Static resources shared between all particles
     static std::unique_ptr<ppgso::Mesh> mesh;
     static std::unique_ptr<ppgso::Shader> shader;

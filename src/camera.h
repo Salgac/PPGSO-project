@@ -29,7 +29,7 @@ public:
     bool go_player = false;
 
 	const float BOUNDARY_LEFT = -0.5f;
-	const float BOUNDARY_RIGHT = 10.0f;
+	const float BOUNDARY_RIGHT = 18.0f;
 
     glm::vec3 boundary_position_right{BOUNDARY_RIGHT, 0.0f, -1.0f };
     glm::vec3 boundary_position_left{BOUNDARY_LEFT, 0.0f, -1.0f };

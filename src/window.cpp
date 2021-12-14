@@ -62,10 +62,10 @@ private:
         scene.objects.push_back(move(std::make_unique<Ground>()));
 
         // trees
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 50; i++)
         {
-            float a = glm::linearRand(-3.0f, -10.0f);
-            glm::vec3 pos = glm::vec3{glm::linearRand(-2.0f, 15.0f), 0, a};
+            float a = glm::linearRand(-3.0f, -12.0f);
+            glm::vec3 pos = glm::vec3{glm::linearRand(-2.0f, 12.0f), 0, a};
             auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
             scene.objects.push_back(move(tree));
         }
@@ -76,19 +76,20 @@ private:
             glm::vec3 pos = glm::vec3{4+(i*2), 0, -1.5};
             auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0});
             scene.objects.push_back(move(tree));
-            //0.5f, 0.35f, 0.05f
-            //0.4470588235294118f,0.3607843137254902f,0.2588235294117647f
-            //0.3607843137254902f, 0.2509803921568627f, 0.2f
 
         }
 
         // wolfs
         for (float i = 0; i < 5; i++)
         {
-            glm::vec3 pos = {2.5 + i / 2, 0, 8.5 + i / 2};
+            glm::vec3 pos = {glm::linearRand(12.0f, 18.0f),0,  glm::linearRand(-1.5f, -4.0f)};
             auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
             scene.objects.push_back(move(wolf1));
         }
+
+        glm::vec3 pos = {10,0,-2};
+        auto deer = std::make_unique<Deer>(pos, glm::vec3{1,1,0});
+        scene.objects.push_back(move(deer));
 
     }
     void scene2_init()
