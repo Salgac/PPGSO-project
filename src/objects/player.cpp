@@ -24,12 +24,10 @@ public:
 	glm::vec3 speed{0, 0, 0};
 	glm::vec3 scale{0.6f, 0.6f, 0.6f};
 
-	glm::vec3 jump{0, 4.0f, 0};
+	glm::vec3 jump{0, 2.0f, 0};
 	glm::vec3 move{0, 0, 0.5f};
 
 	float ground = 0;
-
-    bool wind = false;
 
 	/// Construct a new Player
 	/// \param p - Initial position
@@ -63,10 +61,10 @@ public:
 				if (player_position.y < collision_object->scale.y)
 				{
 					if (player_position.x < collision_object->position.x)
-                        scene.move_right = false;
+						scene.move_right = false;
 
 					if (player_position.x > collision_object->position.x)
-                        scene.move_left = false;
+						scene.move_left = false;
 				}
 
 				else
@@ -101,28 +99,28 @@ public:
 			}
 		}
 
-        // move the player
-        if (scene.move_left)
-        {
-            if (abs(speed.z) == 0)
-                speed -= move;
-        }
-        else if (scene.move_right)
-        {
-            if (abs(speed.z) == 0)
-                speed += move;
-        }
-        else
-        {
-            speed.z = 0;
-        }
+		// move the player
+		if (scene.move_left)
+		{
+			if (abs(speed.z) == 0)
+				speed -= move;
+		}
+		else if (scene.move_right)
+		{
+			if (abs(speed.z) == 0)
+				speed += move;
+		}
+		else
+		{
+			speed.z = 0;
+		}
 
-        if (position.z >= 1 )
-        {
-            position.z -= VIETOR * dTime;
-        }
+		if (position.y > 0)
+		{
+			position.z -= VIETOR * dTime;
+		}
 
-        position.z += speed.z * dTime;
+		position.z += speed.z * dTime;
 
 		// for scene specific actions
 		scene.player_position = position;
