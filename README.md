@@ -27,7 +27,7 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 |                                                       | ○ Procedurálne generovaná scéna (Obmedzenia a lokácia objektov definovaná (ne-)deterministickým algoritmom)                           | 2     | &#9744; |
 |                                                       | ○ Zmena scény a viacero virtuálnych oblastí (Aspoň 2 rôzne scény, môžu byť riešené v rámci jednej sceny napr. vonku-vnútri)           | 2     | &#9744; |
 | **Transformácie a animácie objektov**                 |                                                                                                                                       |       |         |
-|                                                       | ○ Procedurálna animácia (Uzavretá metóda s parametrami, Logické vetvenie)                                                             | 2     | &#9744; |
+|                                                       | ○ Procedurálna animácia (Uzavretá metóda s parametrami, Logické vetvenie)                                                             | 2     | &#9745; |
 |                                                       | ○ Hierarchická transformácia objektov (Aspoň 2 levely hierarchie medzi 3-mi objektmi, Použitie kompozície maticových transformácii)   | 2     | &#9745; |
 |                                                       | ○ Animácia na základe dát uložených v kľúčových snímkoch a interpolácie                                                               | 3     | &#9744; |
 | **Simulácia**                                         |                                                                                                                                       |       |         |
@@ -42,6 +42,6 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 |                                                       | ○ Správny Phongov osvetlovací model s viacerými (aspoň 3) zdrojmi svetla, pričom musia byť splnené podmienky                          | 2     | &#9744; |
 |                                                       | ○ Tiene implementované (Jednoduchým spôsobom / pomocou shadow-maps)                                                                   | 1/3   | &#9744; |
 | **Post-processing**                                   |                                                                                                                                       |       |         |
-|                                                       | ○ Zobrazenie scény cez vlastný framebuffer, pomocou ktorého sa aplikuje filter: základný (grayscale) / konvolučný / pokročilý (bloom) | 1/2/4 | &#9744; |
+|                                                       | ○ Zobrazenie scény cez vlastný framebuffer, pomocou ktorého sa aplikuje filter: základný (grayscale) / konvolučný / pokročilý (bloom) | 1/2/4 | &#9745; |
 |                                                       |                                                                                                                                       |       |         |
-|                                                       |                                                                                                                                       | 40    | 12      |
+|                                                       |                                                                                                                                       | 40    | 16     |
