@@ -25,7 +25,7 @@ struct PointLight {
     vec3 color;
 };
 
-#define NR_LIGHTS 2
+#define NR_LIGHTS 3
 uniform PointLight lights[NR_LIGHTS];
 
 // material

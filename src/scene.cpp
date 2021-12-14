@@ -24,8 +24,7 @@ public:
 
 	// lights
 	std::vector<glm::vec3> light_positions;
-	// glm::vec3 light_color = {1.0f, 0.5f, 0.5f};
-	int LIGHT_COUNT = 2;
+	int LIGHT_COUNT = 3;
 
 	// player
 	bool jump = false;
@@ -54,6 +53,10 @@ public:
 	// render function
 	void render()
 	{
+		// ambient light - move according to player
+		glm::vec3 pp = player_position;
+		light_positions.at(1) = glm::vec3(pp.z, pp.y, pp.x) + glm::vec3(0, 2, 2);
+
 		for (auto &object : objects)
 		{
 			object->render(*this);

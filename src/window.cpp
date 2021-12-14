@@ -47,9 +47,15 @@ private:
 		scene.light_positions.push_back(glm::vec3(5, 7, -13));
 		shader->setUniform("lights[0].color", glm::vec3(1, 0.5, 0.5));
 
-		// temp
-		scene.light_positions.push_back(glm::vec3(0, 2, 0));
-		shader->setUniform("lights[1].color", glm::vec3(1, 1, 1));
+		// ambient
+		scene.light_positions.push_back(glm::vec3(0, 2, 2));
+		shader->setUniform("lights[1].color", glm::vec3(0.3, 0.3, 0.3));
+
+		// tmp
+		glm::vec3 posc = glm::vec3(1, 1, -2);
+		scene.objects.push_back(move(std::make_unique<Cube>(posc, glm::vec3(0.1, 0.1, 0.1), 1)));
+		scene.light_positions.push_back(posc);
+		shader->setUniform("lights[2].color", glm::vec3(0.3, 1.0, 0.5));
 
 		scene.shader = move(shader);
 

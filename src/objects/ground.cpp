@@ -49,9 +49,7 @@ public:
 
 	void setLightShader(Scene &scene)
 	{
-		glm::mat4 rotationMat(1);
-		glm::rotate(rotationMat, glm::radians(90.0f), glm::vec3{1, 0, 0});
-		glm::vec3 pos = glm::vec3(rotationMat * glm::vec4(position, 1.0f));
+		glm::vec3 pos = glm::vec3(position.x, position.z, position.y);
 
 		for (int i = 0; i < scene.LIGHT_COUNT; i++)
 		{

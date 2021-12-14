@@ -146,11 +146,14 @@ public:
 
 	void setLightShader(Scene &scene)
 	{
+		glm::vec3 pp = position;
+		glm::vec3 pos = glm::vec3(pp.z, pp.y, pp.x);
+
 		for (int i = 0; i < scene.LIGHT_COUNT; i++)
 		{
 			char buffer[64];
 			sprintf(buffer, "lights[%d].position", i);
-			scene.shader->setUniform(buffer, scene.light_positions.at(i) - position);
+			scene.shader->setUniform(buffer, scene.light_positions.at(i) - pos);
 		}
 	}
 };
