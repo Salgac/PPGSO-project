@@ -28,6 +28,7 @@
 #include "objects/deer.cpp"
 #include "objects/fireflies.cpp"
 #include "objects/crow.cpp"
+#include "objects/corn.cpp"
 
 #include "camera.h"
 #include "scene.cpp"
@@ -179,6 +180,13 @@ private:
 
         scene.objects.push_back(move(std::make_unique<Lake>()));
 
+        for (float i = 0; i < 70; i++)
+        {
+            glm::vec3 pos = glm::vec3{6 + i/6,0,-1};
+            auto corn = std::make_unique<Corn>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{1,1,1});
+            scene.objects.push_back(move(corn));
+        }
+
 		// fireflies
 		glm::vec3 posf = glm::vec3(3, 0.6, -1);
 		scene.light_positions.push_back(posf);
@@ -285,7 +293,7 @@ public:
 		scene.render();
 
 		// check for scene change
-		if (scene.player_position.x > 11 and current_scene == 0)
+		if (scene.player_position.x > 1 and current_scene == 0)
 		{
             current_scene++;
 			scene2_init();
