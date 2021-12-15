@@ -22,6 +22,7 @@
 
 #include "objects/tree.cpp"
 #include "objects/falling_tree.cpp"
+#include "objects/flower.cpp"
 #include "objects/wolf.cpp"
 #include "objects/deer.cpp"
 #include "objects/fireflies.cpp"
@@ -131,8 +132,18 @@ private:
 			scene.objects.push_back(move(wolf1));
 		}
 
-		// third light not present
-		scene.shader->setUniform("lights[2].color", glm::vec3(0, 0, 0));
+		// magic flowers
+		glm::vec3 color = glm::vec3(1, 0, 0.8);
+		glm::vec3 flowercenter = glm::vec3(5, 0, -1.6);
+
+		scene.light_positions.at(2) = flowercenter + glm::vec3(0, 0.1, 0);
+		scene.shader->setUniform("lights[2].color", color / glm::vec3(3, 1, 3));
+
+		for (int i = 0; i < 10; i++)
+		{
+			glm::vec3 pos = glm::vec3(glm::linearRand(-0.3, 0.3), 0, glm::linearRand(-0.3, 0.3));
+			scene.objects.push_back(move(std::make_unique<Flower>(flowercenter + pos, color)));
+		}
 	}
 
 	void scene2_init()
