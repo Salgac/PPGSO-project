@@ -45,8 +45,8 @@ private:
 	int current_scene = 0;
 
 	// Objects to render the framebuffer on to
-	ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
-	//ppgso::Shader quadShader = {texture_vert_glsl, texture_frag_glsl};
+	//ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
+	ppgso::Shader quadShader = {texture_vert_glsl, texture_frag_glsl};
 	ppgso::Mesh quadMesh = {"quad.obj"};
 	ppgso::Texture quadTexture = {1024, 1024};
 
@@ -183,6 +183,7 @@ private:
 		glm::vec3 posf = glm::vec3(3, 0.6, -1);
 		scene.light_positions.push_back(posf);
 		scene.objects.push_back(move(std::make_unique<Fireflies>(posf, glm::linearRand(30, 50))));
+
 	}
 
 	int crowSpawn = 0;
@@ -284,7 +285,7 @@ public:
 		scene.render();
 
 		// check for scene change
-		if (scene.player_position.x > 1 and current_scene == 0)
+		if (scene.player_position.x > 11 and current_scene == 0)
 		{
             current_scene++;
 			scene2_init();
