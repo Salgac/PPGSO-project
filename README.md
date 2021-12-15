@@ -23,7 +23,7 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 |                                                       | ○ Unikátne textúrovanie pomocou UV koordinátov                                                                                        | 2     | &#9745; |
 | **Scény**                                             |                                                                                                                                       |       |         |
 |                                                       | ○ Každá scéna bude mať logické priestorové usporiadanie (podlaha, pozadie, obloha, strop, steny...)                                   | 1     | &#9745; |
-|                                                       | ○ Dynamická scéna s objektami, ktoré sú vytvárané a zanikajú v čase (Aspoň 2 rôzne typy objektov, ktoré vznikajú-zanikajú)            | 1     | &#9744; |
+|                                                       | ○ Dynamická scéna s objektami, ktoré sú vytvárané a zanikajú v čase (Aspoň 2 rôzne typy objektov, ktoré vznikajú-zanikajú)            | 1     | &#9745; |
 |                                                       | ○ Procedurálne generovaná scéna (Obmedzenia a lokácia objektov definovaná (ne-)deterministickým algoritmom)                           | 2     | &#9745; |
 |                                                       | ○ Zmena scény a viacero virtuálnych oblastí (Aspoň 2 rôzne scény, môžu byť riešené v rámci jednej sceny napr. vonku-vnútri)           | 2     | &#9745; |
 | **Transformácie a animácie objektov**                 |                                                                                                                                       |       |         |
@@ -44,4 +44,4 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 | **Post-processing**                                   |                                                                                                                                       |       |         |
 |                                                       | ○ Zobrazenie scény cez vlastný framebuffer, pomocou ktorého sa aplikuje filter: základný (grayscale) / konvolučný / pokročilý (bloom) | 1/2/4 | &#9745; |
 |                                                       |                                                                                                                                       |       |         |
-|                                                       |                                                                                                                                       | 40    | 27      |
+|                                                       |                                                                                                                                       | 40    | 28      |
