@@ -3,6 +3,9 @@
 #include <vector>
 #include <list>
 
+#include <shaders/light_vert_glsl.h>
+#include <shaders/light_frag_glsl.h>
+
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtx/matrix_transform_2d.hpp>
@@ -36,6 +39,25 @@ private:
 		// camera
 		auto camera = std::make_unique<Camera>(100.0f, (float)width / (float)height, 0.1f, 100.0f);
 		scene.camera = move(camera);
+
+		// shader and light
+		auto shader = std::make_unique<ppgso::Shader>(light_vert_glsl, light_frag_glsl);
+
+		// moonlight
+		scene.light_positions.push_back(glm::vec3(5, 7, -13));
+		shader->setUniform("lights[0].color", glm::vec3(1, 0.5, 0.5));
+
+		// ambient
+		scene.light_positions.push_back(glm::vec3(0, 2, 2));
+		shader->setUniform("lights[1].color", glm::vec3(0.3, 0.3, 0.3));
+
+		// tmp - for fireflies
+		glm::vec3 posc = glm::vec3(8, 1, -2);
+		scene.objects.push_back(move(std::make_unique<Cube>(posc, glm::vec3(0.1, 0.1, 0.1), 1)));
+		scene.light_positions.push_back(posc);
+		shader->setUniform("lights[2].color", glm::vec3(0.1, 0.3, 0.1));
+
+		scene.shader = move(shader);
 
 		// player
 		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));

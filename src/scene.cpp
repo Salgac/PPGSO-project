@@ -19,7 +19,12 @@ public:
 	// camera
 	std::unique_ptr<Camera> camera;
 
-	// lights TODO
+	// shader
+	std::unique_ptr<ppgso::Shader> shader;
+
+	// lights
+	std::vector<glm::vec3> light_positions;
+	int LIGHT_COUNT = 3;
 
 	// player
 	bool jump = false;
@@ -48,6 +53,9 @@ public:
 	// render function
 	void render()
 	{
+		// ambient light - move according to player
+		light_positions.at(1) = player_position + glm::vec3(0, 2, 2);
+
 		for (auto &object : objects)
 		{
 			object->render(*this);
