@@ -41,13 +41,17 @@ public:
     glm::vec3 position{0, 0, 0};
     glm::vec3 speed{0, 0, 0};
     glm::vec3 scale{size, size, size};
+
     float bornTime = 0;
+    float speed_rotation;
+
+    int child;
 
     /// Construct a new Particle
     /// \param p - Initial position
     /// \param s - Initial speed
     /// \param c - Color of particle
-    Deer_child(glm::vec3 p, glm::vec3 c,float s,int d)
+    Deer_child(glm::vec3 p, glm::vec3 c,float s,float d, int e)
     {
         // First particle will initialize resources
         if (!shader)
@@ -62,6 +66,17 @@ public:
 
         size = s;
 
+        speed_rotation = d;
+        child = e;
+
+        if(e == 1)
+        {
+            glm::vec3 pos = {0, 0, 2};
+            auto deer = std::make_unique<Deer_child>(pos, glm::vec3{0.5070588235294118f,0.4007843137254902f,0.3088235294117647f}, 0.0005f,0.5f, 0);
+            objects.push_back(move(deer));
+        }
+
+
         scale = glm::vec3 {size,size,size};
     }
 
@@ -69,30 +84,24 @@ public:
     bool update_child(float dTime, Scene &scene, glm::mat4 Parent_modelMatrix) override
     {
 
-        /*
-        if(right)
-            bornTime += 0.05;
-        if(bornTime > 90)
-        {
-            right = false;
-            left = true;
-        }
-
-        if(left)
-        {
-            bornTime -= 0.05;
-        }
-
-        if(bornTime < -90)
-        {
-            right = true;
-            left = false;
-        }
-         */
+        bornTime -= speed_rotation;
 
         modelMatrix = Parent_modelMatrix;
-        modelMatrix = glm::translate(modelMatrix, glm::vec3{1,0,0});
-        //modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime ), glm::vec3{0, 1, 0});
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime), glm::vec3{0, 1, 0});
+        modelMatrix = glm::translate(modelMatrix, position);
+
+
+        auto i = std::begin(objects);
+        while (i != std::end(objects))
+        {
+            // Update object and remove from list if needed
+            auto obj = i->get();
+            if (!obj->update_child(dTime, scene,modelMatrix))
+                i = objects.erase(i);
+            else
+                ++i;
+        }
+
         modelMatrix = glm::scale(modelMatrix, scale);
 
         return true;
@@ -103,26 +112,6 @@ public:
     bool update(float dTime, Scene &scene) override
     {
 
-        /*
-        if(right)
-            bornTime += 0.05;
-        if(bornTime > 90)
-        {
-            right = false;
-            left = true;
-        }
-
-        if(left)
-        {
-            bornTime -= 0.05;
-        }
-
-        if(bornTime < -90)
-        {
-            right = true;
-            left = false;
-        }
-        */
         modelMatrix = glm::mat4{1.0f};
         //modelMatrix = glm::translate(modelMatrix, position);
         modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime ), glm::vec3{0, 1, 0});
@@ -130,8 +119,6 @@ public:
         modelMatrix = glm::scale(modelMatrix, scale);
 
         return true;
-
-
     }
 
     void render(Scene &scene) override
