@@ -25,14 +25,19 @@ public:
 		// init flies into list
 		for (int i = 0; i < limit; i++)
 		{
-			glm::vec3 pos = glm::vec3(glm::linearRand(-0.3, 0.3), glm::linearRand(-0.5, 0.5), glm::linearRand(-0.3, 0.3));
-			glm::vec3 rot = glm::vec3(glm::linearRand(-1, 1), glm::linearRand(-1, 1), glm::linearRand(-1, 1));
-
-			auto fly = std::make_unique<Sphere>(position, pos, glm::vec3{0.025, 0.025, 0.025}, color);
-			fly->rotation = rot;
-
-			flies.push_back(move(fly));
+			spawnAFireFly();
 		}
+	}
+
+	void spawnAFireFly()
+	{
+		glm::vec3 pos = glm::vec3(glm::linearRand(-0.3, 0.3), glm::linearRand(-0.5, 0.5), glm::linearRand(-0.3, 0.3));
+		glm::vec3 rot = glm::vec3(glm::linearRand(-1, 1), glm::linearRand(-1, 1), glm::linearRand(-1, 1));
+
+		auto fly = std::make_unique<Sphere>(position, pos, glm::vec3{0.025, 0.025, 0.025}, color);
+		fly->rotation = rot;
+
+		flies.push_back(move(fly));
 	}
 
 	bool update(float dTime, Scene &scene) override
@@ -53,14 +58,26 @@ public:
 
 		// update color
 		float t = glfwGetTime();
-		color = basecolor * (float)((sin(t) + 1) / 2.0f + 0.5);
+		color = basecolor * (float)((cos(t) + 1) / 2.0f + 0.5);
 
 		// iterate through flies
-		for (auto &f : flies)
+		auto i = std::begin(flies);
+		while (i != std::end(flies))
 		{
+			// update
+			auto f = i->get();
+
 			f->position = position;
 			f->color = color;
-			f->update(dTime, scene);
+
+			if (!f->update(dTime, scene))
+			{
+				// remove and spawn a new one
+				i = flies.erase(i);
+				spawnAFireFly();
+			}
+			else
+				++i;
 		}
 
 		return true;
