@@ -6,6 +6,18 @@ Dokumentacia zameru projektu pri prvom odovzdani je dostupna [tu](https://www.dr
 
 Repozitar vychadza z implementacie ulohy "task5_3d_origin", vypracovaneho pocas cvicenia z repozitaru [ppgso](https://github.com/kapecp/ppgso)
 
+## Ukazka
+
+Scena 1: \
+![scena 1](img/scene1.png)
+
+Scena 2: \
+![scena 1](img/scene2.png)
+
+## Graficke demo
+
+Viac nez dvoj minutove video je k dispozicii k nahliadnutiu [tu](https://www.dropbox.com/s/eocod65c46ksq0y/video.mp4?dl=0).
+
 ## Spustenie
 
 Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
@@ -16,8 +28,8 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 | Uloha                                                 |                                                                                                                                       | Body  |         |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----- | ------- |
 | **Grafické demo**                                     |                                                                                                                                       |       |         |
-|                                                       | ○ Logický začiatok, priebeh a koniec                                                                                                  | 1     | &#9744; |
-|                                                       | ○ Trvanie aspoň 2 minúty, pričom demo nemôže byť “statické”                                                                           | 1     | &#9744; |
+|                                                       | ○ Logický začiatok, priebeh a koniec                                                                                                  | 1     | &#9745; |
+|                                                       | ○ Trvanie aspoň 2 minúty, pričom demo nemôže byť “statické”                                                                           | 1     | &#9745; |
 | **3D objekty a mapovanie textúr na 3D geometriu**     |                                                                                                                                       |       |         |
 |                                                       | ○ Objekty ako unikátne 3D polygonálne modely                                                                                          | 2     | &#9745; |
 |                                                       | ○ Unikátne textúrovanie pomocou UV koordinátov                                                                                        | 2     | &#9745; |
@@ -44,4 +56,17 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 | **Post-processing**                                   |                                                                                                                                       |       |         |
 |                                                       | ○ Zobrazenie scény cez vlastný framebuffer, pomocou ktorého sa aplikuje filter: základný (grayscale) / konvolučný / pokročilý (bloom) | 1/2/4 | &#9745; |
 |                                                       |                                                                                                                                       |       |         |
-|                                                       |                                                                                                                                       | 40    | 30      |
+|                                                       |                                                                                                                                       | 40    | 32      |
+
+## Poznamky ku vypracovaniu
+
+Pre zjednodusenie bodovania su tu uvedene niektore priklady ku bodom zadania:
+
+- Graficke demo: 	dostupne v repozitari, scenar podla specifikacie v prvom odovzdani.
+- 3D objekty :		objekt hraca ma unikatny polygonialny model, spolu s texturou pomocou UV koordinatov
+- Sceny: 			dynamicke objekty su svetlusky a vrany, stromy su v scenach proceduralne generovane
+- Transformacie:	body v zadani boli implementovane na zvieratach
+- Simulacia:		kolizia pri vlkoch, na hraca posobi gravitacia a vietor v skoku
+- Kamera:			animacia kamery cez klucove snimky sluzi na zobrazenie celej sceny
+- Osvetlenie:		svetlusky sluzia ako menitelny zdroj svetla, cela scena osvetlena pomocou 3 svetiel
+- Post-procesing:	implementovany konvolucny filter
