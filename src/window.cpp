@@ -22,6 +22,7 @@
 
 #include "objects/tree.cpp"
 #include "objects/falling_tree.cpp"
+#include "objects/flower.cpp"
 #include "objects/wolf.cpp"
 #include "objects/deer.cpp"
 #include "objects/fireflies.cpp"
@@ -131,13 +132,13 @@ private:
 		// faling trees
 		for (int i = 0; i < 3; i++)
 		{
-			glm::vec3 pos = glm::vec3{5 + (i * 2), 0, -1.5};
+			glm::vec3 pos = glm::vec3{4 + (i * 2), 0, -1.5};
 			auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0});
 			scene.objects.push_back(move(tree));
 		}
 
 		// deers
-		glm::vec3 pos = {2, 0, -3};
+		glm::vec3 pos = {1.7, 0, -3};
 		auto deer = std::make_unique<Deer>(pos, glm::vec3{0.4470588235294118f, 0.3607843137254902f, 0.2588235294117647f}, 0.0035f, 2);
 		scene.objects.push_back(move(deer));
 
@@ -149,9 +150,20 @@ private:
 			scene.objects.push_back(move(wolf1));
 		}
 
-
 		// third light not present
 		scene.shader->setUniform("lights[2].color", glm::vec3(0, 0, 0));
+		// magic flowers
+		glm::vec3 color = glm::vec3(1, 0, 0.8);
+		glm::vec3 flowercenter = glm::vec3(5, 0, -1.6);
+
+		scene.light_positions.at(2) = flowercenter + glm::vec3(0, 0.1, 0);
+		scene.shader->setUniform("lights[2].color", color / glm::vec3(3, 1, 3));
+
+		for (int i = 0; i < 10; i++)
+		{
+			glm::vec3 pos = glm::vec3(glm::linearRand(-0.3, 0.3), 0, glm::linearRand(-0.3, 0.3));
+			scene.objects.push_back(move(std::make_unique<Flower>(flowercenter + pos, color)));
+		}
 	}
 
 	void scene2_init()

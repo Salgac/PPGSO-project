@@ -170,7 +170,7 @@ public:
                     collision_object->speed.z = -0.4f;
                 }
 
-               
+
 
                 collision_object->jumping = true;
                 jumping = true;
