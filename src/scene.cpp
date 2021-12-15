@@ -33,7 +33,7 @@ public:
 	glm::vec3 player_position{0, 0, 0};
 
 	float Dtime;
-    int scene_count = 0;
+	int scene_count = 0;
 
 	// update function
 	void update(float time)
@@ -50,11 +50,10 @@ public:
 				++i;
 		}
 
-        if(player_position.z > 11 and scene_count == 1)
-        {
-            objects.clear();
-        }
-
+		if (player_position.x > 11 and scene_count == 1)
+		{
+			objects.clear();
+		}
 	}
 
 	// render function
