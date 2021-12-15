@@ -318,6 +318,7 @@ public:
 
 	void onKey(int key, int scanCode, int action, int mods) override
 	{
+		std::cout << scanCode << std::endl;
 		if (action == GLFW_PRESS)
 		{
 			switch (scanCode)
@@ -337,15 +338,15 @@ public:
 				if (!scene.jump)
 					scene.jump = true;
 				break;
-			case 77:
+			case 32: // o
 				scene.camera->go_boundary_right = true;
 				scene.camera->go_boundary_left = false;
 				break;
-			case 75:
+			case 31: // i
 				scene.camera->go_boundary_left = true;
 				scene.camera->go_boundary_right = false;
 				break;
-			case 76:
+			case 33: // p
 				scene.camera->go_boundary_left = false;
 				scene.camera->go_boundary_right = false;
 				scene.camera->go_player = true;
