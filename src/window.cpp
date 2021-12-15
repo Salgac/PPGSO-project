@@ -129,6 +129,8 @@ private:
 		scene.objects.clear();
 
 		initCommon();
+
+		scene.light_positions.push_back(glm::vec3(2, 1, -2));
 	}
 
 public:
