@@ -18,6 +18,7 @@
 #include "objects/player.cpp"
 #include "objects/background.cpp"
 #include "objects/moon.cpp"
+#include "objects/lake.cpp"
 #include "objects/ground.cpp"
 
 #include "objects/tree.cpp"
@@ -44,8 +45,8 @@ private:
 	int current_scene = 0;
 
 	// Objects to render the framebuffer on to
-	// ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
-	ppgso::Shader quadShader = {texture_vert_glsl, texture_frag_glsl};
+	ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
+	//ppgso::Shader quadShader = {texture_vert_glsl, texture_frag_glsl};
 	ppgso::Mesh quadMesh = {"quad.obj"};
 	ppgso::Texture quadTexture = {1024, 1024};
 
@@ -172,6 +173,12 @@ private:
 
 		initCommon();
 
+        auto cube = std::make_unique<Cube>(glm::vec3{-1, 0, 0}, glm::vec3{0, 0.3, 1},0);
+        cube->scale = {0.2f, 1.0f, 0.1f};
+        scene.objects.push_back(move(cube));
+
+        scene.objects.push_back(move(std::make_unique<Lake>()));
+
 		// fireflies
 		glm::vec3 posf = glm::vec3(3, 0.6, -1);
 		scene.light_positions.push_back(posf);
@@ -191,7 +198,6 @@ public:
 	ProjectWindow(int size) : Window{"project", size, size}
 	{
 		buffer_init();
-
 		scene1_init();
 	}
 
@@ -278,8 +284,9 @@ public:
 		scene.render();
 
 		// check for scene change
-		if (scene.player_position.x > 13)
+		if (scene.player_position.x > 1 and current_scene == 0)
 		{
+            current_scene++;
 			scene2_init();
 		}
 

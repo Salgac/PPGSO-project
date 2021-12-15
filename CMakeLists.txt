@@ -82,7 +82,7 @@ add_library(ppgso STATIC
         ppgso/texture.cpp
         ppgso/window.cpp src/objects/wolf.cpp
         "src/objects/falling_tree.cpp"
-        src/objects/Deer_child.cpp)
+        src/objects/Deer_child.cpp src/objects/lake.cpp)
 
 # Make sure GLM uses radians and GLEW is a static library
 target_compile_definitions(ppgso PUBLIC -DGLM_FORCE_RADIANS -DGLEW_STATIC)
