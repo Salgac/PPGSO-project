@@ -7,7 +7,6 @@ int main()
 {
     // Create our window
     auto window = ProjectWindow{SIZE};
-
     // Main execution loop
     while (window.pollEvents())
     {
