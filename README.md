@@ -28,7 +28,7 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 |                                                       | ○ Zmena scény a viacero virtuálnych oblastí (Aspoň 2 rôzne scény, môžu byť riešené v rámci jednej sceny napr. vonku-vnútri)           | 2     | &#9745; |
 | **Transformácie a animácie objektov**                 |                                                                                                                                       |       |         |
 |                                                       | ○ Procedurálna animácia (Uzavretá metóda s parametrami, Logické vetvenie)                                                             | 2     | &#9745; |
-|                                                       | ○ Hierarchická transformácia objektov (Aspoň 2 levely hierarchie medzi 3-mi objektmi, Použitie kompozície maticových transformácii)   | 2     | &#9745; |
+|                                                       | ○ Hierarchická transformácia objektov (Aspoň 2 levely hierarchie medzi 3-mi objektmi, Použitie kompozície maticových transformácii)   | 2     | &#9744; |
 |                                                       | ○ Animácia na základe dát uložených v kľúčových snímkoch a interpolácie                                                               | 3     | &#9744; |
 | **Simulácia**                                         |                                                                                                                                       |       |         |
 |                                                       | ○ Efektívna kolízia medzi objektami (Dynamická odozva na kolíziu)                                                                     | 3     | &#9745; |
