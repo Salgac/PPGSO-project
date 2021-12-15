@@ -74,6 +74,9 @@ private:
 		scene.light_positions.push_back(glm::vec3(0, 2, 2));
 		scene.shader->setUniform("lights[1].color", glm::vec3(0.3, 0.3, 0.3));
 
+		// third light
+		scene.light_positions.push_back(glm::vec3(2, 1, -2));
+
 		// player
 		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
 
@@ -90,11 +93,20 @@ private:
 		initCommon();
 
 		// trees
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < 60; i++)
 		{
 			float a = glm::linearRand(-3.0f, -12.0f);
-			glm::vec3 pos = glm::vec3{glm::linearRand(-2.0f, 12.0f), 0, a};
+			glm::vec3 pos = glm::vec3{glm::linearRand(-2.0f, 14.0f), 0, a};
 			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
+			scene.objects.push_back(move(tree));
+		}
+
+		// trees on right edge
+		for (int i = 0; i < 25; i++)
+		{
+			float a = glm::linearRand(0.1f, 5.0f);
+			glm::vec3 pos = glm::vec3{14 + a, 0, glm::linearRand(-5.0f, 1.0f)};
+			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / ((a + 3) * (a + 3)), 0});
 			scene.objects.push_back(move(tree));
 		}
 
@@ -106,24 +118,21 @@ private:
 			scene.objects.push_back(move(tree));
 		}
 
+		// deers
+		glm::vec3 pos = {2, 0, -3};
+		auto deer = std::make_unique<Deer>(pos, glm::vec3{0.4470588235294118f, 0.3607843137254902f, 0.2588235294117647f}, 0.0035f, 2);
+		scene.objects.push_back(move(deer));
+
 		// wolfs
 		for (float i = 0; i < 5; i++)
 		{
-			glm::vec3 pos = {glm::linearRand(12.0f, 18.0f), 0, glm::linearRand(-1.5f, -4.0f)};
+			glm::vec3 pos = {glm::linearRand(9.0f, 13.0f), 0, glm::linearRand(-1.5f, -4.0f)};
 			auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
 			scene.objects.push_back(move(wolf1));
 		}
 
-
-		// deers druha scena
-		glm::vec3 pos = {18, 0, -4};
-		auto deer = std::make_unique<Deer>(pos, glm::vec3{0.4470588235294118f,0.3607843137254902f,0.2588235294117647f}, 0.0035f,2);
-		scene.objects.push_back(move(deer));
-
-		// fireflies
-		glm::vec3 posf = glm::vec3(1, 0.6, -1);
-		scene.light_positions.push_back(posf);
-		scene.objects.push_back(move(std::make_unique<Fireflies>(posf, glm::linearRand(30, 50))));
+		// third light not present
+		scene.shader->setUniform("lights[2].color", glm::vec3(0, 0, 0));
 	}
 
 	void scene2_init()
@@ -132,7 +141,10 @@ private:
 
 		initCommon();
 
-		scene.light_positions.push_back(glm::vec3(2, 1, -2));
+		// fireflies
+		glm::vec3 posf = glm::vec3(3, 0.6, -1);
+		scene.light_positions.push_back(posf);
+		scene.objects.push_back(move(std::make_unique<Fireflies>(posf, glm::linearRand(30, 50))));
 	}
 
 	int crowSpawn = 0;
@@ -235,7 +247,7 @@ public:
 		scene.render();
 
 		// check for scene change
-		if (scene.player_position.x > 11)
+		if (scene.player_position.x > 13)
 		{
 			scene2_init();
 		}
