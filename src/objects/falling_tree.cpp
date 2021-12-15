@@ -17,7 +17,6 @@
 #include "../camera.h"
 
 #include "../shapes/cube.cpp"
-#include "particle.cpp"
 
 #ifndef FALL_TREE
 #define FALL_TREE
@@ -96,6 +95,7 @@ public:
             {
                 if(particles)
                 {
+                    /* import particles
                     for(int i = 0; i < 10; i++)
                     {
                         glm::vec3 pst;
@@ -107,9 +107,11 @@ public:
                         prtcl->scale = {0.05f, 0.05, 0.05};
                         scene.objects.push_back(move(prtcl));
                     }
+                       particles = false;
+                     */
 
 
-                    particles = false;
+
                 }
             }
             if (position.y >= help)

@@ -44,7 +44,7 @@ private:
     GLuint fbo = 1;
     GLuint rbo = 1;
 
-    void scene1_init()
+    void scene1_init() //scene 1
     {
         scene.objects.clear();
 
@@ -87,6 +87,7 @@ private:
             scene.objects.push_back(move(wolf1));
         }
 
+        //deer
         glm::vec3 pos = {10,0,-2};
         auto deer = std::make_unique<Deer>(pos, glm::vec3{1,1,0});
         scene.objects.push_back(move(deer));
