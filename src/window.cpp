@@ -184,13 +184,17 @@ private:
 
 		// lakeside
 		scene.objects.push_back(move(std::make_unique<Lake>()));
+		auto tree = std::make_unique<Tree>(glm::vec3(6.7, 0, -1.5), glm::vec3{0, 0, 0}, glm::vec3{0.2, 0.8, 0.2});
+		scene.objects.push_back(move(tree));
 
-        for (float i = 0; i < 75; i++)
-        {
-            glm::vec3 pos = glm::vec3{-1 + i/15,0,-1};
-            auto corn = std::make_unique<Corn>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{1,1,1});
-            scene.objects.push_back(move(corn));
-        }
+		// corn
+		for (int i = 0; i < 50; i++)
+		{
+			float a = glm::linearRand(-3.0f, -12.0f);
+			glm::vec3 pos = glm::vec3{glm::linearRand(-1.0f, 9.0f), 0, a};
+			auto corn = std::make_unique<Corn>(pos);
+			scene.objects.push_back(move(corn));
+		}
 
 		// fireflies
 		glm::vec3 posf = glm::vec3(3, 0.6, -1);
@@ -297,7 +301,7 @@ public:
 		scene.render();
 
 		// check for scene change
-		if (scene.player_position.x > 11 and current_scene == 0)
+		if (scene.player_position.x > 12 and current_scene == 0)
 		{
 			current_scene++;
 			scene2_init();
