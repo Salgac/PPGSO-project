@@ -18,7 +18,7 @@ class Background final : public Renderable
 
 public:
 	glm::vec3 position{20, 25, -40};
-	glm::vec3 scale{75, 40, 0};
+	glm::vec3 scale{120, 40, 0};
 
 	Background()
 	{

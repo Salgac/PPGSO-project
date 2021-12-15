@@ -76,7 +76,7 @@ public:
     {
         modelMatrix = glm::mat4{1.0f};
         
-        if( position.x - scene.player_position.z < 1.5) {
+        if( position.x - scene.player_position.x < 1.5) {
 
             if(!collision)
             {
@@ -109,9 +109,6 @@ public:
                     }
                        particles = false;
                      */
-
-
-
                 }
             }
             if (position.y >= help)

@@ -120,7 +120,7 @@ private:
 
 		// deer
 		glm::vec3 pos = {10, 0, -2};
-		auto deer = std::make_unique<Deer>(pos, glm::vec3{1, 1, 0});
+		auto deer = std::make_unique<Deer>(pos, glm::vec3{1, 1, 0}, 0.0035f,2);
 		scene.objects.push_back(move(deer));
 	}
 	void scene2_init()
@@ -177,7 +177,7 @@ public:
 		glViewport(0, 0, 1024, 1024);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
-		glClearColor(.5f, .7f, .5f, 0);
+		glClearColor(0.0f, 0.0f, 0.0f, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 

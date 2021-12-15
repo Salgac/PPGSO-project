@@ -26,8 +26,10 @@ class Deer : public Renderable
     static std::unique_ptr<ppgso::Mesh> mesh;
     static std::unique_ptr<ppgso::Shader> shader;
 
+    std::list<std::unique_ptr<Renderable>> objects;
+
 public:
-    float size = 0.002f;
+    float size;
 
     bool right = true;
     bool left = false;
@@ -41,7 +43,7 @@ public:
     /// \param p - Initial position
     /// \param s - Initial speed
     /// \param c - Color of particle
-    Deer(glm::vec3 p, glm::vec3 c)
+    Deer(glm::vec3 p, glm::vec3 c,float s,int d)
     {
         // First particle will initialize resources
         if (!shader)
@@ -53,6 +55,10 @@ public:
         position = p;
 
         bornTime = (float)glfwGetTime();
+
+        size = s;
+
+        scale = glm::vec3 {size,size,size};
     }
 
     bool update(float dTime, Scene &scene) override
@@ -88,6 +94,21 @@ public:
             left = false;
         }
 
+
+        /*
+        auto i = std::begin(objects);
+        while (i != std::end(objects))
+        {
+            // Update object and remove from list if needed
+            auto obj = i->get();
+            if (!obj->update(dTime, scene))
+                i = objects.erase(i);
+            else
+                ++i;
+        }
+         */
+
+
         modelMatrix = glm::mat4{1.0f};
         modelMatrix = glm::translate(modelMatrix, position);
         modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime ), glm::vec3{0, 1, 0});
@@ -106,6 +127,13 @@ public:
         // - Setup all needed shader inputs
         // - hint: use OverallColor in the color_vert_glsl shader for color
         // - Render the mesh
+
+
+        for (auto &object : objects)
+        {
+            object->render(scene);
+        }
+
 
         viewMatrix = scene.camera->viewMatrix;
         // Update transformation and color uniforms in the shader
