@@ -37,6 +37,7 @@ class ProjectWindow : public ppgso::Window
 {
 private:
 	Scene scene;
+	int current_scene = 0;
 
 	// Objects to render the framebuffer on to
 	// ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
@@ -48,32 +49,34 @@ private:
 	GLuint fbo = 1;
 	GLuint rbo = 1;
 
-	void scene1_init() // scene 1
+	void initBase()
 	{
-		scene.objects.clear();
-
 		// camera
 		auto camera = std::make_unique<Camera>(100.0f, (float)width / (float)height, 0.1f, 100.0f);
 		scene.camera = move(camera);
 
 		// shader and light
 		auto shader = std::make_unique<ppgso::Shader>(light_vert_glsl, light_frag_glsl);
+		scene.shader = move(shader);
+	}
+
+	void initCommon()
+	{
+		scene.light_positions.clear();
 
 		// moonlight
 		scene.light_positions.push_back(glm::vec3(5, 7, -13));
-		shader->setUniform("lights[0].color", glm::vec3(1, 0.5, 0.5));
+		scene.shader->setUniform("lights[0].color", glm::vec3(1, 0.5, 0.5));
 
 		// ambient
 		scene.light_positions.push_back(glm::vec3(0, 2, 2));
-		shader->setUniform("lights[1].color", glm::vec3(0.3, 0.3, 0.3));
+		scene.shader->setUniform("lights[1].color", glm::vec3(0.3, 0.3, 0.3));
 
 		// tmp - for fireflies
 		glm::vec3 posc = glm::vec3(8, 1, -2);
 		scene.objects.push_back(move(std::make_unique<Cube>(posc, glm::vec3(0.1, 0.1, 0.1), 1)));
 		scene.light_positions.push_back(posc);
-		shader->setUniform("lights[2].color", glm::vec3(0.1, 0.3, 0.1));
-
-		scene.shader = move(shader);
+		scene.shader->setUniform("lights[2].color", glm::vec3(0.1, 0.3, 0.1));
 
 		// player
 		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
@@ -82,6 +85,13 @@ private:
 		scene.objects.push_back(move(std::make_unique<Background>()));
 		scene.objects.push_back(move(std::make_unique<Moon>()));
 		scene.objects.push_back(move(std::make_unique<Ground>()));
+	}
+
+	void scene1_init() // scene 1
+	{
+		initBase();
+
+		initCommon();
 
 		// trees
 		for (int i = 0; i < 50; i++)
@@ -117,33 +127,15 @@ private:
 	{
 		scene.objects.clear();
 
-		// camera
-		auto camera = std::make_unique<Camera>(100.0f, (float)width / (float)height, 0.1f, 100.0f);
-		scene.camera = move(camera);
-
-		// player
-		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
-
-		// backgrounds
-		scene.objects.push_back(move(std::make_unique<Background>()));
-		scene.objects.push_back(move(std::make_unique<Moon>()));
-		scene.objects.push_back(move(std::make_unique<Ground>()));
-	}
-	void initScene()
-	{
-		scene.scene_count++;
-		if (scene.scene_count == 1)
-			scene1_init();
-		if (scene.scene_count == 2)
-			scene2_init();
+		initCommon();
 	}
 
 public:
 	ProjectWindow(int size) : Window{"project", size, size}
 	{
-
 		buffer_init();
-		initScene();
+
+		scene1_init();
 	}
 
 	void buffer_init()
@@ -228,8 +220,11 @@ public:
 		// Render every object in scene
 		scene.render();
 
-		if (scene.objects.size() == 0)
-			initScene();
+		// check for scene change
+		if (scene.player_position.x > 11)
+		{
+			scene2_init();
+		}
 
 		buffer_show();
 	}
@@ -238,7 +233,6 @@ public:
 	{
 		if (action == GLFW_PRESS)
 		{
-			std::cout << scanCode;
 			switch (scanCode)
 			{
 			case 38:
