@@ -17,7 +17,7 @@
 #include "../camera.h"
 
 #include "../shapes/cube.cpp"
-
+#include "particle.cpp"
 
 #ifndef FALL_TREE
 #define FALL_TREE
@@ -44,6 +44,7 @@ public:
     glm::vec3 speed{0, 0, 0};
     glm::vec3 scale{size, size, size};
 
+    bool particles = false;
     bool collision = false;
     float rotate = 0;
     float help;
@@ -81,6 +82,7 @@ public:
             if(!collision)
             {
                 collision = true;
+                particles = true;
                 auto cube = std::make_unique<Cube>(glm::vec3{position.x, 0, 0}, glm::vec3{0, 0.3, 1},0);
                 cube->scale = {0.15f, 0.15, 0.15};
                 scene.objects.push_back(move(cube));
@@ -88,6 +90,27 @@ public:
 
             if (rotate < 90) {
                 rotate += rotate_speed;
+
+            }
+            else
+            {
+                if(particles)
+                {
+                    for(int i = 0; i < 10; i++)
+                    {
+                        glm::vec3 pst;
+                        pst.x = glm::linearRand(position.x - 0.2 , position.x + 0.2);
+                        pst.y = 0.5;
+                        pst.z = 0;
+
+                        auto prtcl = std::make_unique<Particle>(pst,glm::vec3{0,0,0},glm::vec3{0,1,0});
+                        prtcl->scale = {0.05f, 0.05, 0.05};
+                        scene.objects.push_back(move(prtcl));
+                    }
+
+
+                    particles = false;
+                }
             }
             if (position.y >= help)
                 position.y -= y_change_speed;
