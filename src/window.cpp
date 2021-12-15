@@ -61,7 +61,6 @@ private:
 		auto shader = std::make_unique<ppgso::Shader>(light_vert_glsl, light_frag_glsl);
 		scene.shader = move(shader);
 	}
-
 	void initCommon()
 	{
 		scene.light_positions.clear();
@@ -114,9 +113,10 @@ private:
 			scene.objects.push_back(move(wolf1));
 		}
 
-		// deer
-		glm::vec3 pos = {10, 0, -2};
-		auto deer = std::make_unique<Deer>(pos, glm::vec3{1, 1, 0}, 0.0035f, 2);
+
+		// deers druha scena
+		glm::vec3 pos = {18, 0, -4};
+		auto deer = std::make_unique<Deer>(pos, glm::vec3{0.4470588235294118f,0.3607843137254902f,0.2588235294117647f}, 0.0035f,2);
 		scene.objects.push_back(move(deer));
 
 		// fireflies
