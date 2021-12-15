@@ -27,7 +27,7 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 |                                                       | ○ Procedurálne generovaná scéna (Obmedzenia a lokácia objektov definovaná (ne-)deterministickým algoritmom)                           | 2     | &#9745; |
 |                                                       | ○ Zmena scény a viacero virtuálnych oblastí (Aspoň 2 rôzne scény, môžu byť riešené v rámci jednej sceny napr. vonku-vnútri)           | 2     | &#9745; |
 | **Transformácie a animácie objektov**                 |                                                                                                                                       |       |         |
-|                                                       | ○ Procedurálna animácia (Uzavretá metóda s parametrami, Logické vetvenie)                                                             | 2     | &#9745; |
+|                                                       | ○ Procedurálna animácia (Uzavretá metóda s parametrami, Logické vetvenie)                                                             | 2     | &#9746; |
 |                                                       | ○ Hierarchická transformácia objektov (Aspoň 2 levely hierarchie medzi 3-mi objektmi, Použitie kompozície maticových transformácii)   | 2     | &#9744; |
 |                                                       | ○ Animácia na základe dát uložených v kľúčových snímkoch a interpolácie                                                               | 3     | &#9744; |
 | **Simulácia**                                         |                                                                                                                                       |       |         |
@@ -44,4 +44,4 @@ Pre spustenie v systeme Linux staci spustit script ["run.sh"](run.sh).
 | **Post-processing**                                   |                                                                                                                                       |       |         |
 |                                                       | ○ Zobrazenie scény cez vlastný framebuffer, pomocou ktorého sa aplikuje filter: základný (grayscale) / konvolučný / pokročilý (bloom) | 1/2/4 | &#9745; |
 |                                                       |                                                                                                                                       |       |         |
-|                                                       |                                                                                                                                       | 40    | 27      |
+|                                                       |                                                                                                                                       | 40    | 29      |
