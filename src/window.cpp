@@ -297,7 +297,7 @@ public:
 		scene.render();
 
 		// check for scene change
-		if (scene.player_position.x > 1 and current_scene == 0)
+		if (scene.player_position.x > 11 and current_scene == 0)
 		{
 			current_scene++;
 			scene2_init();
