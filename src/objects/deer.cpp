@@ -65,7 +65,7 @@ public:
         for(int i = 0; i < d; i++)
         {
             glm::vec3 pos = {1 + i, 0, 0};
-            auto deer = std::make_unique<Deer_child>(pos, glm::vec3{0.5470588235294118f,0.4607843137254902f,0.3588235294117647f}, 0.0015f,0.35f, i);
+            auto deer = std::make_unique<Deer_child>(pos, glm::vec3{0.5470588235294118f,0.4607843137254902f,0.3588235294117647f}, 0.0015f,0.25f, i);
             objects.push_back(move(deer));
         }
 

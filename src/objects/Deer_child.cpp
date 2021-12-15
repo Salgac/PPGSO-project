@@ -72,11 +72,9 @@ public:
         if(e == 1)
         {
             glm::vec3 pos = {0, 0, 2};
-            auto deer = std::make_unique<Deer_child>(pos, glm::vec3{0.5070588235294118f,0.4007843137254902f,0.3088235294117647f}, 0.0005f,0.5f, 0);
+            auto deer = std::make_unique<Deer_child>(pos, glm::vec3{0.5070588235294118f,0.4007843137254902f,0.3088235294117647f}, 0.0005f,0.35f, 0);
             objects.push_back(move(deer));
         }
-
-
         scale = glm::vec3 {size,size,size};
     }
 
@@ -89,7 +87,6 @@ public:
         modelMatrix = Parent_modelMatrix;
         modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime), glm::vec3{0, 1, 0});
         modelMatrix = glm::translate(modelMatrix, position);
-
 
         auto i = std::begin(objects);
         while (i != std::end(objects))
@@ -105,33 +102,20 @@ public:
         modelMatrix = glm::scale(modelMatrix, scale);
 
         return true;
-
-
     }
-
     bool update(float dTime, Scene &scene) override
     {
 
-        modelMatrix = glm::mat4{1.0f};
-        //modelMatrix = glm::translate(modelMatrix, position);
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime ), glm::vec3{0, 1, 0});
-
-        modelMatrix = glm::scale(modelMatrix, scale);
-
-        return true;
     }
 
     void render(Scene &scene) override
     {
 
         for (auto &object : objects)
-        {
             object->render(scene);
-        }
-
 
         viewMatrix = scene.camera->viewMatrix;
-        // Update transformation and color uniforms in the shader
+
         shader->use();
         shader->setUniform("OverallColor", color);
         shader->setUniform("ModelMatrix", modelMatrix);

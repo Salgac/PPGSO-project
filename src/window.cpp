@@ -117,7 +117,8 @@ private:
 			scene.objects.push_back(move(wolf1));
 		}
 
-		// deer
+
+		// deers druha scena
 		glm::vec3 pos = {18, 0, -4};
 		auto deer = std::make_unique<Deer>(pos, glm::vec3{0.4470588235294118f,0.3607843137254902f,0.2588235294117647f}, 0.0035f,2);
 		scene.objects.push_back(move(deer));
