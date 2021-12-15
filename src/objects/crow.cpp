@@ -21,7 +21,7 @@ public:
 		position = pos;
 		scale *= scl;
 
-		speed = glm::vec3(glm::linearRand(-0.2, 0.2), glm::linearRand(0.1, 0.2), glm::linearRand(0.5, 1.0));
+		speed = glm::vec3(glm::linearRand(-0.2, 0.2), glm::linearRand(0.1, 0.2), glm::linearRand(0.7, 1.3));
 
 		if (!texture)
 			texture = std::make_unique<ppgso::Texture>(ppgso::image::loadBMP("crow.bmp"));
