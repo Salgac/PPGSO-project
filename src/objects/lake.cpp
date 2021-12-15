@@ -12,17 +12,13 @@ class Lake final : public Renderable
     std::unique_ptr<ppgso::Texture> texture;
     std::unique_ptr<ppgso::Shader> shader;
 
-
-
 public:
-    glm::vec3 position{5, 0.05, -6};
+    glm::vec3 position{12, 0.05, -1};
     glm::vec3 scale{5, 5, 5};
     glm::vec3 color{0, 0.4490196078431373, 0.5882352941176471};
 
     Lake()
     {
-        if (!texture)
-            texture = std::make_unique<ppgso::Texture>(ppgso::image::loadBMP("moon.bmp"));
         if (!mesh)
             mesh = std::make_unique<ppgso::Mesh>("circle.obj");
         if (!shader)
@@ -42,18 +38,11 @@ public:
     void render(Scene &scene) override
     {
         // Render the object
-
         shader->use();
         shader->setUniform("OverallColor", color);
         shader->setUniform("ModelMatrix", modelMatrix);
         shader->setUniform("ViewMatrix", scene.camera->viewMatrix);
         shader->setUniform("ProjectionMatrix", scene.camera->perspective);
-        //scene.shader->setUniform("Texture", *texture);
-
-        //light - only illumination
-        //scene.shader->setUniform("lights[0].position", glm::vec3{0, 0, 5});
-        //scene.shader->setUniform("lights[1].position", glm::vec3{0, 0, 5});
-        //scene.shader->setUniform("lights[2].position", glm::vec3{0, 0, 50});
 
         mesh->render();
     }
