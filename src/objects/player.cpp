@@ -1,7 +1,3 @@
-
-#include <shaders/texture_vert_glsl.h>
-#include <shaders/texture_frag_glsl.h>
-
 #include <ppgso/ppgso.h>
 
 #include "../renderable.h"
@@ -17,7 +13,6 @@ class Player final : public Renderable
 	// Static resources
 	std::unique_ptr<ppgso::Mesh> mesh;
 	std::unique_ptr<ppgso::Texture> texture;
-	std::unique_ptr<ppgso::Shader> shader;
 
 public:
 	glm::vec3 position{0, 0, 0};
@@ -25,7 +20,7 @@ public:
 	glm::vec3 scale{0.6f, 0.6f, 0.6f};
 
 	glm::vec3 jump{0, 2.0f, 0};
-	glm::vec3 move{0, 0, 0.5f};
+	glm::vec3 move{0.5f, 0, 0};
 
 	float ground = 0;
 
@@ -33,8 +28,6 @@ public:
 	/// \param p - Initial position
 	Player(glm::vec3 p)
 	{
-		if (!shader)
-			shader = std::make_unique<ppgso::Shader>(texture_vert_glsl, texture_frag_glsl);
 		if (!texture)
 			texture = std::make_unique<ppgso::Texture>(ppgso::image::loadBMP("player.bmp"));
 		if (!mesh)
@@ -45,7 +38,7 @@ public:
 	bool update(float dTime, Scene &scene) override
 	{
 		// collisions
-		glm::vec3 player_position{position.z, position.y, position.x};
+		glm::vec3 player_position{position.x, position.y, position.z};
 		for (auto &obj : scene.objects)
 		{
 			// Ignore self in scene
@@ -102,32 +95,31 @@ public:
 		// move the player
 		if (scene.move_left)
 		{
-			if (abs(speed.z) == 0)
+			if (abs(speed.x) == 0)
 				speed -= move;
 		}
 		else if (scene.move_right)
 		{
-			if (abs(speed.z) == 0)
+			if (abs(speed.x) == 0)
 				speed += move;
 		}
 		else
 		{
-			speed.z = 0;
+			speed.x = 0;
 		}
 
 		if (position.y > 0)
 		{
-			position.z -= VIETOR * dTime;
+			position.x -= VIETOR * dTime;
 		}
 
-		position.z += speed.z * dTime;
+		position.x += speed.x * dTime;
 
 		// for scene specific actions
 		scene.player_position = position;
 
 		// generate modelMatrix
 		modelMatrix = glm::mat4{1.0f};
-		modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
 		modelMatrix = glm::translate(modelMatrix, position);
 		modelMatrix = glm::scale(modelMatrix, scale);
 
@@ -138,14 +130,26 @@ public:
 		// Render the object
 		viewMatrix = scene.camera->viewMatrix;
 
-		shader->use();
-		// shader->setUniform("LightDirection", glm::vec3{1.0f, 1.0f, 1.0f});
-		shader->setUniform("ModelMatrix", modelMatrix);
-		shader->setUniform("ViewMatrix", viewMatrix);
-		shader->setUniform("ProjectionMatrix", scene.camera->perspective);
+		// shader
+		scene.shader->use();
+		scene.shader->setUniform("ModelMatrix", modelMatrix);
+		scene.shader->setUniform("ViewMatrix", viewMatrix);
+		scene.shader->setUniform("ProjectionMatrix", scene.camera->perspective);
+		scene.shader->setUniform("Texture", *texture);
 
-		shader->setUniform("Texture", *texture);
+		// light
+		setLightShader(scene);
 
 		mesh->render();
 	};
+
+	void setLightShader(Scene &scene)
+	{
+		for (int i = 0; i < scene.LIGHT_COUNT; i++)
+		{
+			char buffer[64];
+			sprintf(buffer, "lights[%d].position", i);
+			scene.shader->setUniform(buffer, scene.light_positions.at(i) - position);
+		}
+	}
 };
