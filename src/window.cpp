@@ -13,6 +13,7 @@
 #include <ppgso/ppgso.h>
 
 #include "shapes/cube.cpp"
+#include "shapes/sphere.cpp"
 
 #include "objects/player.cpp"
 #include "objects/background.cpp"
@@ -23,6 +24,7 @@
 #include "objects/falling_tree.cpp"
 #include "objects/wolf.cpp"
 #include "objects/deer.cpp"
+#include "objects/fireflies.cpp"
 
 #include "camera.h"
 #include "scene.cpp"
@@ -72,12 +74,6 @@ private:
 		scene.light_positions.push_back(glm::vec3(0, 2, 2));
 		scene.shader->setUniform("lights[1].color", glm::vec3(0.3, 0.3, 0.3));
 
-		// tmp - for fireflies
-		glm::vec3 posc = glm::vec3(8, 1, -2);
-		scene.objects.push_back(move(std::make_unique<Cube>(posc, glm::vec3(0.1, 0.1, 0.1), 1)));
-		scene.light_positions.push_back(posc);
-		scene.shader->setUniform("lights[2].color", glm::vec3(0.1, 0.3, 0.1));
-
 		// player
 		scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
 
@@ -120,14 +116,21 @@ private:
 
 		// deer
 		glm::vec3 pos = {10, 0, -2};
-		auto deer = std::make_unique<Deer>(pos, glm::vec3{1, 1, 0}, 0.0035f,2);
+		auto deer = std::make_unique<Deer>(pos, glm::vec3{1, 1, 0}, 0.0035f, 2);
 		scene.objects.push_back(move(deer));
+
+		// fireflies
+		glm::vec3 posf = glm::vec3(1, 0.6, -1);
+		scene.light_positions.push_back(posf);
+		scene.objects.push_back(move(std::make_unique<Fireflies>(posf)));
 	}
 	void scene2_init()
 	{
 		scene.objects.clear();
 
 		initCommon();
+
+		scene.light_positions.push_back(glm::vec3(2, 1, -2));
 	}
 
 public:
