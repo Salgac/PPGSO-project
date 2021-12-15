@@ -93,13 +93,31 @@ private:
 		initCommon();
 
 		// trees
-		for (int i = 0; i < 60; i++)
+
+		for (int i = 0; i < 25; i++)
 		{
-			float a = glm::linearRand(-3.0f, -12.0f);
-			glm::vec3 pos = glm::vec3{glm::linearRand(-2.0f, 14.0f), 0, a};
+			float a = glm::linearRand(-5.0f, -12.0f);
+			glm::vec3 pos = glm::vec3{glm::linearRand(-2.0f, 6.0f), 0, a};
 			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
 			scene.objects.push_back(move(tree));
 		}
+
+
+        for (int i = 0; i < 50; i++)
+        {
+            float a = glm::linearRand(-3.0f, -12.0f);
+            glm::vec3 pos = glm::vec3{glm::linearRand(6.0f, 9.0f), 0, a};
+            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
+            scene.objects.push_back(move(tree));
+        }
+
+        for (int i = 0; i < 20; i++)
+        {
+            float a = glm::linearRand(-5.5f, -12.0f);
+            glm::vec3 pos = glm::vec3{glm::linearRand(9.0f, 15.0f), 0, a};
+            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
+            scene.objects.push_back(move(tree));
+        }
 
 		// trees on right edge
 		for (int i = 0; i < 25; i++)
@@ -113,7 +131,7 @@ private:
 		// faling trees
 		for (int i = 0; i < 3; i++)
 		{
-			glm::vec3 pos = glm::vec3{4 + (i * 2), 0, -1.5};
+			glm::vec3 pos = glm::vec3{5 + (i * 2), 0, -1.5};
 			auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0});
 			scene.objects.push_back(move(tree));
 		}
@@ -126,10 +144,11 @@ private:
 		// wolfs
 		for (float i = 0; i < 5; i++)
 		{
-			glm::vec3 pos = {glm::linearRand(9.0f, 13.0f), 0, glm::linearRand(-1.5f, -4.0f)};
+			glm::vec3 pos = {glm::linearRand(9.5f, 13.5f), 0, glm::linearRand(-1.5f, -4.0f) };
 			auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
 			scene.objects.push_back(move(wolf1));
 		}
+
 
 		// third light not present
 		scene.shader->setUniform("lights[2].color", glm::vec3(0, 0, 0));

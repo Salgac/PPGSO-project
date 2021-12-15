@@ -71,7 +71,7 @@ public:
 
         if(e == 1)
         {
-            glm::vec3 pos = {0, 0, 2};
+            glm::vec3 pos = {0, 0, 0.5};
             auto deer = std::make_unique<Deer_child>(pos, glm::vec3{0.5070588235294118f,0.4007843137254902f,0.3088235294117647f}, 0.0005f,0.35f, 0);
             objects.push_back(move(deer));
         }

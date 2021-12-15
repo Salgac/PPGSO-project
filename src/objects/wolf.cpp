@@ -49,7 +49,9 @@ public:
 
     int distance_x = 0;
     int distance_z = 0;
-    
+
+    int child = 0;
+
     /// Construct a new Particle
     /// \param p - Initial position
     /// \param s - Initial speed
@@ -71,12 +73,31 @@ public:
         dgr = r;
         color = c;
 
+        //child = det;
+
         speed.z = 0.3f;
         speed.x = 0.3f;
 
         objects.clear();
+        //create(child);
 
     }
+
+    /*
+    bool create(int child)
+    {
+        for(int i = 1; i <= child; i++)
+        {
+
+            glm::vec3 pos = {1 + i / 2, 0, - 0.5 + i / 2};
+            auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1,0);
+            objects.push_back(wolf1);
+            objects.push_back(move(wolf1));
+        }
+
+
+    }
+     */
 
     void movement(int random) {
         if (distance_x == 0) {
@@ -142,6 +163,14 @@ public:
             {
                 speed.z = (-speed.z);
                 speed.x = (-speed.x) ;
+
+                if(speed.z == 0)
+                {
+                    speed.z = 0.4f;
+                    collision_object->speed.z = -0.4f;
+                }
+
+               
 
                 collision_object->jumping = true;
                 jumping = true;
