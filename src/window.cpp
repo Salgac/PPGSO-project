@@ -185,9 +185,9 @@ private:
 		// lakeside
 		scene.objects.push_back(move(std::make_unique<Lake>()));
 
-        for (float i = 0; i < 70; i++)
+        for (float i = 0; i < 75; i++)
         {
-            glm::vec3 pos = glm::vec3{6 + i/6,0,-1};
+            glm::vec3 pos = glm::vec3{-1 + i/15,0,-1};
             auto corn = std::make_unique<Corn>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{1,1,1});
             scene.objects.push_back(move(corn));
         }

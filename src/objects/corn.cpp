@@ -28,7 +28,7 @@ class Corn : public Renderable
     std::unique_ptr<ppgso::Texture> texture;
 
 public:
-    float size = 0.02f;
+    float size = 0.020f;
 
     glm::vec3 position{0, 0, 0};
     glm::vec3 speed{0, 0, 0};
