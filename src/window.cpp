@@ -45,7 +45,7 @@ private:
 	int current_scene = 0;
 
 	// Objects to render the framebuffer on to
-	//ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
+	// ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
 	ppgso::Shader quadShader = {texture_vert_glsl, texture_frag_glsl};
 	ppgso::Mesh quadMesh = {"quad.obj"};
 	ppgso::Texture quadTexture = {1024, 1024};
@@ -104,22 +104,21 @@ private:
 			scene.objects.push_back(move(tree));
 		}
 
+		for (int i = 0; i < 50; i++)
+		{
+			float a = glm::linearRand(-3.0f, -12.0f);
+			glm::vec3 pos = glm::vec3{glm::linearRand(6.0f, 9.0f), 0, a};
+			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
+			scene.objects.push_back(move(tree));
+		}
 
-        for (int i = 0; i < 50; i++)
-        {
-            float a = glm::linearRand(-3.0f, -12.0f);
-            glm::vec3 pos = glm::vec3{glm::linearRand(6.0f, 9.0f), 0, a};
-            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
-            scene.objects.push_back(move(tree));
-        }
-
-        for (int i = 0; i < 20; i++)
-        {
-            float a = glm::linearRand(-5.5f, -12.0f);
-            glm::vec3 pos = glm::vec3{glm::linearRand(9.0f, 15.0f), 0, a};
-            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
-            scene.objects.push_back(move(tree));
-        }
+		for (int i = 0; i < 20; i++)
+		{
+			float a = glm::linearRand(-5.5f, -12.0f);
+			glm::vec3 pos = glm::vec3{glm::linearRand(9.0f, 15.0f), 0, a};
+			auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
+			scene.objects.push_back(move(tree));
+		}
 
 		// trees on right edge
 		for (int i = 0; i < 25; i++)
@@ -146,7 +145,7 @@ private:
 		// wolfs
 		for (float i = 0; i < 5; i++)
 		{
-			glm::vec3 pos = {glm::linearRand(9.5f, 13.5f), 0, glm::linearRand(-1.5f, -4.0f) };
+			glm::vec3 pos = {glm::linearRand(9.5f, 13.5f), 0, glm::linearRand(-1.5f, -4.0f)};
 			auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
 			scene.objects.push_back(move(wolf1));
 		}
@@ -173,17 +172,22 @@ private:
 
 		initCommon();
 
-        auto cube = std::make_unique<Cube>(glm::vec3{-1, 0, 0}, glm::vec3{0, 0.3, 1},0);
-        cube->scale = {0.2f, 1.0f, 0.1f};
-        scene.objects.push_back(move(cube));
+		// bounding boxes
+		auto cubeleft = std::make_unique<Cube>(glm::vec3{-1, 0, 0}, glm::vec3{0, 0.3, 1}, 0);
+		cubeleft->scale = {0.2f, 1.0f, 0.1f};
+		scene.objects.push_back(move(cubeleft));
 
-        scene.objects.push_back(move(std::make_unique<Lake>()));
+		auto cuberight = std::make_unique<Cube>(glm::vec3{7, 0, 0}, glm::vec3{0, 0.3, 1}, 0);
+		cuberight->scale = {0.2f, 1.0f, 0.1f};
+		scene.objects.push_back(move(cuberight));
+
+		// lakeside
+		scene.objects.push_back(move(std::make_unique<Lake>()));
 
 		// fireflies
 		glm::vec3 posf = glm::vec3(3, 0.6, -1);
 		scene.light_positions.push_back(posf);
 		scene.objects.push_back(move(std::make_unique<Fireflies>(posf, glm::linearRand(30, 50))));
-
 	}
 
 	int crowSpawn = 0;
@@ -287,7 +291,7 @@ public:
 		// check for scene change
 		if (scene.player_position.x > 11 and current_scene == 0)
 		{
-            current_scene++;
+			current_scene++;
 			scene2_init();
 		}
 
