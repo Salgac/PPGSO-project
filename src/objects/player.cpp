@@ -20,7 +20,7 @@ public:
 	glm::vec3 scale{0.6f, 0.6f, 0.6f};
 
 	glm::vec3 jump{0, 2.0f, 0};
-	glm::vec3 move{0, 0, 0.5f};
+	glm::vec3 move{0.5f, 0, 0};
 
 	float ground = 0;
 
@@ -38,7 +38,7 @@ public:
 	bool update(float dTime, Scene &scene) override
 	{
 		// collisions
-		glm::vec3 player_position{position.z, position.y, position.x};
+		glm::vec3 player_position{position.x, position.y, position.z};
 		for (auto &obj : scene.objects)
 		{
 			// Ignore self in scene
@@ -95,32 +95,31 @@ public:
 		// move the player
 		if (scene.move_left)
 		{
-			if (abs(speed.z) == 0)
+			if (abs(speed.x) == 0)
 				speed -= move;
 		}
 		else if (scene.move_right)
 		{
-			if (abs(speed.z) == 0)
+			if (abs(speed.x) == 0)
 				speed += move;
 		}
 		else
 		{
-			speed.z = 0;
+			speed.x = 0;
 		}
 
 		if (position.y > 0)
 		{
-			position.z -= VIETOR * dTime;
+			position.x -= VIETOR * dTime;
 		}
 
-		position.z += speed.z * dTime;
+		position.x += speed.x * dTime;
 
 		// for scene specific actions
 		scene.player_position = position;
 
 		// generate modelMatrix
 		modelMatrix = glm::mat4{1.0f};
-		modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3{0, 1, 0});
 		modelMatrix = glm::translate(modelMatrix, position);
 		modelMatrix = glm::scale(modelMatrix, scale);
 
@@ -146,14 +145,11 @@ public:
 
 	void setLightShader(Scene &scene)
 	{
-		glm::vec3 pp = position;
-		glm::vec3 pos = glm::vec3(pp.z, pp.y, pp.x);
-
 		for (int i = 0; i < scene.LIGHT_COUNT; i++)
 		{
 			char buffer[64];
 			sprintf(buffer, "lights[%d].position", i);
-			scene.shader->setUniform(buffer, scene.light_positions.at(i) - pos);
+			scene.shader->setUniform(buffer, scene.light_positions.at(i) - position);
 		}
 	}
 };
