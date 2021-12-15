@@ -1,5 +1,4 @@
 .idea
-shader
 ppgso
 cmake-build-debug-mingw
 cmake-build-debug
@@ -7,7 +6,6 @@ cmake
 `cmake-build-debug`
 CMakeLists.txt
 dependencies
-shapes
 
 _build
 _install

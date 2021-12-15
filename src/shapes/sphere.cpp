@@ -31,14 +31,16 @@ private:
 public:
 	// Public attributes that define position, color ..
 	glm::vec3 position;
+	glm::vec3 offset;
 	glm::vec3 rotation{0, 0, 0};
 	glm::vec3 scale;
 	glm::vec3 color;
 
 	// Initialize object data buffers
-	Sphere(glm::vec3 pos, glm::vec3 scl, glm::vec3 clr)
+	Sphere(glm::vec3 pos, glm::vec3 off, glm::vec3 scl, glm::vec3 clr)
 	{
 		position = pos;
+		offset = off;
 		scale = scl;
 		color = clr;
 
@@ -53,6 +55,8 @@ public:
 	{
 		modelMatrix = glm::mat4(1.0f);
 		modelMatrix = glm::translate(modelMatrix, position);
+		modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime(), rotation);
+		modelMatrix = glm::translate(modelMatrix, offset);
 		modelMatrix = glm::scale(modelMatrix, scale);
 
 		return true;
