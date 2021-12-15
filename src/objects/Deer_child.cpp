@@ -16,10 +16,12 @@
 #include "../renderable.h"
 #include "../camera.h"
 
-#include "Deer_child.cpp"
+#ifndef DEER_CHILD
+#define DEER_CHILD
+
 class Renderable;
 
-class Deer : public Renderable
+class Deer_child : public Renderable
 {
     glm::mat4 viewMatrix{1.0f};
     glm::mat4 modelMatrix{1.0f};
@@ -45,7 +47,7 @@ public:
     /// \param p - Initial position
     /// \param s - Initial speed
     /// \param c - Color of particle
-    Deer(glm::vec3 p, glm::vec3 c,float s,int d)
+    Deer_child(glm::vec3 p, glm::vec3 c,float s,int d)
     {
         // First particle will initialize resources
         if (!shader)
@@ -61,31 +63,13 @@ public:
         size = s;
 
         scale = glm::vec3 {size,size,size};
-
-        for(int i = 0; i < d; i++)
-        {
-            glm::vec3 pos = {10 + i + 1, 0, -2};
-            auto deer = std::make_unique<Deer_child>(pos, glm::vec3{1, 1, 0}, 0.0005f,2);
-            objects.push_back(move(deer));
-        }
-
-
     }
 
-    bool update(float dTime, Scene &scene) override
+
+    bool update_child(float dTime, Scene &scene, glm::mat4 Parent_modelMatrix) override
     {
-        // Animate position using speed and dTime.
-        // - Return true to keep the object alive
-        // - Returning false removes the object from the scene
-        // - hint: you can add more particles to the scene here also
-        //modelMatrix = glm::translate(modelMatrix, speed);
 
-        //new pos
-        //if (position.y > 0)
-        //    position += speed;
-
-
-
+        /*
         if(right)
             bornTime += 0.05;
         if(bornTime > 90)
@@ -104,27 +88,44 @@ public:
             right = true;
             left = false;
         }
+         */
+
+        modelMatrix = Parent_modelMatrix;
+        modelMatrix = glm::translate(modelMatrix, glm::vec3{1,0,0});
+        //modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime ), glm::vec3{0, 1, 0});
+        modelMatrix = glm::scale(modelMatrix, scale);
+
+        return true;
 
 
+    }
 
+    bool update(float dTime, Scene &scene) override
+    {
 
-
-        modelMatrix = glm::mat4{1.0f};
-        modelMatrix = glm::translate(modelMatrix, position);
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime ), glm::vec3{0, 1, 0});
-
-
-
-        auto i = std::begin(objects);
-        while (i != std::end(objects))
+        /*
+        if(right)
+            bornTime += 0.05;
+        if(bornTime > 90)
         {
-            // Update object and remove from list if needed
-            auto obj = i->get();
-            if (!obj->update_child(dTime, scene,modelMatrix))
-                i = objects.erase(i);
-            else
-                ++i;
+            right = false;
+            left = true;
         }
+
+        if(left)
+        {
+            bornTime -= 0.05;
+        }
+
+        if(bornTime < -90)
+        {
+            right = true;
+            left = false;
+        }
+        */
+        modelMatrix = glm::mat4{1.0f};
+        //modelMatrix = glm::translate(modelMatrix, position);
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(bornTime ), glm::vec3{0, 1, 0});
 
         modelMatrix = glm::scale(modelMatrix, scale);
 
@@ -135,12 +136,6 @@ public:
 
     void render(Scene &scene) override
     {
-        // Render the object
-        // - Use the shader
-        // - Setup all needed shader inputs
-        // - hint: use OverallColor in the color_vert_glsl shader for color
-        // - Render the mesh
-
 
         for (auto &object : objects)
         {
@@ -160,5 +155,7 @@ public:
     }
 };
 
-std::unique_ptr<ppgso::Mesh> Deer::mesh;
-std::unique_ptr<ppgso::Shader> Deer::shader;
+std::unique_ptr<ppgso::Mesh>  Deer_child::mesh;
+std::unique_ptr<ppgso::Shader>  Deer_child::shader;
+
+#endif

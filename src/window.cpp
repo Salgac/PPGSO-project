@@ -59,7 +59,6 @@ private:
 		auto shader = std::make_unique<ppgso::Shader>(light_vert_glsl, light_frag_glsl);
 		scene.shader = move(shader);
 	}
-
 	void initCommon()
 	{
 		scene.light_positions.clear();

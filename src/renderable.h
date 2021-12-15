@@ -20,5 +20,9 @@ public:
 	/// \param scene - Scene reference
 	/// \return - Return true to keep object in scene
 	virtual bool update(float dTime, Scene &scene) = 0;
+
+    virtual bool update_child(float d, Scene &scene, glm::mat4 ParetModelMatrix) {
+        return false;
+    }
 };
 #endif
