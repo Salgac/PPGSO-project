@@ -24,6 +24,7 @@ public:
 
 	float ground = 0;
 
+
 	/// Construct a new Player
 	/// \param p - Initial position
 	Player(glm::vec3 p)

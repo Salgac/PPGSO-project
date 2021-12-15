@@ -27,7 +27,7 @@ class Tree : public Renderable
     static std::unique_ptr<ppgso::Shader> shader;
 
 public:
-    float size = glm::linearRand(0.025f, 0.075f);
+    float size = glm::linearRand(0.075f, 0.25f);
 
     glm::vec3 position{0, 0, 0};
     glm::vec3 speed{0, 0, 0};

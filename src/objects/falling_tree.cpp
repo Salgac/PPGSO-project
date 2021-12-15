@@ -18,7 +18,6 @@
 
 #include "../shapes/cube.cpp"
 
-
 #ifndef FALL_TREE
 #define FALL_TREE
 
@@ -28,7 +27,11 @@ class Falling_Tree : public Renderable
 {
     glm::mat4 viewMatrix{1.0f};
     glm::mat4 modelMatrix{1.0f};
-    glm::vec3 color{1.0f};
+    glm::vec3 color{0.3607843137254902f, 0.2509803921568627f, 0.2f};
+
+    //0.4470588235294118f,0.3607843137254902f,0.2588235294117647f
+    //0.3607843137254902f, 0.2509803921568627f, 0.2f
+
     // Static resources shared between all particles
     static std::unique_ptr<ppgso::Mesh> mesh;
     static std::unique_ptr<ppgso::Shader> shader;
@@ -40,6 +43,7 @@ public:
     glm::vec3 speed{0, 0, 0};
     glm::vec3 scale{size, size, size};
 
+    bool particles = false;
     bool collision = false;
     float rotate = 0;
     float help;
@@ -53,15 +57,13 @@ public:
     /// \param p - Initial position
     /// \param s - Initial speed
     /// \param c - Color of particle
-    Falling_Tree(glm::vec3 p, glm::vec3 s, glm::vec3 c)
+    Falling_Tree(glm::vec3 p, glm::vec3 s)
     {
         // First particle will initialize resources
         if (!shader)
             shader = std::make_unique<ppgso::Shader>(color_vert_glsl, color_frag_glsl);
         if (!mesh)
             mesh = std::make_unique<ppgso::Mesh>("tree2.obj");
-
-        color = c;
         speed = s;
         position = p;
         help = position.z;
@@ -79,6 +81,7 @@ public:
             if(!collision)
             {
                 collision = true;
+                particles = true;
                 auto cube = std::make_unique<Cube>(glm::vec3{position.x, 0, 0}, glm::vec3{0, 0.3, 1},0);
                 cube->scale = {0.15f, 0.15, 0.15};
                 scene.objects.push_back(move(cube));
@@ -86,6 +89,30 @@ public:
 
             if (rotate < 90) {
                 rotate += rotate_speed;
+
+            }
+            else
+            {
+                if(particles)
+                {
+                    /* import particles
+                    for(int i = 0; i < 10; i++)
+                    {
+                        glm::vec3 pst;
+                        pst.x = glm::linearRand(position.x - 0.2 , position.x + 0.2);
+                        pst.y = 0.5;
+                        pst.z = 0;
+
+                        auto prtcl = std::make_unique<Particle>(pst,glm::vec3{0,0,0},glm::vec3{0,1,0});
+                        prtcl->scale = {0.05f, 0.05, 0.05};
+                        scene.objects.push_back(move(prtcl));
+                    }
+                       particles = false;
+                     */
+
+
+
+                }
             }
             if (position.y >= help)
                 position.y -= y_change_speed;

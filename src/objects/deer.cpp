@@ -41,16 +41,15 @@ public:
     /// \param p - Initial position
     /// \param s - Initial speed
     /// \param c - Color of particle
-    Deer(glm::vec3 p, glm::vec3 s, glm::vec3 c)
+    Deer(glm::vec3 p, glm::vec3 c)
     {
         // First particle will initialize resources
         if (!shader)
             shader = std::make_unique<ppgso::Shader>(color_vert_glsl, color_frag_glsl);
         if (!mesh)
-            mesh = std::make_unique<ppgso::Mesh>("../data/Deer.obj");
+            mesh = std::make_unique<ppgso::Mesh>("Deer.obj");
 
         color = c;
-        speed = s;
         position = p;
 
         bornTime = (float)glfwGetTime();

@@ -38,8 +38,8 @@ private:
     Scene scene;
 
     // Objects to render the framebuffer on to
-    ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
-    //ppgso::Shader quadShader = {texture_vert_glsl, texture_frag_glsl};
+    //ppgso::Shader quadShader = {convolution_vert_glsl, convolution_frag_glsl};
+    ppgso::Shader quadShader = {texture_vert_glsl, texture_frag_glsl};
     ppgso::Mesh quadMesh = {"quad.obj"};
     ppgso::Texture quadTexture = {1024, 1024};
 
@@ -47,16 +47,13 @@ private:
     GLuint fbo = 1;
     GLuint rbo = 1;
 
-    bool convolution = false;
-
-    void initScene() {
-
-
-        // TODO create 2 separate templates for scenes
+    void scene1_init() //scene 1
+    {
         scene.objects.clear();
 
+
         // camera
-        auto camera = std::make_unique<Camera>(100.0f, (float) width / (float) height, 0.1f, 100.0f);
+        auto camera = std::make_unique<Camera>(100.0f, (float)width / (float)height, 0.1f, 100.0f);
         scene.camera = move(camera);
 
   	  	// shader and light
@@ -87,34 +84,63 @@ private:
         scene.objects.push_back(move(std::make_unique<Ground>()));
 
         // trees
-        /*
-        for (int i = 0; i < 35; i++)
+        for (int i = 0; i < 50; i++)
         {
-            float a = glm::linearRand(-5.0f, -1.0f);
-            glm::vec3 pos = glm::vec3{glm::linearRand(-0.5f, 4.0f), 0, a};
-            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5 / (a * a), 0});
+            float a = glm::linearRand(-3.0f, -12.0f);
+            glm::vec3 pos = glm::vec3{glm::linearRand(-2.0f, 12.0f), 0, a};
+            auto tree = std::make_unique<Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 2.5 / (a * a), 0});
             scene.objects.push_back(move(tree));
         }
 
-        */
+        //faling trees
+        for (int i = 0; i < 3;i++)
+        {
+            glm::vec3 pos = glm::vec3{4+(i*2), 0, -1.5};
+            auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0});
+            scene.objects.push_back(move(tree));
+
+        }
+
         // wolfs
-        for (float i = 0; i < 5; i++) {
-            glm::vec3 pos = {1 + i / 2, 0, -2 - i};
-            auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0},
-                                                glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
+        for (float i = 0; i < 5; i++)
+        {
+            glm::vec3 pos = {glm::linearRand(12.0f, 18.0f),0,  glm::linearRand(-1.5f, -4.0f)};
+            auto wolf1 = std::make_unique<Wolf>(pos, glm::vec3{0, 0, 0}, glm::vec3{0.2 + i * 0.05, 0.2 + i * 0.05, 0.2 + i * 0.05}, 90.0f, 1);
             scene.objects.push_back(move(wolf1));
         }
 
-        glm::vec3 pos = glm::vec3{2, 0, -1.5};
-        auto tree = std::make_unique<Falling_Tree>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0.5, 0});
-        scene.objects.push_back(move(tree));
-
-
-        pos = {1, 0, -1};
-        auto deer = std::make_unique<Deer>(pos, glm::vec3{0, -0.01, 0}, glm::vec3{0, 0, 1});
+        //deer
+        glm::vec3 pos = {10,0,-2};
+        auto deer = std::make_unique<Deer>(pos, glm::vec3{1,1,0});
         scene.objects.push_back(move(deer));
 
     }
+    void scene2_init()
+    {
+        scene.objects.clear();
+
+
+        // camera
+        auto camera = std::make_unique<Camera>(100.0f, (float)width / (float)height, 0.1f, 100.0f);
+        scene.camera = move(camera);
+
+        // player
+        scene.objects.push_back(move(std::make_unique<Player>(glm::vec3{0, 1, 0})));
+
+        // backgrounds
+        scene.objects.push_back(move(std::make_unique<Background>()));
+        scene.objects.push_back(move(std::make_unique<Moon>()));
+        scene.objects.push_back(move(std::make_unique<Ground>()));
+
+    }
+	void initScene()
+	{
+        scene.scene_count++;
+        if( scene.scene_count == 1)
+            scene1_init();
+        if( scene.scene_count == 2)
+            scene2_init();
+	}
 
 
 public:
@@ -179,7 +205,7 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         auto quadViewMatrix = glm::mat4{1.0f};
-        quadViewMatrix = glm::lookAt(glm::vec3{0.0f, 0.0f, -0.8f}, scene.camera->front - glm::vec3{0.0f, 0.0f, -1.0f},{0.0f, -1.0f, 0.0f});
+        quadViewMatrix = glm::lookAt(glm::vec3{0.0f, 0.0f, -0.8f}, scene.camera->help - glm::vec3{0.0f, 1.0f, -1.0f},{0.0f, -1.0f, 0.0f});
 
         // Animate rotation of the quad
         auto quadModelMatrix = glm::mat4{1.0f};
@@ -197,7 +223,6 @@ public:
     void onIdle() {
         buffer_set();
 
-
         // Track time
         static auto time = (float) glfwGetTime();
         float dTime = (float) glfwGetTime() - time;
@@ -205,55 +230,70 @@ public:
 
         // update
         scene.update(dTime);
+
         // Render every object in scene
         scene.render();
 
-
-
+        if(scene.objects.size() == 0)
+            initScene();
 
 
         buffer_show();
+
     }
 
 	void onKey(int key, int scanCode, int action, int mods) override
 	{
 		if (action == GLFW_PRESS)
 		{
-			switch (scanCode)
-			{
-			case 38:
-			case 113:
-				// left
-				scene.move_left = true;
-				break;
-			case 40:
-			case 114:
-				// right
-				scene.move_right = true;
-				break;
-			case 65:
-				// spacebar
-				if (!scene.jump)
-					scene.jump = true;
-				break;
+            std:: cout << scanCode;
+			switch (scanCode) {
+                case 38:
+                case 113:
+                    // left
+                    scene.move_left = true;
+                    break;
+                case 40:
+                case 114:
+                    // right
+                    scene.move_right = true;
+                    break;
+                case 65:
+                    // spacebar
+                    if (!scene.jump)
+                        scene.jump = true;
+                    break;
+                case 77:
+                    scene.camera->go_boundary_right = true;
+                    scene.camera->go_boundary_left = false;
+                    break;
+                case 75:
+                    scene.camera->go_boundary_left = true;
+                    scene.camera->go_boundary_right = false;
+                    break;
+                case 76:
+                    scene.camera->go_boundary_left = false;
+                    scene.camera->go_boundary_right = false;
+                    scene.camera->go_player = true;
+                    break;
+                }
+			}
+            if (action == GLFW_RELEASE)
+            {
+                switch (scanCode)
+                {
+                    case 38:
+                    case 113:
+                        // left
+                        scene.move_left = false;
+                        break;
+                    case 40:
+                    case 114:
+                        // right
+                        scene.move_right = false;
+                        break;
+                }
             }
 		}
-		if (action == GLFW_RELEASE)
-		{
-			switch (scanCode)
-			{
-			case 38:
-			case 113:
-				// left
-				scene.move_left = false;
-				break;
-			case 40:
-			case 114:
-				// right
-				scene.move_right = false;
-				break;
 
-            }
-        }
-	}
-};
+    };
