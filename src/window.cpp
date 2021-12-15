@@ -122,7 +122,7 @@ private:
 		// fireflies
 		glm::vec3 posf = glm::vec3(1, 0.6, -1);
 		scene.light_positions.push_back(posf);
-		scene.objects.push_back(move(std::make_unique<Fireflies>(posf)));
+		scene.objects.push_back(move(std::make_unique<Fireflies>(posf, glm::linearRand(30, 50))));
 	}
 	void scene2_init()
 	{

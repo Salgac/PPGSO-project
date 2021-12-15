@@ -28,12 +28,17 @@ private:
 	glm::mat4 modelMatrix{1.0f};
 	glm::mat4 viewMatrix{1.0f};
 
+	float bornTime;
+	float ttl;
+
 public:
 	// Public attributes that define position, color ..
 	glm::vec3 position;
 	glm::vec3 offset;
 	glm::vec3 rotation{0, 0, 0};
-	glm::vec3 scale;
+	glm::vec3 scale{0.0001, 0.0001, 0.0001};
+	glm::vec3 desiredScale;
+
 	glm::vec3 color;
 
 	// Initialize object data buffers
@@ -41,8 +46,11 @@ public:
 	{
 		position = pos;
 		offset = off;
-		scale = scl;
+		desiredScale = scl;
 		color = clr;
+
+		bornTime = (float)glfwGetTime();
+		ttl = (float)glm::linearRand(10, 30);
 
 		// shader
 		if (!shader)
@@ -59,6 +67,24 @@ public:
 		modelMatrix = glm::translate(modelMatrix, offset);
 		modelMatrix = glm::scale(modelMatrix, scale);
 
+		// change scale if not desired
+		if (scale.x < desiredScale.x)
+		{
+			scale *= 1.1f;
+		}
+		else
+		{
+			scale = desiredScale;
+		}
+
+		// check TimeToLive
+		if (glfwGetTime() - bornTime > ttl)
+		{
+			// die
+			scale *= 0.8f;
+			if (scale.x < 0.0001f)
+				return false;
+		}
 		return true;
 	}
 
