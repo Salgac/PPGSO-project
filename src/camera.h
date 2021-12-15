@@ -17,8 +17,8 @@ public:
 	glm::vec3 position{0.01f, 0.001f, 0.01};
 	glm::vec3 front{0.0f, 0.0f, -1.0f};
 
-	glm::vec3 position_offset{-0.5f, 0.5f, 1.0f};
-	glm::vec3 front_offset{0.0f, 0.0f, -1.0f};
+	glm::vec3 position_offset{0.0f, 0.5f, 1.0f};
+	glm::vec3 front_offset{1.0f, 0.0f, -1.0f};
 	glm::vec3 up{0.0f, 1.0f, 0.0f};
 
     glm::vec3 help{0.0f, 1.0f, 0.0f};
@@ -78,6 +78,7 @@ public:
         }
         if(!go_player and !go_boundary_left and !go_boundary_right)
             front = player_position;
+	
 
         auto help = player_position;
 		// Update viewMatrix
