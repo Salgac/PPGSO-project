@@ -25,6 +25,7 @@
 #include "objects/wolf.cpp"
 #include "objects/deer.cpp"
 #include "objects/fireflies.cpp"
+#include "objects/crow.cpp"
 
 #include "camera.h"
 #include "scene.cpp"
@@ -124,6 +125,7 @@ private:
 		scene.light_positions.push_back(posf);
 		scene.objects.push_back(move(std::make_unique<Fireflies>(posf, glm::linearRand(30, 50))));
 	}
+
 	void scene2_init()
 	{
 		scene.objects.clear();
@@ -131,6 +133,15 @@ private:
 		initCommon();
 
 		scene.light_positions.push_back(glm::vec3(2, 1, -2));
+	}
+
+	int crowSpawn = 0;
+	void spawnCrow()
+	{
+		// spawn a new one near player
+		int p = scene.player_position.x;
+		glm::vec3 pos = glm::vec3(glm::linearRand(p - 0.5, p + 4.5), 0, -5);
+		scene.objects.push_back(move(std::make_unique<Crow>(pos)));
 	}
 
 public:
@@ -229,6 +240,12 @@ public:
 			scene2_init();
 		}
 
+		// spawn a random crow every 4 seconds
+		if ((int)time % 4 == 0 && (int)time != crowSpawn)
+		{
+			crowSpawn = (int)time;
+			spawnCrow();
+		}
 		buffer_show();
 	}
 
